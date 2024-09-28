@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: $textSmall2;
+    font-weight: $textMedium;
+    background-color: $colorBackground;
+    position: relative;
+}
+
+.mainContainer {
+    @include flex(column);
+    height: $full;
+}

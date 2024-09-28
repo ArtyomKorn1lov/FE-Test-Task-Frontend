@@ -1,6 +1,10 @@
 <template>
-    <h1>Hello world!</h1>
-    <el-button>Нажми на меня</el-button>
+    <main class="b-main">
+        <div class="wrap">
+            <h1>Hello world!</h1>
+            <el-button>Нажми на меня</el-button>
+        </div>
+    </main>
 </template>
 
 <script setup>

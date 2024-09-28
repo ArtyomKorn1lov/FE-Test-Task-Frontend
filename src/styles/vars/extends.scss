@@ -1,0 +1,24 @@
+// Наследуемые стили
+%textDefaultOptions {
+    font-weight: $textMedium;
+    line-height: $leadingTited;
+    color: $colorTextPrimary;
+}
+
+%buttonDefaultOptions {
+    background-color: $colorPrimary;
+    color: $colorWhite;
+    border-color: transparent;
+    height: $m40;
+    border-radius: $rounded4;
+}
+
+%buttonDefaultOptionsHover {
+    background-color: $colorPrimaryHover;
+    border-color: transparent;
+}
+
+%buttonDisabledOptions {
+    background-color: $colorTextSecondary;
+    border-color: transparent;
+}
