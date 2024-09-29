@@ -1,0 +1,11 @@
+span {
+    @extend %textDefaultOptions;
+    line-height: $leadingSmall;
+}
+
+p {
+    @extend %textDefaultOptions;
+    margin-top: $m10;
+    margin-bottom: $m10;
+    line-height: $leadingTited;
+}

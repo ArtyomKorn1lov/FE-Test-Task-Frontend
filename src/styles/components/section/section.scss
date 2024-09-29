@@ -1,0 +1,14 @@
+.b-section {
+
+    &__header {
+        padding-top: $m30;
+    }
+
+    &__content {
+        @include flex(column);
+        margin-top: $m20;
+        padding: $m20 $m30 $m15;
+        background-color: $colorWhite;
+        border-radius: $rounded8;
+    }
+}

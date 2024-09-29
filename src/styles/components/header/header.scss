@@ -1,3 +1,18 @@
 .b-header {
     flex-shrink: 0;
+    @include flex(false, false, center);
+
+    &__section {
+        @include flex(false, center, space-between);
+        gap: $m10;
+    }
+
+    &__title {
+        font-size: $textDefault;
+    }
+
+    &__controls {
+        @include flex();
+        gap: $m10;
+    }
 }

@@ -1,0 +1,15 @@
+@media (max-width: 560px) {
+    .b-input {
+
+        &_header {
+
+            .el-input {
+    
+    
+                &__wrapper {
+                    width: $full;
+                }
+            }
+        }
+    }
+}

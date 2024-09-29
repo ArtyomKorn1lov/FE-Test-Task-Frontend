@@ -11,14 +11,42 @@
     border-color: transparent;
     height: $m40;
     border-radius: $rounded4;
-}
 
-%buttonDefaultOptionsHover {
-    background-color: $colorPrimaryHover;
-    border-color: transparent;
+    span, p {
+        color: $colorWhite;
+    }
+
+    &:hover,
+    &:active {
+        background-color: $colorPrimaryHover;
+        border-color: transparent;
+    }
 }
 
 %buttonDisabledOptions {
-    background-color: $colorTextSecondary;
+    background-color: $colorGrey;
+    color: $colorTextPrimary;
     border-color: transparent;
+
+    span, p {
+        color: $colorTextPrimary;
+    }
+
+    &:hover,
+    &:active {
+        background-color: $colorGrey;
+
+        span, p {
+            color: $colorTextPrimary;
+        }
+    }
+}
+
+%inputDefaultOptions {
+    border: 1px solid $colorLightGrey;
+    box-shadow: none;
+    box-sizing: border-box;
+    padding-left: 12px;
+    padding-right: 12px;
+    height: $m40;
 }

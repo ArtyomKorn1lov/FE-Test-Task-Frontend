@@ -1,14 +1,12 @@
 <template>
   <div class="mainContainer">
-    <header class="b-header">
-      <div class="wrap">
-        <h1>Account users</h1>
-      </div>
-    </header>
+    <Header></Header>
     <RouterView />
   </div>
 </template>
 
 <script setup>
 import { RouterView } from 'vue-router';
+
+import Header from '@/components/header/Header.vue';
 </script>

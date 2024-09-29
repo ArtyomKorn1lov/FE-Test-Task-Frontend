@@ -1,0 +1,11 @@
+.b-btn {
+
+    &_primary {
+        @extend %buttonDefaultOptions;
+        padding: $m10 12px;
+
+        &.is-disabled {
+            @extend %buttonDisabledOptions;
+        }
+    }
+}
