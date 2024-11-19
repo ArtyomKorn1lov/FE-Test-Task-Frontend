@@ -1,0 +1,55 @@
+.el-button + .el-button {
+    margin-left: 0;
+}
+
+.b-btn {
+
+    &_primary {
+        @extend %buttonDefaultOptions;
+        padding: $m10 12px;
+
+        &.is-disabled {
+            @extend %buttonDisabledOptions;
+        }
+    }
+
+    &_secondary {
+        @extend %buttonDefaultOptions;
+        padding: $m10 12px;
+        background-color: transparent;
+        border: 1px solid $colorLightGrey;
+
+        span, p {
+            color: $colorTextBtnSecondary;
+            stroke: $colorPlaceHolder;
+        }
+
+        &.is-disabled {
+            @extend %buttonDisabledOptions;
+        }
+
+        &:hover,
+        &:active {
+            background-color: $colorGrey;
+            border-color: $colorPlaceHolder;
+
+            span, p {
+                color: $colorWhite;
+                stroke: $colorWhite;
+            }
+        }
+    }
+
+    &_medium {
+        padding: 8px;
+        height: 32px;
+    }
+
+    &_icon {
+
+        span, p {
+            @include flex(false, center);
+            gap: 8px;
+        }
+    }
+}

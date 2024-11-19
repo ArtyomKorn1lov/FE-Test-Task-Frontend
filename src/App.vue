@@ -1,6 +1,6 @@
 <template>
   <div class="mainContainer">
-    <Header></Header>
+    <HeaderWrapper />
     <RouterView />
   </div>
 </template>
@@ -8,5 +8,5 @@
 <script setup>
 import { RouterView } from 'vue-router';
 
-import Header from '@/components/header/Header.vue';
+import HeaderWrapper from '@/containers/HeaderWrapper.vue';
 </script>

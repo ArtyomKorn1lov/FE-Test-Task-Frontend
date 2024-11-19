@@ -14,6 +14,8 @@
 
     span, p {
         color: $colorWhite;
+        line-height: normal;
+        stroke: $colorWhite;
     }
 
     &:hover,

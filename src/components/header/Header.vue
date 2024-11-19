@@ -10,7 +10,7 @@
             <el-input v-model="search" class="b-input b-input_header" placeholder="Search">
               <template #prefix>
                 <el-icon class="el-input__icon">
-                    <SearchIcon></SearchIcon>
+                    <SearchIcon />
                 </el-icon>
               </template>
             </el-input>

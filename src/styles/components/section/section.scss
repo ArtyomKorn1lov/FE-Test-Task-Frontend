@@ -7,7 +7,7 @@
     &__content {
         @include flex(column);
         margin-top: $m20;
-        padding: $m20 $m30 $m15;
+        padding: $m25 $m15 $m15;
         background-color: $colorWhite;
         border-radius: $rounded8;
     }

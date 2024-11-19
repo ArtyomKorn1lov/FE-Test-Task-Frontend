@@ -1,0 +1,6 @@
+@media (max-width: $sml) {
+    .b-controls {
+        @include flex(column, start);
+        gap: $m10;
+    }
+}
