@@ -1,0 +1,111 @@
+@media (max-width: $md) {
+    .b-account {
+
+        &__row {
+            @include flex(column);
+            gap: $m10;
+        }
+
+        &__col {
+
+            &_left {
+                min-width: auto;
+            }
+        }
+
+        &__top {
+            margin-bottom: $m10;
+            gap: $m5;
+        }
+
+        &__inside {
+
+            &_editable {
+                margin-left: 28px;
+                height: 32px;
+            }
+        }
+
+        &__list {
+            @include containerListHeight($md);
+        }
+
+        &__item {
+            .b-account {
+
+                &__col {
+                    
+                    &:before {
+                        content: attr(data-label);
+                        font-size: $textTiny;
+                        color: $colorTextSecondary;
+                        margin-left: 28px;
+                        margin-bottom: 4px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $sml) {
+    .b-account {
+
+        &__list {
+            @include containerListHeight($sml);
+        }
+    }
+}
+
+@media (max-width: $sm) {
+    .b-account {
+
+        &__inside {
+            gap: 6px;
+
+            &_editable {
+                margin-left: 24px;
+            }
+        }
+
+        &__name,
+        &__email {
+            font-size: $textTiny;
+            font-weight: $textNormal;
+            line-height: 18px;
+        }
+
+        &__list {
+            @include containerListHeight($sm);
+        }
+
+        &__item {
+            .b-account {
+
+                &__col {
+                    
+                    &:before {
+                        margin-left: 24px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $xs) {
+    .b-account {
+
+        &__list {
+            @include containerListHeight($xs);
+        }
+
+        &__inside {
+
+            &_editable {
+                @include flex(column, start, start);
+                height: auto;
+            }
+        }
+    }
+}

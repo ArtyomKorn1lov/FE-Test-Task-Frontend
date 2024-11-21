@@ -13,5 +13,33 @@ body {
 
 .mainContainer {
     @include flex(column);
-    height: $full;
+    height: 100vh;
+}
+
+.custom-scroll {
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: $rounded4;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: $rounded4;
+        background: $colorLightGrey;
+    }
+}
+
+.overflow-y {
+    overflow-y: auto;
+    margin-right: -10px;
+}
+
+@media (max-width: $md) {
+    .overflow-y {
+        margin-right: -7px;
+        padding-right: 3px;
+    }
 }

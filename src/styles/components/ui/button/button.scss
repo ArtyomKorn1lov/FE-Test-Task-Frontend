@@ -1,4 +1,4 @@
-.el-button + .el-button {
+.el-button+.el-button {
     margin-left: 0;
 }
 
@@ -16,10 +16,11 @@
     &_secondary {
         @extend %buttonDefaultOptions;
         padding: $m10 12px;
-        background-color: transparent;
+        background-color: $colorWhite;
         border: 1px solid $colorLightGrey;
 
-        span, p {
+        span,
+        p {
             color: $colorTextBtnSecondary;
             stroke: $colorPlaceHolder;
         }
@@ -33,7 +34,8 @@
             background-color: $colorGrey;
             border-color: $colorPlaceHolder;
 
-            span, p {
+            span,
+            p {
                 color: $colorWhite;
                 stroke: $colorWhite;
             }
@@ -47,9 +49,31 @@
 
     &_icon {
 
-        span, p {
+        span,
+        p {
             @include flex(false, center);
             gap: 8px;
+
+            svg {
+                width: 16px;
+                height: 16px
+            }
+        }
+    }
+
+    &_tag {
+        @extend %tagDefaultOptions;
+
+        &-manager {
+            @include tagPalette(manager);
+        }
+
+        &-admin {
+            @include tagPalette(admin);
+        }
+
+        &-reviewer {
+            @include tagPalette(reviewer);
         }
     }
 }

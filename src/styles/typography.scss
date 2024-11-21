@@ -9,3 +9,14 @@ p {
     margin-bottom: $m10;
     line-height: $leadingTited;
 }
+
+a {
+    @extend %textDefaultOptions;
+    line-height: $leadingSmall;
+    text-decoration: none;
+
+    &:hover,
+    &:active {
+        color: $colorPrimaryHover;
+    }
+}

@@ -1,0 +1,38 @@
+@media (max-width: $sm) {
+    .b-btn {
+
+        &_primary,
+        &_secondary {
+            height: $m35;
+        }
+
+        &_medium {
+            padding: 6px;
+            height: 24px;
+
+            span,
+            p {
+                font-size: $textTiny;
+            }
+        }
+
+        &_icon {
+
+            span,
+            p {
+                gap: 4px;
+    
+                svg {
+                    width: 12px;
+                    height: 12px
+                }
+            }
+        }
+
+        &_tag {
+            font-size: $textTiny;
+            font-weight: $textNormal;
+            height: $m20;
+        }
+    }
+}

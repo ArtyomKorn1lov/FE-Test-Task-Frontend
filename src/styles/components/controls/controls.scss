@@ -2,6 +2,7 @@
     @include flex(false, center);
     gap: $m25;
     margin-bottom: $m25;
+    margin-left: 16px;
 
     &__title {
         font-size: $textRegular;

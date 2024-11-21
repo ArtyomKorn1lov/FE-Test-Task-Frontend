@@ -1,4 +1,5 @@
-// Миксины, для быстрого последущего использования
+// Миксины, c логикой
+@use "sass:map";
 
 @mixin flex($direction: false, $items: false, $justify: false) {
     display: flex;
@@ -6,7 +7,7 @@
     @if $direction {
         flex-direction: $direction;
     }
-    
+
     @if $items {
         align-items: $items;
     }
@@ -29,5 +30,36 @@
 
     @if $gap {
         gap: $gap;
+    }
+}
+
+@mixin tagPalette($code: default) {
+    background-color: map.get($colorTags, $code);
+
+    span {
+        color: map.get($colorTags, $code + -text);
+    }
+
+    &:hover,
+    &:active {
+        background-color: map.get($colorTags, $code + -hover);
+
+        span {
+            color: map.get($colorTags, $code + -text-hover);
+        }
+    }
+}
+
+@mixin containerListHeight($breakpoint: default) {
+    @if $breakpoint == $sml {
+        max-height: calc(100vh - 317px);
+    } @else if $breakpoint == $xs {
+        max-height: calc(100vh - 350px);
+    } @else if $breakpoint == $md {
+        max-height: calc(100vh - 267px);
+    } @else if $breakpoint == $sm {
+        max-height: calc(100vh - 307px);
+    } @else {
+        max-height: calc(100vh - 257px);
     }
 }

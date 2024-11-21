@@ -13,6 +13,7 @@
     border-radius: $rounded4;
 
     span, p {
+        font-family: 'Inter', sans-serif;
         color: $colorWhite;
         line-height: normal;
         stroke: $colorWhite;
@@ -51,4 +52,22 @@
     padding-left: 12px;
     padding-right: 12px;
     height: $m40;
+}
+
+%tagDefaultOptions {
+    @include tagPalette();
+    border-color: transparent;
+    height: $m25;
+    border-radius: $rounded4;
+
+    span, p {
+        font-family: 'Inter', sans-serif;
+        font-weight: $textMedium;
+        line-height: normal;
+    }
+
+    &:hover,
+    &:active {
+        border-color: transparent;
+    }
 }
