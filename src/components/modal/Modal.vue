@@ -2,7 +2,6 @@
     <el-dialog
         v-model="toggleModal"
         :title="title"
-        width="30%"
         align-center
     >
         <slot></slot>

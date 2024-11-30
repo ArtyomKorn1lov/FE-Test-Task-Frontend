@@ -15,8 +15,10 @@
             placeholder="Search"
           >
             <template #prefix>
-              <el-icon class="el-input__icon">
-                <SearchIcon />
+              <el-icon
+                class="el-input__icon"
+                v-html="iconSearch"
+              >
               </el-icon>
             </template>
           </el-input>
@@ -38,12 +40,14 @@
 <script setup>
 import { ElInput, ElIcon, ElButton } from 'element-plus';
 import { ref } from 'vue';
-
-import SearchIcon from '@/components/icons/Search.vue';
+import { getIcon } from '@/lib/template';
+import { computed } from 'vue';
 
 const search = ref('');
 
 const emit = defineEmits(['open-modal']);
+
+const iconSearch = computed(() => getIcon('search'));
 
 const openModal = () => {
   emit('open-modal', true);
