@@ -15,7 +15,11 @@
               </template>
             </el-input>
 
-            <el-button class="b-btn b-btn_primary">
+            <el-button
+              class="b-btn b-btn_primary"
+              native-type="button"
+              @click="openModal"
+            >
                 Connect users
             </el-button>
 
@@ -33,4 +37,9 @@ import SearchIcon from '@/components/icons/Search.vue';
 
 const search = ref('');
 
+const emit = defineEmits(['open-modal']);
+
+const openModal = () => {
+  emit('open-modal', true);
+}
 </script>
