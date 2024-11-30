@@ -4,23 +4,26 @@
     :toggle="modalProps.toggle"
     @close="closeModal"
   >
-    <p>test content</p>
+    <component :is="selectedComponent"></component>
   </Modal>
 </template>
 <script setup>
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import Modal from '@/components/modal/Modal.vue';
 import ModalModel, { CloseModalModel } from '@/models/ModalModel';
+import ModalComponents, { ComponentNotExist } from '@/models/ModalComponents';
 
 const store = useStore();
 
 /** @type {ModalModel} */
 const modalProps = computed(() => store.getters.getModalProps);
-
-console.log('modalProps', modalProps.value);
-watch(modalProps, (newValue) => {
-  console.log('newValue', newValue);
+/** @type {component} */
+const selectedComponent = computed(() => {
+  if (!ModalComponents[modalProps.value.code]) {
+    return ComponentNotExist;
+  }
+  return ModalComponents[modalProps.value.code];
 });
 
 /** @param {CloseModalModel} objClose */

@@ -1,0 +1,47 @@
+.b-dialog {
+
+  &.el-dialog {
+    max-width: 716px;
+  }
+
+  .el-dialog {
+
+    &__header {
+      padding-bottom: 0;
+
+      &.show-close {
+        padding-right: 0;
+      }
+    }
+  }
+
+  &__close {
+    @include flex(false, center, center);
+    right: 22px;
+    top: $m30;
+    position: absolute;
+    width: $m20;
+    height: $m20;
+    fill: $colorPrimary;
+
+    svg {
+      width: $m15;
+      height: $m15;
+    }
+
+    &:hover,
+    &:active {
+      fill: $colorPrimaryHover;
+    }
+  }
+
+  &__title {
+    display: block;
+    font-size: $textLarge;
+    font-weight: $textMedium;
+    color: $colorTextPrimary;
+    line-height: $leadingTited;
+    margin-bottom: $m30;
+    padding-right: $m25;
+  }
+}
