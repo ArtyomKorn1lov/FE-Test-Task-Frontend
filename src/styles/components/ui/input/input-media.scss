@@ -1,15 +1,15 @@
 @media (max-width: $sml) {
-    .b-input {
+  .b-input {
 
-        &_header {
+    &_header {
 
-            .el-input {
-    
-    
-                &__wrapper {
-                    width: $full;
-                }
-            }
+      .el-input {
+
+
+        &__wrapper {
+          width: $full;
         }
+      }
     }
+  }
 }

@@ -1,48 +1,48 @@
 .b-input {
 
+  .el-input {
+
+
+    &__wrapper {
+      @extend %inputDefaultOptions;
+
+      &.is-focus {
+        border-color: $colorGrey;
+      }
+    }
+
+    &__inner {
+      font-family: 'Inter', sans-serif;
+      font-size: $textSmall2;
+      color: $colorTextPrimary;
+    }
+
+    &__icon {
+      stroke: $colorPlaceHolder;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      &:hover,
+      &:active {
+        stroke: $colorGrey;
+      }
+    }
+  }
+
+  &_header {
+
     .el-input {
 
 
-        &__wrapper {
-            @extend %inputDefaultOptions;
-
-            &.is-focus {
-                border-color: $colorGrey;
-            }
-        }
-
-        &__inner {
-            font-family: 'Inter', sans-serif;
-            font-size: $textSmall2;
-            color: $colorTextPrimary;
-        }
-
-        &__icon {
-            stroke: $colorPlaceHolder;
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-
-            svg {
-                width: 16px;
-                height: 16px;
-            }
-
-            &:hover,
-            &:active {
-                stroke: $colorGrey;
-            }
-        }
+      &__wrapper {
+        width: 204px;
+      }
     }
-
-    &_header {
-
-        .el-input {
-
-
-            &__wrapper {
-                width: 204px;
-            }
-        }
-    }
+  }
 }

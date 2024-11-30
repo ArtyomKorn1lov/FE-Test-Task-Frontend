@@ -1,8 +1,8 @@
 <template>
-    <Header
-      @open-modal="openModal"
-    >
-    </Header>
+  <Header
+    @open-modal="openModal"
+  >
+  </Header>
 </template>
 <script setup>
 import { useStore } from 'vuex';

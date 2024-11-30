@@ -1,21 +1,21 @@
 @media (max-width: $md) {
-    .b-controls {
-        margin-bottom: $m10;
-    }
+  .b-controls {
+    margin-bottom: $m10;
+  }
 }
 
 @media (max-width: $sml) {
-    .b-controls {
-        @include flex(column, start);
-        gap: $m10;
-    }
+  .b-controls {
+    @include flex(column, start);
+    gap: $m10;
+  }
 }
 
 @media (max-width: $sm) {
-    .b-controls {
-    
-        &__title {
-            font-size: $textSmall2;
-        }
+  .b-controls {
+
+    &__title {
+      font-size: $textSmall2;
     }
+  }
 }

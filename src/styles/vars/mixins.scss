@@ -2,64 +2,72 @@
 @use "sass:map";
 
 @mixin flex($direction: false, $items: false, $justify: false) {
-    display: flex;
+  display: flex;
 
-    @if $direction {
-        flex-direction: $direction;
-    }
+  @if $direction {
+    flex-direction: $direction;
+  }
 
-    @if $items {
-        align-items: $items;
-    }
+  @if $items {
+    align-items: $items;
+  }
 
-    @if $justify {
-        justify-content: $justify;
-    }
+  @if $justify {
+    justify-content: $justify;
+  }
 }
 
 @mixin grid($cols: false, $rows: false, $gap: false) {
-    display: grid;
+  display: grid;
 
-    @if $cols {
-        grid-template-columns: repeat($cols, minmax(0, 1fr));
-    }
+  @if $cols {
+    grid-template-columns: repeat($cols, minmax(0, 1fr));
+  }
 
-    @if $rows {
-        grid-template-rows: repeat($rows, minmax(0, 1fr));
-    }
+  @if $rows {
+    grid-template-rows: repeat($rows, minmax(0, 1fr));
+  }
 
-    @if $gap {
-        gap: $gap;
-    }
+  @if $gap {
+    gap: $gap;
+  }
 }
 
 @mixin tagPalette($code: default) {
-    background-color: map.get($colorTags, $code);
+  background-color: map.get($colorTags, $code);
+
+  span {
+    color: map.get($colorTags, $code + -text);
+  }
+
+  &:hover,
+  &:active {
+    background-color: map.get($colorTags, $code + -hover);
 
     span {
-        color: map.get($colorTags, $code + -text);
+      color: map.get($colorTags, $code + -text-hover);
     }
-
-    &:hover,
-    &:active {
-        background-color: map.get($colorTags, $code + -hover);
-
-        span {
-            color: map.get($colorTags, $code + -text-hover);
-        }
-    }
+  }
 }
 
 @mixin containerListHeight($breakpoint: default) {
-    @if $breakpoint == $sml {
-        max-height: calc(100vh - 317px);
-    } @else if $breakpoint == $xs {
-        max-height: calc(100vh - 350px);
-    } @else if $breakpoint == $md {
-        max-height: calc(100vh - 267px);
-    } @else if $breakpoint == $sm {
-        max-height: calc(100vh - 307px);
-    } @else {
-        max-height: calc(100vh - 257px);
-    }
+  @if $breakpoint ==$sml {
+    max-height: calc(100vh - 317px);
+  }
+
+  @else if $breakpoint ==$xs {
+    max-height: calc(100vh - 350px);
+  }
+
+  @else if $breakpoint ==$md {
+    max-height: calc(100vh - 267px);
+  }
+
+  @else if $breakpoint ==$sm {
+    max-height: calc(100vh - 307px);
+  }
+
+  @else {
+    max-height: calc(100vh - 257px);
+  }
 }

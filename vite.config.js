@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [
     vue(),
     // Плагин для считывания env файлов на vite
-    EnvironmentPlugin('all', {prefix: ''}),
+    EnvironmentPlugin('all', { prefix: '' }),
     ElementPlus()
   ],
   resolve: {

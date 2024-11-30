@@ -1,157 +1,157 @@
 .b-account {
+  @include flex(column);
+
+  &__top {
+    margin-left: 16px;
+    margin-bottom: 4px;
+  }
+
+  &__row {
+    @include grid(false, false, $m25);
+    grid-template-columns: 4fr 3fr;
+  }
+
+  &__col {
+    @include flex(column, false, center);
+
+    &_left {
+      min-width: 364px;
+    }
+  }
+
+  &__inside {
+    @include flex(false, center);
+    gap: 12px;
+
+    &_table {
+      gap: 0;
+    }
+
+    &_right {
+      margin-left: 28px;
+    }
+
+    &_editable {
+      justify-content: space-between;
+    }
+  }
+
+  &__table-title {
+    font-size: $textTiny;
+    color: $colorTextSecondary;
+    font-weight: $textMedium;
+    line-height: 18px;
+  }
+
+  &__arrow-icon {
+    stroke: $colorTextSecondary;
+    margin-left: $m5;
+    width: 12px;
+    height: 12px;
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  &__list {
     @include flex(column);
+    @include containerListHeight();
+    gap: 4px;
+  }
 
-    &__top {
-        margin-left: 16px;
-        margin-bottom: 4px;
+  &__item {
+    width: $full;
+    padding-left: 4px;
+    border-radius: $rounded4;
+    box-sizing: border-box;
+
+    &-inside {
+      padding-left: 12px;
+      padding-top: $m15;
+      padding-bottom: $m10;
+      padding-right: $m25;
+      border-top-right-radius: $rounded4;
+      border-bottom-right-radius: $rounded4;
     }
 
-    &__row {
-        @include grid(false, false, $m25);
-        grid-template-columns: 4fr 3fr;
-    }
+    &:hover,
+    &:active {
 
-    &__col {
-        @include flex(column, false, center);
+      &:not(.b-account__item_selected) {
+        background-color: $colorSectionActive;
 
-        &_left {
-            min-width: 364px;
-        }
-    }
+        .b-account {
 
-    &__inside {
-        @include flex(false, center);
-        gap: 12px;
+          &__item {
 
-        &_table {
-            gap: 0;
-        }
-
-        &_right {
-            margin-left: 28px;
-        }
-
-        &_editable {
-            justify-content: space-between;
-        }
-    }
-
-    &__table-title {
-        font-size: $textTiny;
-        color: $colorTextSecondary;
-        font-weight: $textMedium;
-        line-height: 18px;
-    }
-
-    &__arrow-icon {
-        stroke: $colorTextSecondary;
-        margin-left: $m5;
-        width: 12px;
-        height: 12px;
-
-        svg {
-            width: 12px;
-            height: 12px;
-        }
-    }
-
-    &__list {
-        @include flex(column);
-        @include containerListHeight();
-        gap: 4px;
-    }
-
-    &__item {
-        width: $full;
-        padding-left: 4px;
-        border-radius: $rounded4;
-        box-sizing: border-box;
-
-        &-inside {
-            padding-left: 12px;
-            padding-top: $m15;
-            padding-bottom: $m10;
-            padding-right: $m25;
-            border-top-right-radius: $rounded4;
-            border-bottom-right-radius: $rounded4;
-        }
-
-        &:hover,
-        &:active {
-
-            &:not(.b-account__item_selected) {
-                background-color: $colorSectionActive;
-
-                .b-account {
-
-                    &__item {
-
-                        &-inside {
-                            background-color: $colorSectionActive;
-                        }
-                    }
-                }
+            &-inside {
+              background-color: $colorSectionActive;
             }
+          }
         }
+      }
+    }
 
-        &_selected {
-            background-color: $colorPrimary;
+    &_selected {
+      background-color: $colorPrimary;
 
-            .b-account {
+      .b-account {
 
-                &__item {
+        &__item {
 
-                    &-inside {
-                        background-color: $colorSectionActive;
-                    }
-                }
-            }
-
-            &:hover,
-            &:active {
-
-                .b-account { 
-
-                    &__controls {
-                        display: flex;
-                    }
-                }
-            }
+          &-inside {
+            background-color: $colorSectionActive;
+          }
         }
-    }
+      }
 
-    &__img {
-        width: $full;
-        height: $full;
-        object-fit: cover;
+      &:hover,
+      &:active {
 
-        &-wrap {
-            flex-shrink: 0;
-            width: 32px;
-            height: 32px;
-            aspect-ratio: 1/1;
-            overflow: hidden;
-            border-radius: $roundedFull;
+        .b-account {
+
+          &__controls {
+            display: flex;
+          }
         }
+      }
     }
+  }
 
-    &__info {
-        @include flex(column);
-        overflow: hidden;
-    }
+  &__img {
+    width: $full;
+    height: $full;
+    object-fit: cover;
 
-    &__name {
-        color: $colorTextPrimary;
-        font-weight: $textMedium;
-        line-height: 21px;
+    &-wrap {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      border-radius: $roundedFull;
     }
+  }
 
-    &__email {
-        color: $colorTextSecondary;
-        line-height: 21px;
-    }
+  &__info {
+    @include flex(column);
+    overflow: hidden;
+  }
 
-    &__controls {
-        display: none;
-    }
+  &__name {
+    color: $colorTextPrimary;
+    font-weight: $textMedium;
+    line-height: 21px;
+  }
+
+  &__email {
+    color: $colorTextSecondary;
+    line-height: 21px;
+  }
+
+  &__controls {
+    display: none;
+  }
 }

@@ -6,7 +6,7 @@ import StoreModel from '@/models/StoreModel';
 const state = new StoreModel();
 
 export default createStore({
-    state,
-    getters,
-    mutations
+  state,
+  getters,
+  mutations
 });

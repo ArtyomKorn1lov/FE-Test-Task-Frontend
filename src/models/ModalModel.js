@@ -11,19 +11,19 @@ export class CloseModalModel {
 CloseModalModel.TOGGLE = 'toggle';
 
 export default class ModalModel {
-    /** @type {boolean} */
-    toggle;
-    /** @type {string|boolean} */
-    code;
-    /** @type {string|boolean} */
-    title;
+  /** @type {boolean} */
+  toggle;
+  /** @type {string|boolean} */
+  code;
+  /** @type {string|boolean} */
+  title;
 
-    /** @param {ModalModel|null} data */
-    constructor(data = null) {
-        this.toggle = data?.toggle;
-        this.code = data?.code;
-        this.title = data?.title;
-    }
+  /** @param {ModalModel|null} data */
+  constructor(data = null) {
+    this.toggle = data?.toggle;
+    this.code = data?.code;
+    this.title = data?.title;
+  }
 }
 
 ModalModel.TOGGLE = 'toggle';

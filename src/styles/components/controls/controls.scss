@@ -1,17 +1,17 @@
 .b-controls {
+  @include flex(false, center);
+  gap: $m25;
+  margin-bottom: $m25;
+  margin-left: 16px;
+
+  &__title {
+    font-size: $textRegular;
+    font-weight: $textMedium;
+    color: $colorDarkBlue;
+  }
+
+  &__btns {
     @include flex(false, center);
-    gap: $m25;
-    margin-bottom: $m25;
-    margin-left: 16px;
-
-    &__title {
-        font-size: $textRegular;
-        font-weight: $textMedium;
-        color: $colorDarkBlue;
-    }
-
-    &__btns {
-        @include flex(false, center);
-        gap: 8px;
-    }
+    gap: 8px;
+  }
 }

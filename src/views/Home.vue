@@ -1,7 +1,7 @@
 <template>
-    <main class="b-main">
-        <AccountWrapper />
-    </main>
+  <main class="b-main">
+    <AccountWrapper />
+  </main>
 </template>
 
 <script setup>
