@@ -1,0 +1,108 @@
+.b-select {
+
+  .el-select {
+
+    &__wrapper {
+      height: $m40;
+      border: 1px solid $colorLightGrey;
+      box-shadow: none;
+      padding-left: 12px;
+      padding-right: 12px;
+      box-sizing: border-box;
+    }
+
+    &__selected-item {
+
+      span,
+      p {
+        font-weight: $textNormal;
+        color: $colorTextPrimary;
+      }
+
+      &.is-transparent {
+
+        span,
+        p {
+          color: $colorPlaceHolder;
+        }
+      }
+    }
+  }
+
+  &_selected {
+    @include selectInputTagsPalette();
+
+    &-manager {
+      @include selectInputTagsPalette(manager);
+    }
+
+    &-admin {
+      @include selectInputTagsPalette(admin);
+    }
+
+    &-reviewer {
+      @include selectInputTagsPalette(reviewer);
+    }
+  }
+
+  &__popper {
+
+    &.el-popper {
+
+      border-radius: $rounded10;
+    }
+
+    .el-popper {
+
+      &__arrow {
+        display: none;
+      }
+    }
+
+    .el-select {
+
+      &-dropdown {
+
+        .el-scrollbar {
+          border-radius: $rounded10;
+        }
+
+        &__item {
+          padding-left: 12px;
+          padding-right: 12px;
+
+          span,
+          p {
+            color: $colorTextPrimary;
+            font-weight: $textNormal;
+          }
+
+          &.is-hovering {
+            background-color: $colorSectionActive;
+
+            span,
+            p {
+              color: $colorPrimaryHover;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__tag {
+    @include selectTagsPalette();
+
+    &-manager {
+      @include selectTagsPalette(manager);
+    }
+
+    &-admin {
+      @include selectTagsPalette(admin);
+    }
+
+    &-reviewer {
+      @include selectTagsPalette(reviewer);
+    }
+  }
+}

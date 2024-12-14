@@ -1,7 +1,10 @@
 .b-dialog {
 
   &.el-dialog {
-    max-width: 716px;
+    max-width: 400px;
+    width: $full;
+    padding: $m15;
+    border-radius: $rounded8;
   }
 
   .el-dialog {
@@ -17,8 +20,8 @@
 
   &__close {
     @include flex(false, center, center);
-    right: 22px;
-    top: $m30;
+    right: 18px;
+    top: $m20;
     position: absolute;
     width: $m20;
     height: $m20;
@@ -37,7 +40,7 @@
 
   &__title {
     display: block;
-    font-size: $textLarge;
+    font-size: $textTitle;
     font-weight: $textMedium;
     color: $colorTextPrimary;
     line-height: $leadingTited;

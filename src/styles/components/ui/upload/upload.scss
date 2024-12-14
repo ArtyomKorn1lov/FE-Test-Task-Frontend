@@ -12,15 +12,26 @@
     display: block;
 
     &:hover {
-      border-color: var(--el-color-primary);
-    }
-  }
+      border-color: $colorPrimary;
 
-  &__icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    text-align: center;
+      .b-upload {
+
+        &__icon {
+          color: $colorPrimary;
+        }
+      }
+    }
+
+
+    .b-upload {
+
+      &__icon {
+        font-size: 28px;
+        color: $colorTextSecondary;
+        width: 178px;
+        height: 178px;
+        text-align: center;
+      }
+    }
   }
 }

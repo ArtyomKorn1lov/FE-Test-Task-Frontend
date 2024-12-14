@@ -15,7 +15,7 @@ const store = useStore();
 const openModal = (flag = false) => {
   store.commit('setModalProps', new ModalModel({
     toggle: flag,
-    title: "Add user",
+    title: "Connect user",
     code: "Account"
   }));
 }

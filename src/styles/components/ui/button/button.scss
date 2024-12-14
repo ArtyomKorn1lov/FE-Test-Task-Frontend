@@ -47,6 +47,20 @@
     height: 32px;
   }
 
+  &_large {
+    padding: 16px;
+    height: $m50;
+
+    span,
+    p {
+      font-size: $textRegular;
+    }
+  }
+
+  &_full {
+    width: $full;
+  }
+
   &_icon {
 
     span,
