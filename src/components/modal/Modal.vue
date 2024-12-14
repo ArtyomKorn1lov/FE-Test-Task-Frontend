@@ -1,0 +1,64 @@
+<template>
+  <el-dialog
+    class="b-dialog"
+    v-model="toggleModal"
+    :title="title"
+    :show-close="false"
+    align-center
+  >
+    <template #header="{ close }">
+      <span class="b-dialog__title">{{ title }}</span>
+      <a
+        href="javascript:void(0)"
+        @click="close"
+        class="b-dialog__close"
+        v-html="iconClose"
+      >
+      </a>
+    </template>
+    <slot></slot>
+  </el-dialog>
+</template>
+<script setup>
+import { ElDialog } from 'element-plus';
+import { ref, watch, computed } from 'vue';
+import { CloseModalModel } from '@/models/ModalModel';
+import { getIcon } from '@/lib/template';
+
+const { toggle, title } = defineProps({
+  toggle: {
+    type: Boolean,
+    default: false
+  },
+  title: {
+    type: String,
+    default: ""
+  }
+});
+
+const emit = defineEmits(['close']);
+
+const toggleModal = ref(false);
+
+const iconClose = computed(() => getIcon('close'));
+
+watch(() => toggle,
+  /** @param {boolean} newValue */
+  (newValue) => {
+    if (newValue === toggleModal.value || newValue === false) {
+      return;
+    }
+    toggleModal.value = newValue;
+  });
+
+watch(toggleModal,
+  /** @param {boolean} newValue */
+  (newValue) => {
+    if (newValue === toggle.value || newValue === true) {
+      return;
+    }
+    emit('close', new CloseModalModel({
+      toggle: false
+    }));
+  });
+</script>

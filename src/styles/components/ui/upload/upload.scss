@@ -1,0 +1,37 @@
+.b-upload {
+
+  .el-upload {
+    border: 1px dashed var(--el-border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: var(--el-transition-duration-fast);
+    width: 178px;
+    height: 178px;
+    display: block;
+
+    &:hover {
+      border-color: $colorPrimary;
+
+      .b-upload {
+
+        &__icon {
+          color: $colorPrimary;
+        }
+      }
+    }
+
+
+    .b-upload {
+
+      &__icon {
+        font-size: 28px;
+        color: $colorTextSecondary;
+        width: 178px;
+        height: 178px;
+        text-align: center;
+      }
+    }
+  }
+}

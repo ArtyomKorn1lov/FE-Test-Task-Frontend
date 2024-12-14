@@ -1,0 +1,103 @@
+.b-message-box {
+
+  &.el-message-box {
+    width: $full;
+    padding: $m15;
+    border-radius: $rounded8;
+
+    &--center {
+
+      .el-message-box {
+
+        &__title {
+          @include flex(column);
+          gap: $m20;
+        }
+      }
+    }
+  }
+
+  .el-message-box {
+
+    &__header {
+      padding-bottom: 0;
+
+      &.show-close {
+        padding-right: 0;
+      }
+    }
+
+    &__title {
+      padding-left: $m20;
+      padding-right: $m20;
+
+      span,
+      p {
+        font-size: $textTitle;
+      }
+    }
+
+    &__headerbtn {
+      width: $m20;
+      height: $m20;
+      top: $m10;
+      right: $m10;
+
+      .el-message-box {
+
+        &__close {
+          color: $colorPrimary;
+        }
+      }
+
+      &:hover,
+      &:active,
+      &:focus {
+
+        .el-message-box {
+
+          &__close {
+            color: $colorPrimaryHover;
+          }
+        }
+      }
+    }
+
+    &__close {
+      width: $m20;
+      height: $m20;
+
+      svg {
+        width: $m20;
+        height: $m20;
+      }
+    }
+
+    &__status {
+      width: $m40;
+      height: $m40;
+
+      svg {
+        width: $m40;
+        height: $m40;
+      }
+    }
+
+    &__content {
+      margin-top: $m20;
+    }
+
+    &__message {
+
+      span,
+      p {
+        font-size: $textRegular;
+        color: $colorTextBtnSecondary;
+      }
+    }
+
+    &__btns {
+      padding-top: $m20;
+    }
+  }
+}

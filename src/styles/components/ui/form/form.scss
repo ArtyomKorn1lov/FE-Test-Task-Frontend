@@ -1,0 +1,36 @@
+:root {
+  --el-color-danger: #f3012e !important;
+  --el-color-error: #f3012e !important;
+}
+
+.b-form {
+
+  &__col {
+
+    &_bottom {
+      margin-top: $m25;
+    }
+  }
+
+  .el-form {
+
+    &-item {
+      flex-direction: column;
+      margin-bottom: $m25;
+
+      &__label {
+        font-size: $textRegular;
+        color: $colorTextPrimary;
+        font-weight: $textMedium;
+        line-height: 18px;
+        height: 18px;
+        margin-bottom: $m5;
+        justify-content: start;
+
+        &-wrap {
+          margin-left: 0 !important;
+        }
+      }
+    }
+  }
+}

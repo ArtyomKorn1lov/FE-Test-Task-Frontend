@@ -1,0 +1,20 @@
+.b-section {
+
+  &_page {
+    @include flex(column);
+    padding-bottom: $m30;
+  }
+
+  &__header {
+    padding-top: $m30;
+  }
+
+  &__content {
+    @include flex(column);
+    height: $full;
+    margin-top: $m20;
+    padding: $m25 $m15 $m15;
+    background-color: $colorWhite;
+    border-radius: $rounded8;
+  }
+}

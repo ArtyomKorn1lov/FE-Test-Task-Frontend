@@ -1,0 +1,13 @@
+// Подключение базовых стилей
+@import "@/styles/vars/index.scss";
+@import "@/styles/fonts.scss";
+@import "@/styles/general.scss";
+@import "@/styles/typography.scss";
+// Подключение стилей-компонентов
+@import "@/styles/components/ui/index.scss";
+@import "@/styles/components/header/index.scss";
+@import "@/styles/components/main/index.scss";
+@import "@/styles/components/wrap/index.scss";
+@import "@/styles/components/section/index.scss";
+@import "@/styles/components/controls/index.scss";
+@import "@/styles/components/account/index.scss";

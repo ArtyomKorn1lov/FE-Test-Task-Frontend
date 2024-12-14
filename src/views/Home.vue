@@ -1,6 +1,9 @@
 <template>
-    <h1>Hello world!</h1>
+  <main class="b-main">
+    <AccountWrapper />
+  </main>
 </template>
 
 <script setup>
+import AccountWrapper from '@/containers/AccountWrapper.vue';
 </script>
