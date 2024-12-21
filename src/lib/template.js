@@ -1,4 +1,5 @@
 /**
+ * Сформировать html иконки-спрайта
  * @param {string|null} code
  * @param {string} prefix
  */

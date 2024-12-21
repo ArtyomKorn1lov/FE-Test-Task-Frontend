@@ -2,7 +2,10 @@ export class CloseModalModel {
   /** @type {boolean} */
   toggle;
 
-  /** @param {CloseModalModel|null} data */
+  /**
+   * @param {CloseModalModel|null} data
+   * @constructor
+   */
   constructor(data = null) {
     this.toggle = data?.toggle;
   }
@@ -18,7 +21,10 @@ export default class ModalModel {
   /** @type {string|boolean} */
   title;
 
-  /** @param {ModalModel|null} data */
+  /**
+   * @param {ModalModel|null} data
+   * @constructor
+   */
   constructor(data = null) {
     this.toggle = data?.toggle;
     this.code = data?.code;

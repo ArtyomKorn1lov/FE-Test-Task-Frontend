@@ -41,7 +41,7 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              :class="'b-select__tag b-select__tag-' + item.value"
+              :class="'b-select__tag-' + item.value"
             />
           </el-select>
         </el-form-item>

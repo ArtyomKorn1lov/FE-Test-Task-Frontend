@@ -26,7 +26,9 @@ const selectedComponent = computed(() => {
   return ModalComponents[modalProps.value.code];
 });
 
-/** @param {CloseModalModel} objClose */
+/**
+ * @param {CloseModalModel} objClose
+ */
 const closeModal = (objClose) => {
   store.commit('setModalProps', new ModalModel({
     toggle: objClose.toggle,
