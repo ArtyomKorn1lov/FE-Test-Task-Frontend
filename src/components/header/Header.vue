@@ -7,21 +7,28 @@
           Account users
         </span>
 
-        <div class="b-header__controls">
+        <form
+          class="b-header__controls"
+          @submit.prevent.native="handleSearch(search)"
+        >
 
-          <el-input
+          <el-autocomplete
             v-model="search"
+            :fetch-suggestions="querySearchAsync"
             class="b-input b-input_header"
             placeholder="Search"
+            popper-class="b-select__popper"
+            @select="(item) => handleSearch(item.value)"
           >
             <template #prefix>
               <el-icon
                 class="el-input__icon"
                 v-html="iconSearch"
+                @click="handleSearch(search)"
               >
               </el-icon>
             </template>
-          </el-input>
+          </el-autocomplete>
 
           <el-button
             class="b-btn b-btn_primary"
@@ -31,25 +38,61 @@
             Connect users
           </el-button>
 
-        </div>
+        </form>
       </div>
     </div>
   </header>
 </template>
 
 <script setup>
-import { ElInput, ElIcon, ElButton } from 'element-plus';
-import { ref } from 'vue';
+import { ElIcon, ElButton, ElAutocomplete } from 'element-plus';
+import { ref, computed } from 'vue';
 import { getIcon } from '@/lib/template';
-import { computed } from 'vue';
+import { getContextSearch } from '@/api/accounts';
+import Converter from '@/lib/helpers/converter';
+import Request from '@/lib/request';
+import ContextSearchModel from '@/models/ContextSearchModel';
+import { AccountLoginFieldCode, FieldContextSearchCode } from '@/lib/constants';
 
 const search = ref('');
 
-const emit = defineEmits(['open-modal']);
+const emit = defineEmits(['open-modal', 'search']);
 
 const iconSearch = computed(() => getIcon('search'));
 
 const openModal = () => {
   emit('open-modal', true);
 }
+
+/**
+ * @param {String} queryString
+ * @param {Function} callback
+ */
+const querySearchAsync = async (queryString, callback) => {
+  let searchString = "";
+  if (!!queryString) {
+    const request = new Request();
+    const contextObj = new ContextSearchModel({
+      search: queryString
+    });
+    searchString = request.getQueryString(contextObj);
+  }
+  await getContextSearch(searchString)
+    .then((response) => {
+      const searchStrings = Converter.changeArrayObjectsCode(response?.data, AccountLoginFieldCode, FieldContextSearchCode);
+      callback(searchStrings);
+    })
+    .catch((error) => {
+      console.error('GET error:{accounts/search}', error);
+      callback([]);
+    });
+}
+
+/**
+ * @param {String} value
+ */
+const handleSearch = (value) => {
+  emit('search', value);
+}
+
 </script>

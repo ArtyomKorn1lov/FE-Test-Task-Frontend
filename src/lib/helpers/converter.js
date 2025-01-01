@@ -41,4 +41,24 @@ export default class Converter {
 
     return array;
   }
+
+  /**
+   * Изменить ключ объектов массива
+   * @param {Array<Object>} array
+   * @param {String} key
+   * @param {String} newKey
+   * @returns {Array<Object>}
+   */
+  static changeArrayObjectsCode(array, key, newKey) {
+    if (!array || array.length <= 0 || !key || !newKey) {
+      return [];
+    }
+
+    let newArray = array.map((item) => {
+      let obj = {};
+      obj[newKey] = item[key];
+      return obj;
+    });
+    return newArray;
+  }
 }

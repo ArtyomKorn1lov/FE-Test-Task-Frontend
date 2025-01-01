@@ -1,4 +1,5 @@
 import FilterModel from "@/models/FilterModel";
+import PaginationModel from "@/models/PaginationModel";
 
 export default class StoreModel {
   /** @type {Boolean} */
@@ -9,6 +10,9 @@ export default class StoreModel {
   modalTitle;
   /** @type {FilterModel} */
   filter;
+  /** @type {PaginationModel} */
+  pagination;
+
 
   /** @param {StoreModel|null} data */
   constructor(data = null) {
@@ -16,9 +20,6 @@ export default class StoreModel {
     this.modalCode = !!data?.modalCode ? data?.modalCode : false;
     this.modalTitle = !!data?.modalTitle ? data?.modalTitle : false;
     this.filter = !!data?.filter ? data?.filter : new FilterModel();
+    this.pagination = !!data?.pagination ? data?.pagination : new PaginationModel();
   }
 }
-
-StoreModel.MODAL_TOGGLE = 'modalToggle';
-StoreModel.MODAL_CODE = 'modalCode';
-StoreModel.MODAL_TITLE = 'modalTitle';

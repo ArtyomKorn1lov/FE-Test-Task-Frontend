@@ -1,4 +1,5 @@
 import FilterModel from "@/models/FilterModel";
+import PaginationModel from "@/models/PaginationModel";
 
 /**
  * @type {Number}
@@ -29,8 +30,36 @@ export const PaginationSelector = ".observable";
  * @type {FilterModel}
  */
 export const DefaultFilterValues = new FilterModel({
-  page: 1,
-  pageCount: 10,
   sort: 'sort',
   order: 'ASC'
 });
+
+/**
+ * @type {PaginationModel}
+ */
+export const DefaultPaginationValues =  new PaginationModel({
+  page: 1,
+  pageCount: 10
+});
+
+/**
+ * @type {Number}
+ */
+export const OneCountElement = 1;
+
+/**
+ * @type {String}
+ */
+export const AccountLoginFieldCode = "login";
+
+/**
+ * @type {String}
+ */
+export const FieldContextSearchCode = "value";
+
+/**
+ * @type {Array}
+ */
+export const FilterPaginationFieldsCodes = [
+  "page"
+];

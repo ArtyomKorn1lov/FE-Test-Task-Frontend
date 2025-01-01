@@ -1,7 +1,7 @@
-import { getFilter } from "@/api/accounts";
+import { getFilter, getPagination } from "@/api/accounts";
 import FilterModel from "@/models/FilterModel";
 import Converter from "@/lib/helpers/converter";
-import { DefaultFilterValues } from "@/lib/constants";
+import { DefaultFilterValues, DefaultPaginationValues } from "@/lib/constants";
 import NextPageModel from "@/models/NextPageModel";
 
 /**
@@ -25,14 +25,30 @@ export const initFilterValues = async ({ commit }) => {
 
 /**
  * @param {*} param0
+ */
+export const initPagination = async ({ commit }) => {
+  await getPagination()
+    .then((response) => {
+      let pageObj = Converter.convertArrayToObject(response?.data);
+      !pageObj && (pageObj = DefaultPaginationValues);
+      commit('setPaginationValues', pageObj);
+    })
+    .catch((error) => {
+      console.error('GET error:{accounts/page-nav}', error);
+      commit('setPaginationValues', DefaultPaginationValues);
+    });
+}
+
+/**
+ * @param {*} param0
  * @param {Number} itemsCount
  * @returns {Boolean}
  */
 export const nextPage = ({ commit, state }, itemsCount) => {
-  if (!itemsCount || itemsCount < state.filter.pageCount) {
+  if (!itemsCount || itemsCount < state.pagination.pageCount) {
     return false;
   }
 
-  commit('setFilterValues', new NextPageModel({page: Number(state.filter.page) + 1}));
+  commit('setPaginationValues', new NextPageModel({page: Number(state.pagination.page) + 1}));
   return true;
 }

@@ -1,6 +1,7 @@
 import StoreModel from "@/models/StoreModel";
 import ModalModel from "@/models/ModalModel";
 import FilterModel from "@/models/FilterModel";
+import PaginationModel from "@/models/PaginationModel";
 
 /**
  *
@@ -22,4 +23,13 @@ export const getModalProps = state => {
  */
 export const getFilter = state => {
   return state.filter;
+};
+
+/**
+ *
+ * @param {StoreModel} state
+ * @returns {PaginationModel}
+ */
+export const getPagination = state => {
+  return state.pagination
 };

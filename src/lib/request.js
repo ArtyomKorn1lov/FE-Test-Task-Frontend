@@ -1,5 +1,6 @@
 import Formatter from "@/lib/helpers/formatter";
 import FilterModel from "@/models/FilterModel";
+import ContextSearchModel from "@/models/ContextSearchModel";
 import { FirstElementIndex } from "@/lib/constants";
 
 /**
@@ -30,7 +31,7 @@ export default class Request {
 
   /**
    * Сформировать строку query параметров запроса
-   * @param {FilterModel} filter
+   * @param {FilterModel|ContextSearchModel} filter
    * @returns {String}
    */
   getQueryString(filter) {

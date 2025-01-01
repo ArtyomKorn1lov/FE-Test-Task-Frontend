@@ -1,10 +1,18 @@
 <template>
-  <!-- b-account__item_selected -->
-  <a href="javascript:void(0)" class="b-account__item">
+  <a
+    href="javascript:void(0)"
+    class="b-account__item"
+    :class="{'b-account__item_selected': selected}"
+  >
     <div class="b-account__item-inside b-account__row">
       <div class="b-account__col b-account__col_left" data-label="User">
         <div class="b-account__inside">
-          <el-checkbox class="b-checkbox"></el-checkbox>
+          <el-checkbox
+            class="b-checkbox"
+            v-model="selected"
+            @change="selectItem"
+          >
+          </el-checkbox>
           <div class="b-account__img-wrap">
             <img
               class="b-account__img"
@@ -27,6 +35,7 @@
           <el-button
             class="b-btn b-btn_tag"
             :class="tagClassModifier"
+            @click="selectRole"
           >
             {{ element.role }}
           </el-button>
@@ -45,16 +54,29 @@
 <script setup>
 import { ElButton, ElCheckbox } from 'element-plus';
 import AccountModel from '@/models/AccountModel';
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { NoImageUrl, TagAccountListModifier } from '@/lib/constants';
 import { getIcon } from '@/lib/template';
+import SelectItemModel from '@/models/SelectItemModel';
+import SelectRoleModel from '@/models/SelectRoleModel';
 
-const { element } = defineProps({
+const { element, isSelected } = defineProps({
   element: {
     type: AccountModel,
     default: {}
+  },
+  isSelected: {
+    type: Boolean,
+    default: false
   }
 });
+
+const emit = defineEmits(['select-item', 'select-role']);
+
+/**
+ * @type {Boolean}
+ */
+const selected = ref(false);
 
 /** @type {String} */
 const iconDelete = computed(() => getIcon('delete'));
@@ -78,5 +100,25 @@ const picture = computed(() => {
 const tagClassModifier = computed(() => {
   return `${TagAccountListModifier}${element?.roleCode}`
 });
+
+watch(() => isSelected, (newValue) => {
+  selected.value = newValue;
+});
+
+/**
+ * @param {Boolean} value
+ */
+const selectItem = (value) => {
+  emit('select-item', new SelectItemModel({
+    value: value,
+    id: element.id
+  }));
+}
+
+const selectRole = () => {
+  emit('select-role', new SelectRoleModel({
+    roleCode: element.roleCode
+  }));
+}
 
 </script>

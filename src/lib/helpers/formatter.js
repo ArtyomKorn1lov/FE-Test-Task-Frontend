@@ -6,7 +6,7 @@ export default class Formatter {
   /**
    * Внедрить массив или объект элементов в строку, заменив выбранные значения. Функция взята из библиотеки 'stringinject'.
    * @param {String} str
-   * @param {String} data
+   * @param {Array|Object} data
    * @returns {String|Boolean}
    */
   static stringInject(str, data) {

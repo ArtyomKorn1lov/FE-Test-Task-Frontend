@@ -1,6 +1,7 @@
 <template>
   <Header
     @open-modal="openModal"
+    @search="search"
   >
   </Header>
 </template>
@@ -8,6 +9,9 @@
 import { useStore } from 'vuex';
 import Header from '@/components/header/Header.vue';
 import ModalModel from '@/models/ModalModel';
+import ContextSearchModel from '@/models/ContextSearchModel';
+import NextPageModel from '@/models/NextPageModel';
+import { OneCountElement } from '@/lib/constants';
 
 const store = useStore();
 
@@ -19,4 +23,17 @@ const openModal = (flag = false) => {
     code: "Account"
   }));
 }
+
+/**
+ * @param {String} value
+ */
+const search = (value) => {
+  store.commit('setFilterValues', new ContextSearchModel({
+    search: value
+  }));
+  store.commit('setPaginationValues', new NextPageModel({
+    page: OneCountElement
+  }));
+}
+
 </script>
