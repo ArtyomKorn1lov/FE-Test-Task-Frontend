@@ -22,7 +22,9 @@
         <div class="b-account__top b-account__row">
           <div class="b-account__col">
             <div class="b-account__inside b-account__inside_table">
-              <el-checkbox class="b-checkbox">User</el-checkbox>
+              <el-checkbox class="b-checkbox">
+                User
+              </el-checkbox>
             </div>
           </div>
           <div class="b-account__col">
@@ -41,6 +43,8 @@
         <AccountList
           v-if="showItems"
           :items="items"
+          :is-loading="isLoading"
+          @refresh="refresh"
         />
       </div>
     </div>
@@ -48,19 +52,30 @@
 </template>
 <script setup>
 import { ElButton, ElCheckbox } from 'element-plus';
-import { getIcon } from '@/lib/template';
 import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
+import { getIcon } from '@/lib/template';
 import Request from '@/lib/request';
 import { getAccounts } from '@/api/accounts';
-import QueryParamModel from '@/models/QueryParamModel';
 import AccountModel from '@/models/AccountModel';
 import AccountList from '@/components/account/AccountList.vue';
+import FilterModel from '@/models/FilterModel';
 
 /**
  * @type {Array<AccountModel>}
  */
 const items = ref([]);
+/**
+ * @type {Boolean}
+ */
+const isLoading = ref(true);
 
+const store = useStore()
+
+/**
+ * @type {FilterModel}
+ */
+const filter = computed(() => store.getters.getFilter);
 /** @type {String} */
 const iconArrow = computed(() => getIcon('arrow'));
 /** @type {String} */
@@ -74,41 +89,37 @@ const showItems = computed(() => {
   return !!items.value && items.value.length > 0;
 });
 
-const getAccountsData = async () => {
-  /**
-   * @type {Array<QueryParamModel>}
-   */
-  const queryParams = [
-    {
-      code: 'page',
-      value: '1'
-    },
-    {
-      code: 'pageCount',
-      value: '20'
-    },
-    {
-      code: 'sort',
-      value: 'sort'
-    },
-    {
-      code: 'order',
-      value: 'ASC'
-    },
-  ];
+const refresh = async () => {
   const request = new Request();
-  const queryString = request.getQueryString(queryParams);
+  const queryString = request.getQueryString(filter.value);
   await getAccounts(queryString)
     .then((response) => {
-      items.value = response?.data?.map((item) => {
+      /**
+       * @type {Array<AccountModel>}
+       */
+      const responseDataList = response?.data?.map((item) => {
         return new AccountModel(item);
       });
+      items.value = items.value.concat(responseDataList);
+      store.dispatch('nextPage', responseDataList.length)
+        .then((result) => {
+          isLoading.value = result;
+        });
     })
     .catch((error) => {
       console.error('GET error:{accounts/list}', error);
+      store.dispatch('nextPage', 0)
+      .then((result) => {
+          isLoading.value = result;
+        });
     });
 }
 
-getAccountsData();
+const onInit = async () => {
+  await store.dispatch('initFilterValues');
+  await refresh();
+}
+
+onInit();
 
 </script>

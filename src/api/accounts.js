@@ -10,3 +10,12 @@ import AccountModel from "@/models/AccountModel";
 export const getAccounts = async (queryParams = "", headers = false) => {
   return await mutationGetRequest(`/accounts/list/${queryParams}`, headers);
 }
+
+/**
+ * Получить список значений фильтра
+ * @param {boolean|object} headers
+ * @returns {any}
+ */
+export const getFilter = async (headers = false) => {
+  return await mutationGetRequest('/accounts/filter-values/', headers);
+}

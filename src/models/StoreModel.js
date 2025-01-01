@@ -1,16 +1,21 @@
+import FilterModel from "@/models/FilterModel";
+
 export default class StoreModel {
-  /** @type {boolean} */
+  /** @type {Boolean} */
   modalToggle;
-  /** @type {string|boolean} */
+  /** @type {String|Boolean} */
   modalCode;
-  /** @type {string|boolean} */
+  /** @type {String|Boolean} */
   modalTitle;
+  /** @type {FilterModel} */
+  filter;
 
   /** @param {StoreModel|null} data */
   constructor(data = null) {
     this.modalToggle = !!data?.modalToggle ? data?.modalToggle : false;
     this.modalCode = !!data?.modalCode ? data?.modalCode : false;
     this.modalTitle = !!data?.modalTitle ? data?.modalTitle : false;
+    this.filter = !!data?.filter ? data?.filter : new FilterModel();
   }
 }
 
