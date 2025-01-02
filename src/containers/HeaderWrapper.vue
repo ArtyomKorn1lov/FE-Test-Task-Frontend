@@ -1,19 +1,24 @@
 <template>
   <Header
+    :role-code="filter.roleCode"
     @open-modal="openModal"
     @search="search"
   >
   </Header>
 </template>
 <script setup>
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import Header from '@/components/header/Header.vue';
 import ModalModel from '@/models/ModalModel';
-import ContextSearchModel from '@/models/ContextSearchModel';
-import NextPageModel from '@/models/NextPageModel';
-import { OneCountElement } from '@/lib/constants';
+import SearchModel from '@/models/SearchModel';
 
 const store = useStore();
+
+/**
+ * @type {FilterModel}
+ */
+ const filter = computed(() => store.getters.getFilter);
 
 /** @param {boolean} flag */
 const openModal = (flag = false) => {
@@ -28,11 +33,8 @@ const openModal = (flag = false) => {
  * @param {String} value
  */
 const search = (value) => {
-  store.commit('setFilterValues', new ContextSearchModel({
+  store.commit('setFilterValues', new SearchModel({
     search: value
-  }));
-  store.commit('setPaginationValues', new NextPageModel({
-    page: OneCountElement
   }));
 }
 

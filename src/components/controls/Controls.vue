@@ -19,14 +19,28 @@
       >
       </el-button>
     </div>
+    <el-button
+      v-if="!!roleCode"
+      class="b-btn b-btn_tag b-btn_icon"
+      :class="tagClassModifier"
+      @click="clearRoleFilter"
+    >
+      {{ roleName }}
+      <el-icon>
+        <CircleClose />
+      </el-icon>
+    </el-button>
   </div>
 </template>
 <script setup>
 import { computed } from 'vue';
-import { ElButton } from 'element-plus';
+import { ElButton, ElIcon } from 'element-plus';
+import { CircleClose } from '@element-plus/icons-vue';
 import { getIcon } from '@/lib/template';
+import { TagAccountListModifier } from '@/lib/constants';
+import SelectRoleModel from '@/models/SelectRoleModel';
 
-const { count, disableEditBtn } = defineProps({
+const { count, disableEditBtn, roleCode, roleName } = defineProps({
   count: {
     type: Number,
     default: 0
@@ -34,8 +48,18 @@ const { count, disableEditBtn } = defineProps({
   disableEditBtn: {
     type: Boolean,
     default: false
+  },
+  roleCode: {
+    type: String,
+    default: ''
+  },
+  roleName: {
+    type: String,
+    default: ''
   }
 });
+
+const emit = defineEmits(['clear-role']);
 
 /**
  * @type {String}
@@ -51,4 +75,17 @@ const iconEdit = computed(() => getIcon('edit'));
 const showBtnGroup = computed(() => {
   return count > 0;
 });
+/**
+ * @type {String}
+ */
+ const tagClassModifier = computed(() => {
+  return `${TagAccountListModifier}${roleCode}`
+});
+
+const clearRoleFilter = () => {
+  emit('clear-role', new SelectRoleModel({
+    roleCode: '',
+    roleName: ''
+  }));
+}
 </script>

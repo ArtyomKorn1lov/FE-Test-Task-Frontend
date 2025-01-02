@@ -54,6 +54,13 @@ import Request from '@/lib/request';
 import ContextSearchModel from '@/models/ContextSearchModel';
 import { AccountLoginFieldCode, FieldContextSearchCode } from '@/lib/constants';
 
+const { roleCode } = defineProps({
+  roleCode: {
+    type: String,
+    default: ''
+  }
+});
+
 const search = ref('');
 
 const emit = defineEmits(['open-modal', 'search']);
@@ -70,10 +77,11 @@ const openModal = () => {
  */
 const querySearchAsync = async (queryString, callback) => {
   let searchString = "";
-  if (!!queryString) {
+  if (!!queryString || !!roleCode) {
     const request = new Request();
     const contextObj = new ContextSearchModel({
-      search: queryString
+      search: queryString,
+      roleCode: roleCode
     });
     searchString = request.getQueryString(contextObj);
   }

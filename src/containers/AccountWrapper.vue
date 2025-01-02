@@ -4,11 +4,17 @@
       <Controls
         :count="itemsCount"
         :disable-edit-btn="disableEditTop"
+        :role-code="filter.roleCode"
+        :role-name="selectedRoleName"
+        @clear-role="onSelectRole"
       />
       <div class="b-account">
         <AccountTop
           :is-selected="isSelectAll"
+          :sort="filter.sort"
+          :order="filter.order"
           @select-all="onSelectAll"
+          @set-sort="setSortValues"
         />
         <AccountList
           v-if="showItems"
@@ -37,7 +43,8 @@ import PaginationModel from '@/models/PaginationModel';
 import SelectItemModel from '@/models/SelectItemModel';
 import SelectRoleModel from '@/models/SelectRoleModel';
 import NextPageModel from '@/models/NextPageModel';
-import { OneCountElement, FirstElementIndex } from '@/lib/constants';
+import { OneCountElement, FirstElementIndex, ASCorderCode, DESCorderCode } from '@/lib/constants';
+import SortModel from '@/models/SortModel';
 
 /**
  * @type {Array<AccountModel>}
@@ -59,6 +66,10 @@ const isLoading = ref(true);
  * @type {Boolean}
  */
 const isInit = ref(false);
+/**
+ * @type {String}
+ */
+const selectedRoleName = ref('');
 
 const store = useStore();
 
@@ -93,8 +104,12 @@ watch(filter, async () => {
   if (!!isInit.value) {
     return;
   }
+  onSelectAll(false);
   items.value = [];
   isLoading.value = true;
+  store.commit('setPaginationValues', new NextPageModel({
+    page: OneCountElement
+  }));
   await refresh();
 });
 
@@ -127,10 +142,20 @@ const onSelectAll = (value) => {
  * @param {SelectRoleModel} obj
  */
 const onSelectRole = (obj) => {
+  store.commit('setFilterValues', {
+    roleCode: obj.roleCode
+  });
+  selectedRoleName.value = obj.roleName;
+}
+
+/**
+ * @param {SortModel} obj
+ */
+const setSortValues = (obj) => {
+  (obj.sort === filter.value.sort)
+    ? (obj.order = obj.order === ASCorderCode ? DESCorderCode : ASCorderCode)
+    : (obj.order = ASCorderCode);
   store.commit('setFilterValues', obj);
-  store.commit('setPaginationValues', new NextPageModel({
-    page: OneCountElement
-  }));
 }
 
 const refresh = async () => {

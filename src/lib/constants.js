@@ -58,8 +58,21 @@ export const AccountLoginFieldCode = "login";
 export const FieldContextSearchCode = "value";
 
 /**
- * @type {Array}
+ * @type {String}
  */
-export const FilterPaginationFieldsCodes = [
-  "page"
-];
+export const AccountSortPropCode = "login";
+
+/**
+ * @type {String}
+ */
+export const PermissionNameSortPropCode = "permission";
+
+/**
+ * @type {String}
+ */
+export const ASCorderCode = "ASC";
+
+/**
+ * @type {String}
+ */
+export const DESCorderCode = "DESC";

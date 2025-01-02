@@ -7,20 +7,43 @@
           v-model="selected"
           @change="selectAllItems"
         >
-          User
         </el-checkbox>
+        <a
+          class="b-account__table"
+          href="javascript:void(0)"
+          @click="setSortValues(AccountSortPropCode)"
+        >
+          <span class="b-account__table-title b-account__table-title_left">
+            User
+          </span>
+          <span
+            v-if="sort === AccountSortPropCode"
+            class="b-account__arrow-icon"
+            :class="{'b-account__arrow-icon_rotate': order === DESCorderCode}"
+            v-html="iconArrow"
+          >
+          </span>
+        </a>
       </div>
     </div>
     <div class="b-account__col">
       <div class="b-account__inside b-account__inside_table b-account__inside_right">
-        <span class="b-account__table-title">
-          Permission
-        </span>
-        <span
-          class="b-account__arrow-icon"
-          v-html="iconArrow"
+        <a
+          class="b-account__table"
+          href="javascript:void(0)"
+          @click="setSortValues(PermissionNameSortPropCode)"
         >
-        </span>
+          <span class="b-account__table-title">
+            Permission
+          </span>
+          <span
+            v-if="sort === PermissionNameSortPropCode"
+            class="b-account__arrow-icon"
+            :class="{'b-account__arrow-icon_rotate': order === DESCorderCode}"
+            v-html="iconArrow"
+          >
+          </span>
+        </a>
       </div>
     </div>
   </div>
@@ -29,15 +52,25 @@
 import { computed, ref, watch } from 'vue';
 import { ElCheckbox } from 'element-plus';
 import { getIcon } from '@/lib/template';
+import { AccountSortPropCode, PermissionNameSortPropCode, DESCorderCode } from '@/lib/constants';
+import SortModel from '@/models/SortModel';
 
-const { isSelected } = defineProps({
+const { isSelected, sort, order } = defineProps({
   isSelected: {
     type: Boolean,
     default: false
+  },
+  sort: {
+    type: String,
+    default: ''
+  },
+  order: {
+    type: String,
+    default: 'ASC'
   }
 });
 
-const emit = defineEmits(['select-all']);
+const emit = defineEmits(['select-all', 'set-sort']);
 
 /**
  * @type {Boolean}
@@ -58,6 +91,16 @@ watch(() => isSelected, (newValue) => {
  */
 const selectAllItems = (value) => {
   emit('select-all', value);
+}
+
+/**
+ * @param {String} value
+ */
+const setSortValues = (value) => {
+  emit('set-sort', new SortModel({
+    sort: value,
+    order: order
+  }));
 }
 
 </script>

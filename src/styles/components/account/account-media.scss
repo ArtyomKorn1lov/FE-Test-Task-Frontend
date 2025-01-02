@@ -24,6 +24,10 @@
         margin-left: 28px;
         height: 32px;
       }
+
+      &_right {
+        margin-left: 28px;
+      }
     }
 
     &__list {
@@ -73,6 +77,13 @@
       font-size: $textTiny;
       font-weight: $textNormal;
       line-height: 18px;
+    }
+
+    &__table-title {
+
+      &_left {
+        padding-left: 6px;
+      }
     }
 
     &__list {

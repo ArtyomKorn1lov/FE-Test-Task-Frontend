@@ -117,7 +117,8 @@ const selectItem = (value) => {
 
 const selectRole = () => {
   emit('select-role', new SelectRoleModel({
-    roleCode: element.roleCode
+    roleCode: element.roleCode,
+    roleName: element.role
   }));
 }
 
