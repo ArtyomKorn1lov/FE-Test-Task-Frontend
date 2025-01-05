@@ -4,7 +4,10 @@
     :toggle="modalProps.toggle"
     @close="closeModal"
   >
-    <component :is="selectedComponent"></component>
+    <component
+      :is="selectedComponent"
+      @update="update"
+      ></component>
   </Modal>
 </template>
 <script setup>
@@ -35,6 +38,12 @@ const closeModal = (objClose) => {
     title: false,
     code: false
   }));
+}
+
+const update = () => {
+  closeModal(new CloseModalModel({
+      toggle: false
+    }));
 }
 
 </script>

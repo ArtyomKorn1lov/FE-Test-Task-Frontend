@@ -15,7 +15,6 @@
     "vue": "^3.4.29",
     "vue-axios": "^3.5.2",
     "vue-router": "^4.3.3",
-    "vue-the-mask": "^0.11.1",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
