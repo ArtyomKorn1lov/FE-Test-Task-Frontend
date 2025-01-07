@@ -24,6 +24,7 @@
           @select-item="onSelectItem"
           @select-role="onSelectRole"
           @refresh="refresh"
+          @after-delete-item="afterDeleteItem"
         />
       </div>
     </div>
@@ -146,6 +147,12 @@ const onSelectRole = (obj) => {
     roleCode: obj.roleCode
   });
   selectedRoleName.value = obj.roleName;
+}
+
+const afterDeleteItem = () => {
+  store.commit('setFilterValues', new FilterModel({
+    ...filter.value
+  }));
 }
 
 /**

@@ -45,7 +45,7 @@ const iconClose = computed(() => getIcon('close'));
 watch(() => toggle,
   /** @param {boolean} newValue */
   (newValue) => {
-    if (newValue === toggleModal.value || newValue === false) {
+    if (newValue === toggleModal.value) {
       return;
     }
     toggleModal.value = newValue;

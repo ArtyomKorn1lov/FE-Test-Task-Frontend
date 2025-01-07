@@ -1,4 +1,4 @@
-import { mutationGetRequest, mutationPostRequest } from "@/api/mutations";
+import { mutationGetRequest, mutationPostRequest, mutationDeleteRequest } from "@/api/mutations";
 import AccountModel from "@/models/AccountModel";
 
 /**
@@ -49,10 +49,14 @@ export const getContextSearch = async (queryParams = "", headers = false) => {
 
 /**
  * Создать аккаунт
- * @param {any} formData
- * @param {boolean|object} headers
+ * @param {Object} formData
+ * @param {Boolean|Object} headers
  * @returns {Object}
  */
 export const createAccount = async (formData, headers = false) => {
   return await mutationPostRequest('/accounts/create/', formData, headers);
+}
+
+export const deleteAccount  = async (id, headers = false) => {
+  return await mutationDeleteRequest(`/accounts/delete/${id}`, headers);
 }

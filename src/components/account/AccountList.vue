@@ -7,6 +7,7 @@
       :is-selected="isSelectedItem(item.id)"
       @select-item="selectItem"
       @select-role="selectRole"
+      @after-delete-item="afterDeleteItem"
     />
     <AccountsPagination
       v-if="isLoading"
@@ -35,7 +36,7 @@ const { items, selectedItems, isLoading } = defineProps({
   }
 });
 
-const emit = defineEmits(['refresh', 'select-item', 'select-role']);
+const emit = defineEmits(['refresh', 'select-item', 'select-role', 'after-delete-item']);
 
 const refresh = () => {
   emit('refresh');
@@ -57,6 +58,13 @@ const isSelectedItem = (id) => {
 
 const selectRole = (obj) => {
   emit('select-role', obj);
+}
+
+/**
+ * @param {Number} id
+ */
+ const afterDeleteItem = () => {
+  emit('after-delete-item');
 }
 
 </script>

@@ -33,9 +33,8 @@ export const mutationPutRequest = async (url, formData = false, headers = false)
 /**
  * Функция DELETE-запроса axios
  * @param {string} url
- * @param {boolean|object} formData
  * @param {boolean|object} headers
  */
-export const mutationDeleteRequest = async (url, formData = false, headers = false) => {
-  return await axios.delete(apiUrl + url, !!formData ? formData : {}, !!headers ? { headers: headers } : {});
+export const mutationDeleteRequest = async (url, headers = false) => {
+  return await axios.delete(apiUrl + url, !!headers ? { headers: headers } : {});
 }

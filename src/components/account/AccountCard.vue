@@ -43,7 +43,12 @@
             <el-button class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
               v-html="'<span>' + iconEdit + 'Edit' + '</span>'">
             </el-button>
-            <el-button class="b-btn b-btn_secondary b-btn_medium b-btn_icon" v-html="'<span>' + iconDelete + '</span>'">
+            <el-button
+              class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
+              v-html="'<span>' + iconDelete + '</span>'"
+              @click="deleteItem"
+              :disabled="disabledDelete"
+            >
             </el-button>
           </div>
         </div>
@@ -52,8 +57,9 @@
   </a>
 </template>
 <script setup>
-import { ElButton, ElCheckbox } from 'element-plus';
+import { ElButton, ElCheckbox, ElMessageBox, ElMessage } from 'element-plus';
 import AccountModel from '@/models/AccountModel';
+import { deleteAccount } from '@/api/accounts';
 import { computed, ref, watch } from 'vue';
 import { NoImageUrl, TagAccountListModifier } from '@/lib/constants';
 import { getIcon } from '@/lib/template';
@@ -71,12 +77,13 @@ const { element, isSelected } = defineProps({
   }
 });
 
-const emit = defineEmits(['select-item', 'select-role']);
+const emit = defineEmits(['select-item', 'select-role', 'after-delete-item']);
 
 /**
  * @type {Boolean}
  */
 const selected = ref(false);
+const disabledDelete = ref(false);
 
 /** @type {String} */
 const iconDelete = computed(() => getIcon('delete'));
@@ -120,6 +127,61 @@ const selectRole = () => {
     roleCode: element.roleCode,
     roleName: element.role
   }));
+}
+
+const deleteItem = async () => {
+  await confirmDelete(
+    'Delete account',
+    'Are you sure you want to delete this account?',
+    async () => {
+      disabledDelete.value = true;
+      await deleteAccount(element.id)
+        .then((response) => {
+          ElMessage({
+            type: 'success',
+            message: response?.data,
+          });
+          emit('after-delete-item');
+        })
+        .catch((error) => {
+          console.error('DELETE error:{accounts/delete}', error);
+          disabledDelete.value = false;
+          ElMessage({
+            type: 'error',
+            message: error,
+          });
+        });
+    }
+  )
+}
+
+/**
+ * @param {String} title
+ * @param {String} message
+ * @param {Function} callback
+ */
+const confirmDelete = (title, message, callback) => {
+  ElMessageBox.confirm(
+    message,
+    title,
+    {
+      customClass: "b-message-box b-message-box_confirm",
+      type: 'warning',
+      confirmButtonText: 'Confirm',
+      confirmButtonClass: "b-btn b-btn_primary b-btn_normal",
+      cancelButtonClass: "b-btn b-btn_secondary b-btn_normal",
+      cancelButtonText: 'Cancel',
+    }
+  )
+    .then(() => {
+      callback();
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: 'Delete canceled',
+      });
+    });
 }
 
 </script>

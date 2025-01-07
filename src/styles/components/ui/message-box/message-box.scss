@@ -100,4 +100,25 @@
       padding-top: $m20;
     }
   }
+
+  &_confirm {
+
+    .el-message-box {
+
+      &__title {
+        padding-left: 0;
+      }
+
+      &__message {
+
+        p {
+          line-height: $leadingSmall;
+        }
+      }
+
+      &__btns {
+        gap: $m5;
+      }
+    }
+  }
 }

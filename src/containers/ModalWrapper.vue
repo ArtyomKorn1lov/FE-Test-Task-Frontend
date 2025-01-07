@@ -15,6 +15,7 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 import Modal from '@/components/modal/Modal.vue';
 import ModalModel, { CloseModalModel } from '@/models/ModalModel';
+import FilterModel from '@/models/FilterModel';
 import ModalComponents, { ComponentNotExist } from '@/models/ModalComponents';
 
 const store = useStore();
@@ -28,6 +29,7 @@ const selectedComponent = computed(() => {
   }
   return ModalComponents[modalProps.value.code];
 });
+const filter = computed(() => store.getters.getFilter);
 
 /**
  * @param {CloseModalModel} objClose
@@ -44,6 +46,9 @@ const update = () => {
   closeModal(new CloseModalModel({
       toggle: false
     }));
+  store.commit('setFilterValues', new FilterModel({
+    ...filter.value
+  }));
 }
 
 </script>

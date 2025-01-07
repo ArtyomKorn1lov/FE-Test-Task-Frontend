@@ -169,7 +169,7 @@ const getRoleCodeById = (id) => {
 /**
  * @param {String} code
  * @param {String} response
- * @param {Object<File>} uploadFile
+ * @param {File} uploadFile
  */
 const handleFileUploadSuccess = async (code, response, uploadFile) => {
   ElMessage({
