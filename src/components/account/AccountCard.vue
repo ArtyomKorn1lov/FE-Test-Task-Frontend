@@ -3,6 +3,7 @@
     href="javascript:void(0)"
     class="b-account__item"
     :class="{'b-account__item_selected': selected}"
+    @click.prevent.stop="clickItemCard"
   >
     <div class="b-account__item-inside b-account__row">
       <div class="b-account__col b-account__col_left" data-label="User">
@@ -10,7 +11,7 @@
           <el-checkbox
             class="b-checkbox"
             v-model="selected"
-            @change="selectItem"
+            @change.prevent.stop="selectItem"
           >
           </el-checkbox>
           <div class="b-account__img-wrap">
@@ -35,7 +36,7 @@
           <el-button
             class="b-btn b-btn_tag"
             :class="tagClassModifier"
-            @click="selectRole"
+            @click.prevent.stop="selectRole"
           >
             {{ element.role }}
           </el-button>
@@ -46,7 +47,7 @@
             <el-button
               class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
               v-html="'<span>' + iconDelete + '</span>'"
-              @click="deleteItem"
+              @click.prevent.stop="deleteItem"
               :disabled="disabledDelete"
             >
             </el-button>
@@ -57,12 +58,12 @@
   </a>
 </template>
 <script setup>
-import { ElButton, ElCheckbox, ElMessageBox, ElMessage } from 'element-plus';
+import { ElButton, ElCheckbox, ElMessage } from 'element-plus';
 import AccountModel from '@/models/AccountModel';
 import { deleteAccount } from '@/api/accounts';
 import { computed, ref, watch } from 'vue';
 import { NoImageUrl, TagAccountListModifier } from '@/lib/constants';
-import { getIcon } from '@/lib/template';
+import { getIcon, confirmedAction } from '@/lib/template';
 import SelectItemModel from '@/models/SelectItemModel';
 import SelectRoleModel from '@/models/SelectRoleModel';
 
@@ -112,6 +113,11 @@ watch(() => isSelected, (newValue) => {
   selected.value = newValue;
 });
 
+const clickItemCard = () => {
+  selected.value = !selected.value;
+  selectItem(selected.value);
+}
+
 /**
  * @param {Boolean} value
  */
@@ -130,7 +136,7 @@ const selectRole = () => {
 }
 
 const deleteItem = async () => {
-  await confirmDelete(
+  await confirmedAction(
     'Delete account',
     'Are you sure you want to delete this account?',
     async () => {
@@ -151,37 +157,9 @@ const deleteItem = async () => {
             message: error,
           });
         });
-    }
-  )
-}
-
-/**
- * @param {String} title
- * @param {String} message
- * @param {Function} callback
- */
-const confirmDelete = (title, message, callback) => {
-  ElMessageBox.confirm(
-    message,
-    title,
-    {
-      customClass: "b-message-box b-message-box_confirm",
-      type: 'warning',
-      confirmButtonText: 'Confirm',
-      confirmButtonClass: "b-btn b-btn_primary b-btn_normal",
-      cancelButtonClass: "b-btn b-btn_secondary b-btn_normal",
-      cancelButtonText: 'Cancel',
-    }
-  )
-    .then(() => {
-      callback();
-    })
-    .catch(() => {
-      ElMessage({
-        type: 'info',
-        message: 'Delete canceled',
-      });
-    });
+    },
+    'Delete canceled'
+  );
 }
 
 </script>

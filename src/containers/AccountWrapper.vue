@@ -7,6 +7,7 @@
         :role-code="filter.roleCode"
         :role-name="selectedRoleName"
         @clear-role="onSelectRole"
+        @delete-items="deleteSelectedItems"
       />
       <div class="b-account">
         <AccountTop
@@ -31,10 +32,11 @@
   </div>
 </template>
 <script setup>
+import { ElMessage } from 'element-plus';
 import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import Request from '@/lib/request';
-import { getAccounts } from '@/api/accounts';
+import { getAccounts, deleteAccounts } from '@/api/accounts';
 import AccountModel from '@/models/AccountModel';
 import AccountList from '@/components/account/AccountList.vue';
 import AccountTop from '@/components/account/AccountTop.vue';
@@ -44,6 +46,7 @@ import PaginationModel from '@/models/PaginationModel';
 import SelectItemModel from '@/models/SelectItemModel';
 import SelectRoleModel from '@/models/SelectRoleModel';
 import NextPageModel from '@/models/NextPageModel';
+import AccountDeleteModel from '@/models/AccountDeleteModel';
 import { OneCountElement, FirstElementIndex, ASCorderCode, DESCorderCode } from '@/lib/constants';
 import SortModel from '@/models/SortModel';
 
@@ -163,6 +166,22 @@ const setSortValues = (obj) => {
     ? (obj.order = obj.order === ASCorderCode ? DESCorderCode : ASCorderCode)
     : (obj.order = ASCorderCode);
   store.commit('setFilterValues', obj);
+}
+
+const deleteSelectedItems = async () => {
+  await deleteAccounts(new AccountDeleteModel({
+    ids: selectedItems.value
+  }))
+    .then((response) => {
+      ElMessage({
+        type: 'success',
+        message: response?.data,
+      });
+      afterDeleteItem();
+    })
+    .catch((error) => {
+      console.error('POST error:{accounts/delete}', error);
+    });
 }
 
 const refresh = async () => {

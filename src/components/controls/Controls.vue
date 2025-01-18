@@ -16,6 +16,7 @@
       <el-button
         class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
         v-html="'<span>' + iconDelete + 'Delete' + '</span>'"
+        @click="deleteItems"
       >
       </el-button>
     </div>
@@ -36,7 +37,7 @@
 import { computed } from 'vue';
 import { ElButton, ElIcon } from 'element-plus';
 import { CircleClose } from '@element-plus/icons-vue';
-import { getIcon } from '@/lib/template';
+import { getIcon, confirmedAction } from '@/lib/template';
 import { TagAccountListModifier } from '@/lib/constants';
 import SelectRoleModel from '@/models/SelectRoleModel';
 
@@ -59,7 +60,7 @@ const { count, disableEditBtn, roleCode, roleName } = defineProps({
   }
 });
 
-const emit = defineEmits(['clear-role']);
+const emit = defineEmits(['clear-role', 'delete-items']);
 
 /**
  * @type {String}
@@ -88,4 +89,14 @@ const clearRoleFilter = () => {
     roleName: ''
   }));
 }
+
+const deleteItems = () => {
+  confirmedAction(
+    'Delete accounts',
+    'Are you sure you want to delete this accounts?',
+    () => emit('delete-items'),
+    'Delete canceled'
+  );
+}
+
 </script>

@@ -1,5 +1,7 @@
 import { mutationGetRequest, mutationPostRequest, mutationDeleteRequest } from "@/api/mutations";
 import AccountModel from "@/models/AccountModel";
+import AccountCreateModel from "@/models/AccountCreateModel";
+import AccountDeleteModel from "@/models/AccountDeleteModel";
 
 /**
  * Получить список аккаунтов
@@ -49,7 +51,7 @@ export const getContextSearch = async (queryParams = "", headers = false) => {
 
 /**
  * Создать аккаунт
- * @param {Object} formData
+ * @param {AccountCreateModel} formData
  * @param {Boolean|Object} headers
  * @returns {Object}
  */
@@ -57,6 +59,22 @@ export const createAccount = async (formData, headers = false) => {
   return await mutationPostRequest('/accounts/create/', formData, headers);
 }
 
+/**
+ * Удалить аккаунт по id
+ * @param {Number} id
+ * @param {Boolean|Object} headers
+ * @returns {Object}
+ */
 export const deleteAccount  = async (id, headers = false) => {
   return await mutationDeleteRequest(`/accounts/delete/${id}`, headers);
+}
+
+/**
+ * Удалить несколько выбранных аккаунтов
+ * @param {AccountDeleteModel} formData
+ * @param {Boolean|Object} headers
+ * @returns {Object}
+ */
+export const deleteAccounts = async (formData, headers = false) => {
+  return await mutationPostRequest(`/accounts/delete/`, formData, headers);
 }
