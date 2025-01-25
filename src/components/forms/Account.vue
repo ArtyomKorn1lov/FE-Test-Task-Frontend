@@ -1,85 +1,76 @@
 <template>
   <el-form
     class="b-form"
-    @submit.prevent.native="submitForm"
+    ref="formRef"
+    :rules="rules"
+    :model="formData"
+    @submit.prevent.native="onSubmit(formRef, afterSubmit)"
   >
     <el-row class="b-form__row">
-      <el-col class="b-form__col">
+      <el-col
+        v-for="group in fields.groups"
+        :key="group.code"
+        class="b-form__col"
+      >
         <el-form-item
-          label="Account name"
+          v-for="field in group.items"
+          :key="field.code"
+          :label="field.title"
+          :prop="field.code"
         >
-          <el-input
-            class="b-input"
-            v-model="name"
-            placeholder="Enter account name"
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item
-          label="Account email"
-        >
-          <el-input
-            class="b-input"
-            v-model="email"
-            placeholder="Enter account email"
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item
-          label="Permission"
-        >
+          <template v-if="field.type === 'file'">
+            <el-upload
+              class="b-upload"
+              :show-file-list="true"
+              :action="uploadFileUrl"
+              :on-success="(response, uploadFile) => handleFileUploadSuccess(field.code, response, uploadFile)"
+              :before-upload="beforeFileUpload"
+              :on-remove="() => removeFormDataValue(field.code)"
+            >
+              <img
+                v-if="formData[field.code]?.url"
+                :src="formData[field.code].url"
+                class="b-upload__img"
+                :alt="loc.uploadImgAlt"
+              />
+              <el-icon v-else class="b-upload__icon">
+                <Plus />
+              </el-icon>
+            </el-upload>
+          </template>
           <el-select
-            v-model="roleField"
-            placeholder="Select permission"
+            v-else-if="field.type === 'select'"
+            v-model="formData[field.code]"
             class="b-select"
             popper-class="b-select__popper"
-            :class="selectActiveClass"
+            :placeholder="field.placeholder"
+            :class="!!formData[field.code] ? `b-select_selected b-select_selected-${getRoleCodeById(formData[field.code])}` : ''"
           >
             <el-option
+              v-for="option in field.items"
               class="b-select__tag"
-              v-for="item in demoOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              :class="'b-select__tag b-select__tag-' + item.value"
+              :key="option.id"
+              :label="option.name"
+              :value="option.id"
+              :class="'b-select__tag-' + option.code"
             />
           </el-select>
-        </el-form-item>
-        <el-form-item
-          label="User image"
-        >
-          <el-upload
-            class="b-upload"
-            action="#"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
+          <el-input
+            v-else
+            class="b-input"
+            v-model="formData[field.code]"
+            :placeholder="field.placeholder"
           >
-            <img
-              v-if="imageUrl"
-              :src="imageUrl"
-              class="b-upload__img"
-              alt="Preview Image"
-            />
-            <el-icon v-else class="b-upload__icon">
-              <Plus />
-            </el-icon>
-          </el-upload>
-          <el-dialog v-model="dialogVisible">
-            <img
-              w-full
-              :src="imageUrl"
-              alt="Preview Image"
-            />
-          </el-dialog>
+          </el-input>
         </el-form-item>
       </el-col>
       <el-col class="b-form__col b-form__col_bottom">
         <el-button
           class="b-btn b-btn_primary b-btn_large b-btn_full"
           native-type="submit"
+          :loading="isLoading"
         >
-          Create
+          {{ submitMessage }}
         </el-button>
       </el-col>
     </el-row>
@@ -96,79 +87,182 @@ import {
   ElOption,
   ElUpload,
   ElIcon,
-  ElDialog,
   ElButton,
   ElMessage,
-  ElMessageBox
 } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
-import { ref, computed } from 'vue';
+import { ref, reactive, computed } from 'vue';
+import useTranslation from '@/composable/translations';
+import useForm from '@/composable/form';
+import { getRoles, createAccount, getAccountById, editAccount } from '@/api/accounts';
+import AccountFormFields from '@/models/AccountFormFields';
+import { uploadFileUrl } from '@/api/options';
+import { EmailValidatorRegex, AccountRoleFieldCode, MaxFileSize, FileDividerTypeCasting, SuccessStatusCode, ErrorStatusCode } from '@/lib/constants';
+import Request from '@/lib/request';
+import AccountFormValidatorsModel from '@/models/AccountFormValidatorsModel';
+import AccountCreateModel from '@/models/AccountCreateModel';
+import AccountCreateFileModel from '@/models/AccountCreateFileModel';
+import AccountEditModel from '@/models/AccountEditModel';
 
-const name = ref('');
-const email = ref('');
-const roleField = ref('');
-const imageUrl = ref('');
-const dialogVisible = ref(false);
+const loc = useTranslation('accountForm');
 
-const selectActiveClass = computed(() => {
-  return !!roleField.value ? `b-select_selected b-select_selected-${roleField.value}` : "";
+const { accountEditId } = defineProps({
+  accountEditId: {
+    type: [Number, Boolean],
+    default: false
+  }
 });
 
-const demoOptions = [
-  {
-    value: 'agent',
-    label: 'Agent',
-  },
-  {
-    value: 'admin',
-    label: 'Admin',
-  },
-  {
-    value: 'manager',
-    label: 'Account manager',
-  },
-  {
-    value: 'reviewer',
-    label: 'External reviewer',
-  },
-];
+const emit = defineEmits(['update']);
 
-const handleAvatarSuccess = (
-  response,
-  uploadFile
-) => {
-  !!uploadFile.raw && (imageUrl.value = URL.createObjectURL(uploadFile.raw));
+/**
+ * @type {ShallowRef}
+ */
+const formRef = ref();
+/**
+ * @type {Object}
+ */
+const fields = reactive(AccountFormFields);
+
+const {
+  formData,
+  isLoading,
+  rules,
+  onSubmit
+} = useForm(
+  fields,
+  !accountEditId
+    ? createAccount
+    : editAccount,
+  !accountEditId
+    ? new AccountCreateModel()
+    : new AccountEditModel(),
+  new AccountFormValidatorsModel({ email: EmailValidatorRegex })
+);
+
+/**
+ * @type {String}
+ */
+const submitMessage = computed(() => {
+  return !!accountEditId ? loc.value.editBtnTitle : loc.value.createBtnTitle;
+});
+
+const getAccountRoles = async () => {
+  await getRoles()
+    .then((response) => {
+      const roleOptions = response?.data;
+      setAccountRoleOptions(roleOptions);
+    })
+    .catch((error) => {
+      console.error('GET error:{accounts/roles}', error);
+    });
 }
 
-const beforeAvatarUpload = (rawFile) => {
-  if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('Avatar picture size can not exceed 2MB!');
+/**
+ * @param {Array<Object>} roleOptions
+ */
+const setAccountRoleOptions = (roleOptions) => {
+  if (!roleOptions || roleOptions.length < 0) {
+    return;
+  }
+  (!!fields.groups && fields.groups.length > 0)
+    && fields.groups.forEach((group, groupIndex) => {
+      (!!group.items && group.items.length > 0)
+        && group.items.forEach((field, fieldIndex) => {
+          const items = fields.groups[groupIndex].items[fieldIndex].items;
+          (!!items && fields.groups[groupIndex].items[fieldIndex].code === AccountRoleFieldCode)
+            && (fields.groups[groupIndex].items[fieldIndex].items = roleOptions);
+        });
+    });
+}
+
+/**
+ * @param {Number} id
+ */
+const getRoleCodeById = (id) => {
+  if (!id) {
+    return '';
+  }
+  let result = '';
+  (!!fields.groups && fields.groups.length > 0)
+    && fields.groups.forEach((group, groupIndex) => {
+      (!!group.items && group.items.length > 0)
+        && group.items.forEach((field, fieldIndex) => {
+          const items = fields.groups[groupIndex].items[fieldIndex].items;
+          if (!!items && items.length > 0) {
+            result = items.filter((item) => item.id === id)[0]?.code;
+          }
+        });
+    });
+  return result;
+}
+
+/**
+ * @param {Number} id
+ */
+const getEditAccount = async (id) => {
+  let accountModel = {};
+  await getAccountById(id)
+    .then((response) => {
+      accountModel = new AccountEditModel(response?.data);
+    })
+    .catch((error) => {
+      console.error('GET error:{accounts/:id}', error);
+      ElMessage({
+        message: error,
+        type: ErrorStatusCode,
+      });
+    });
+  for (const key in accountModel) {
+    formData[key] = accountModel[key];
+  }
+}
+
+/**
+ * @param {String} code
+ * @param {String} response
+ * @param {File} uploadFile
+ */
+const handleFileUploadSuccess = async (code, response, uploadFile) => {
+  ElMessage({
+    message: response,
+    type: SuccessStatusCode,
+  });
+  const request = new Request();
+  formData[code] = new AccountCreateFileModel({
+    file: await request.convertToBase64(uploadFile.raw),
+    name: uploadFile.name,
+    url: URL.createObjectURL(uploadFile.raw)
+  });
+}
+
+/**
+ * @param {File} rawFile
+ */
+const beforeFileUpload = (rawFile) => {
+  if (rawFile.size / FileDividerTypeCasting / FileDividerTypeCasting > MaxFileSize) {
+    ElMessage.error(`${loc.value.pictureUploadSizeError} ${MaxFileSize}MB!`);
     return false;
   }
   return true;
 }
 
-const submitForm = (formRef) => {
-  /*ElMessageBox.alert(
-    'Form is send success',
-    'Success',
-    {
-      customClass: "b-message-box",
-      center: true,
-      type: "success",
-      showConfirmButton: false
-    });*/
-  ElMessageBox.alert(
-    'Error response invalid server',
-    'Error',
-    {
-      customClass: "b-message-box",
-      showClose: false,
-      center: true,
-      type: "error",
-      confirmButtonClass: "b-btn b-btn_primary b-btn_normal b-btn_full",
-      confirmButtonText: "Close"
-    });
+/**
+ * @param {String} code
+ */
+const removeFormDataValue = (code) => {
+  formData[code] = null;
 }
+
+const afterSubmit = () => {
+  emit('update');
+}
+
+const onInit = async () => {
+  await getAccountRoles();
+  !!accountEditId && await getEditAccount(accountEditId);
+}
+
+onInit();
 
 </script>

@@ -1,0 +1,10 @@
+{
+  "userColTitle": "User",
+  "permissionColTitle": "Permission",
+  "editBtnTitle": "Edit",
+  "deleteItem": {
+    "questionTitle": "Delete account",
+    "questionDescription": "Are you sure you want to delete this account?",
+    "cancelBtnTitle": "Delete canceled"
+  }
+}

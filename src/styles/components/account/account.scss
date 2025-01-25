@@ -27,12 +27,27 @@
       gap: 0;
     }
 
-    &_right {
-      margin-left: 28px;
-    }
-
     &_editable {
       justify-content: space-between;
+    }
+  }
+
+  &__table {
+    @include flex(false, center);
+
+    &:hover,
+    &:active {
+
+      .b-account {
+
+        &__table-title {
+          color: $colorTextBtnSecondary;
+        }
+
+        &__arrow-icon {
+          stroke: $colorTextBtnSecondary;
+        }
+      }
     }
   }
 
@@ -41,6 +56,10 @@
     color: $colorTextSecondary;
     font-weight: $textMedium;
     line-height: 18px;
+
+    &_left {
+      padding-left: 12px;
+    }
   }
 
   &__arrow-icon {
@@ -48,10 +67,24 @@
     margin-left: $m5;
     width: 12px;
     height: 12px;
+    margin-bottom: 2px;
+    transform: translate(0);
+    animation-name: rotate180Back;
+		animation-duration: 0.25s;
+		animation-timing-function: ease-in-out;
 
     svg {
       width: 12px;
       height: 12px;
+    }
+
+    &_rotate {
+      transform: rotate(180deg);
+      animation-name: rotate180;
+		  animation-duration: 0.25s;
+		  animation-timing-function: ease-in-out;
+      margin-bottom: 0;
+      margin-top: 2px;
     }
   }
 

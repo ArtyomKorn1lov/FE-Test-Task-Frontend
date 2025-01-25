@@ -1,385 +1,249 @@
 <template>
   <div class="wrap b-section b-section_page">
     <div class="b-section__content">
-      <div class="b-controls">
-        <span class="b-controls__title">
-          2 users selected
-        </span>
-        <div class="b-controls__btns">
-          <el-button
-            class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-            v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
-          >
-          </el-button>
-          <el-button
-            class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-            v-html="'<span>' + iconDelete + 'Delete' + '</span>'"
-          >
-          </el-button>
-        </div>
-      </div>
+      <Controls
+        :count="itemsCount"
+        :disable-edit-btn="disableEditTop"
+        :role-code="filter.roleCode"
+        :role-name="selectedRoleName"
+        @clear-role="onSelectRole"
+        @delete-items="deleteSelectedItems"
+        @edit-item="editSelectedItem"
+      />
       <div class="b-account">
-        <div class="b-account__top b-account__row">
-          <div class="b-account__col">
-            <div class="b-account__inside b-account__inside_table">
-              <el-checkbox class="b-checkbox">User</el-checkbox>
-            </div>
-          </div>
-          <div class="b-account__col">
-            <div class="b-account__inside b-account__inside_table b-account__inside_right">
-              <span class="b-account__table-title">
-                Permission
-              </span>
-              <span
-                class="b-account__arrow-icon"
-                v-html="iconArrow"
-              >
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="b-account__list custom-scroll overflow-y">
-          <a href="javascript:void(0)"
-             class="b-account__item b-account__item_selected">
-            <div class="b-account__item-inside b-account__row">
-              <div class="b-account__col b-account__col_left" data-label="User">
-                <div class="b-account__inside">
-                  <el-checkbox class="b-checkbox" checked></el-checkbox>
-                  <div class="b-account__img-wrap">
-                    <img class="b-account__img"
-                         src="/src/assets/img/account-photo-1.webp" alt="#">
-                  </div>
-                  <div class="b-account__info">
-                    <span
-                      class="b-account__name">Karen Marie Ørsted Andersen</span>
-                    <a href="mailto:karen.andersen@sunrise.com"
-                       class="b-account__email">karen.andersen@sunrise.com</a>
-                  </div>
-                </div>
-              </div>
-              <div class="b-account__col" data-label="Permission">
-                <div class="b-account__inside b-account__inside_editable">
-                  <el-button class="b-btn b-btn_tag b-btn_tag-manager">Account
-                    manager
-                  </el-button>
-                  <div class="b-controls__btns b-account__controls">
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
-                    >
-                    </el-button>
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconDelete + '</span>'"
-                    >
-                    </el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="javascript:void(0)" class="b-account__item ">
-            <div class="b-account__item-inside b-account__row">
-              <div class="b-account__col b-account__col_left" data-label="User">
-                <div class="b-account__inside">
-                  <el-checkbox class="b-checkbox"></el-checkbox>
-                  <div class="b-account__img-wrap">
-                    <img class="b-account__img"
-                         src="/src/assets/img/account-photo-2.webp" alt="#">
-                  </div>
-                  <div class="b-account__info">
-                    <span class="b-account__name">Wendy Russell</span>
-                    <a href="mailto:wendy.russell@sunrise.com"
-                       class="b-account__email">wendy.russell@sunrise.com</a>
-                  </div>
-                </div>
-              </div>
-              <div class="b-account__col" data-label="Permission">
-                <div class="b-account__inside b-account__inside_editable">
-                  <el-button class="b-btn b-btn_tag b-btn_tag-admin">Admin
-                  </el-button>
-                  <div class="b-controls__btns b-account__controls">
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
-                    >
-                    </el-button>
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconDelete + '</span>'"
-                    >
-                    </el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="javascript:void(0)"
-             class="b-account__item b-account__item_selected">
-            <div class="b-account__item-inside b-account__row">
-              <div class="b-account__col b-account__col_left" data-label="User">
-                <div class="b-account__inside">
-                  <el-checkbox class="b-checkbox" checked></el-checkbox>
-                  <div class="b-account__img-wrap">
-                    <img class="b-account__img"
-                         src="/src/assets/img/account-photo-3.webp" alt="#">
-                  </div>
-                  <div class="b-account__info">
-                    <span class="b-account__name">Gladys Cooper</span>
-                    <a href="mailto:gladys.cooper@sunrise.com"
-                       class="b-account__email">gladys.cooper@sunrise.com</a>
-                  </div>
-                </div>
-              </div>
-              <div class="b-account__col" data-label="Permission">
-                <div class="b-account__inside b-account__inside_editable">
-                  <el-button class="b-btn b-btn_tag b-btn_tag-admin">Admin
-                  </el-button>
-                  <div class="b-controls__btns b-account__controls">
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
-                    >
-                    </el-button>
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconDelete + '</span>'"
-                    >
-                    </el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="javascript:void(0)"
-             class="b-account__item b-account__item_selected">
-            <div class="b-account__item-inside b-account__row">
-              <div class="b-account__col b-account__col_left" data-label="User">
-                <div class="b-account__inside">
-                  <el-checkbox class="b-checkbox" checked></el-checkbox>
-                  <div class="b-account__img-wrap">
-                    <img class="b-account__img"
-                         src="/src/assets/img/account-photo-4.webp" alt="#">
-                  </div>
-                  <div class="b-account__info">
-                    <span class="b-account__name">Gloria Fischer</span>
-                    <a href="mailto:gloria.fischer@sunrise.com"
-                       class="b-account__email">gloria.fischer@sunrise.com</a>
-                  </div>
-                </div>
-              </div>
-              <div class="b-account__col" data-label="Permission">
-                <div class="b-account__inside b-account__inside_editable">
-                  <el-button class="b-btn b-btn_tag b-btn_tag-agent">Agent
-                  </el-button>
-                  <div class="b-controls__btns b-account__controls">
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
-                    >
-                    </el-button>
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconDelete + '</span>'"
-                    >
-                    </el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="javascript:void(0)" class="b-account__item ">
-            <div class="b-account__item-inside b-account__row">
-              <div class="b-account__col b-account__col_left">
-                <div class="b-account__inside" data-label="User">
-                  <el-checkbox class="b-checkbox"></el-checkbox>
-                  <div class="b-account__img-wrap">
-                    <img class="b-account__img"
-                         src="/src/assets/img/account-photo-5.webp" alt="#">
-                  </div>
-                  <div class="b-account__info">
-                    <span class="b-account__name">Arthur Pena</span>
-                    <a href="mailto:arthur.pena@sunrise.com"
-                       class="b-account__email">arthur.pena@sunrise.com</a>
-                  </div>
-                </div>
-              </div>
-              <div class="b-account__col" data-label="Permission">
-                <div class="b-account__inside b-account__inside_editable">
-                  <el-button class="b-btn b-btn_tag b-btn_tag-agent">Agent
-                  </el-button>
-                  <div class="b-controls__btns b-account__controls">
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
-                    >
-                    </el-button>
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconDelete + '</span>'"
-                    >
-                    </el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="javascript:void(0)" class="b-account__item ">
-            <div class="b-account__item-inside b-account__row">
-              <div class="b-account__col b-account__col_left" data-label="User">
-                <div class="b-account__inside">
-                  <el-checkbox class="b-checkbox"></el-checkbox>
-                  <div class="b-account__img-wrap">
-                    <img class="b-account__img"
-                         src="/src/assets/img/account-photo-6.webp" alt="#">
-                  </div>
-                  <div class="b-account__info">
-                    <span class="b-account__name">Clémentine Louis</span>
-                    <a href="mailto:clementine.louis@sunrise.com"
-                       class="b-account__email">clementine.louis@sunrise.com</a>
-                  </div>
-                </div>
-              </div>
-              <div class="b-account__col" data-label="Permission">
-                <div class="b-account__inside b-account__inside_editable">
-                  <el-button class="b-btn b-btn_tag b-btn_tag-agent">Agent
-                  </el-button>
-                  <div class="b-controls__btns b-account__controls">
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
-                    >
-                    </el-button>
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconDelete + '</span>'"
-                    >
-                    </el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="javascript:void(0)" class="b-account__item ">
-            <div class="b-account__item-inside b-account__row">
-              <div class="b-account__col b-account__col_left" data-label="User">
-                <div class="b-account__inside">
-                  <el-checkbox class="b-checkbox"></el-checkbox>
-                  <div class="b-account__img-wrap">
-                    <img class="b-account__img"
-                         src="/src/assets/img/account-photo-7.webp" alt="#">
-                  </div>
-                  <div class="b-account__info">
-                    <span class="b-account__name">Francisco Lane</span>
-                    <a href="mailto:francisco.lane@sunrise.com"
-                       class="b-account__email">francisco.lane@sunrise.com</a>
-                  </div>
-                </div>
-              </div>
-              <div class="b-account__col" data-label="Permission">
-                <div class="b-account__inside b-account__inside_editable">
-                  <el-button class="b-btn b-btn_tag b-btn_tag-agent">Agent
-                  </el-button>
-                  <div class="b-controls__btns b-account__controls">
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
-                    >
-                    </el-button>
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconDelete + '</span>'"
-                    >
-                    </el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="javascript:void(0)" class="b-account__item">
-            <div class="b-account__item-inside b-account__row">
-              <div class="b-account__col b-account__col_left" data-label="User">
-                <div class="b-account__inside">
-                  <el-checkbox class="b-checkbox"></el-checkbox>
-                  <div class="b-account__img-wrap">
-                    <img class="b-account__img"
-                         src="/src/assets/img/account-photo-8.webp" alt="#">
-                  </div>
-                  <div class="b-account__info">
-                    <span class="b-account__name">Darrell Richards</span>
-                    <a href="mailto:darrell.richards@sunrise.com"
-                       class="b-account__email">darrell.richards@sunrise.com</a>
-                  </div>
-                </div>
-              </div>
-              <div class="b-account__col" data-label="Permission">
-                <div class="b-account__inside b-account__inside_editable">
-                  <el-button class="b-btn b-btn_tag b-btn_tag-agent">Agent
-                  </el-button>
-                  <div class="b-controls__btns b-account__controls">
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
-                    >
-                    </el-button>
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconDelete + '</span>'"
-                    >
-                    </el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="javascript:void(0)" class="b-account__item">
-            <div class="b-account__item-inside b-account__row">
-              <div class="b-account__col b-account__col_left" data-label="User">
-                <div class="b-account__inside">
-                  <el-checkbox class="b-checkbox"></el-checkbox>
-                  <div class="b-account__img-wrap">
-                    <img class="b-account__img"
-                         src="/src/assets/img/account-photo-9.webp" alt="#">
-                  </div>
-                  <div class="b-account__info">
-                    <span class="b-account__name">Max Hawkins</span>
-                    <a href="mailto:max.hawkins@sunrise.com"
-                       class="b-account__email">max.hawkins@sunrise.com</a>
-                  </div>
-                </div>
-              </div>
-              <div class="b-account__col" data-label="Permission">
-                <div class="b-account__inside b-account__inside_editable">
-                  <el-button class="b-btn b-btn_tag b-btn_tag-reviewer">External
-                    reviewer
-                  </el-button>
-                  <div class="b-controls__btns b-account__controls">
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
-                    >
-                    </el-button>
-                    <el-button
-                      class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-                      v-html="'<span>' + iconDelete + '</span>'"
-                    >
-                    </el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
+        <AccountTop
+          :is-selected="isSelectAll"
+          :sort="filter.sort"
+          :order="filter.order"
+          @select-all="onSelectAll"
+          @set-sort="setSortValues"
+        />
+        <AccountList
+          v-if="showItems"
+          :items="items"
+          :selected-items="selectedItems"
+          :is-loading="isLoading"
+          @select-item="onSelectItem"
+          @select-role="onSelectRole"
+          @refresh="refresh"
+          @after-delete-item="afterDeleteItem"
+          @edit-item="editItem"
+        />
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { ElButton, ElCheckbox } from 'element-plus';
-import { getIcon } from '@/lib/template';
-import { computed } from 'vue';
+import { ElMessage } from 'element-plus';
+import { computed, ref, watch } from 'vue';
+import { useStore } from 'vuex';
+import useTranslation from '@/composable/translations';
+import Request from '@/lib/request';
+import { getAccounts, deleteAccounts } from '@/api/accounts';
+import AccountModel from '@/models/AccountModel';
+import AccountList from '@/components/account/AccountList.vue';
+import AccountTop from '@/components/account/AccountTop.vue';
+import Controls from '@/components/controls/Controls.vue';
+import FilterModel from '@/models/FilterModel';
+import PaginationModel from '@/models/PaginationModel';
+import SelectItemModel from '@/models/SelectItemModel';
+import SelectRoleModel from '@/models/SelectRoleModel';
+import NextPageModel from '@/models/NextPageModel';
+import AccountDeleteModel from '@/models/AccountDeleteModel';
+import ModalModel from '@/models/ModalModel';
+import { OneCountElement, FirstElementIndex, ASCorderCode, DESCorderCode, SuccessStatusCode, AccountFormComponentModalCode } from '@/lib/constants';
+import SortModel from '@/models/SortModel';
 
-const iconArrow = computed(() => getIcon('arrow'));
-const iconDelete = computed(() => getIcon('delete'));
-const iconEdit = computed(() => getIcon('edit'));
+const loc = useTranslation('modal');
+
+/**
+ * @type {Array<AccountModel>}
+ */
+const items = ref([]);
+/**
+ * @type {Array<Number>}
+ */
+const selectedItems = ref([]);
+/**
+ * @type {Boolean}
+ */
+const isSelectAll = ref(false);
+/**
+ * @type {Boolean}
+ */
+const isLoading = ref(true);
+/**
+ * @type {Boolean}
+ */
+const isInit = ref(false);
+/**
+ * @type {String}
+ */
+const selectedRoleName = ref('');
+
+const store = useStore();
+
+/**
+ * @type {FilterModel}
+ */
+const filter = computed(() => store.getters.getFilter);
+/**
+ * @type {PaginationModel}
+ */
+const pagination = computed(() => store.getters.getPagination);
+/**
+ * @type {Boolean}
+ */
+const showItems = computed(() => {
+  return !!items.value && items.value.length > 0;
+});
+/**
+ * @type {Number}
+ */
+const itemsCount = computed(() => {
+  return selectedItems.value.length;
+});
+/**
+ * @type {Boolean}
+ */
+const disableEditTop = computed(() => {
+  return selectedItems.value.length > OneCountElement;
+});
+
+watch(filter, async () => {
+  if (!!isInit.value) {
+    return;
+  }
+  onSelectAll(false);
+  items.value = [];
+  isLoading.value = true;
+  store.commit('setPaginationValues', new NextPageModel({
+    page: OneCountElement
+  }));
+  await refresh();
+});
+
+/**
+ * @param {SelectItemModel} obj
+ */
+const onSelectItem = (obj) => {
+  isSelectAll.value = false;
+  if (!!obj.value) {
+    !selectedItems.value.includes(obj.id)
+      && (selectedItems.value.push(obj.id));
+    return;
+  }
+  selectedItems.value = selectedItems.value.filter((item) => item !== obj.id);
+}
+
+/**
+ * @param {Boolean} value
+ */
+const onSelectAll = (value) => {
+  isSelectAll.value = value;
+  if (!!value) {
+    selectedItems.value = items.value.map((item) => item.id);
+    return;
+  }
+  selectedItems.value = [];
+}
+
+/**
+ * @param {SelectRoleModel} obj
+ */
+const onSelectRole = (obj) => {
+  store.commit('setFilterValues', {
+    roleCode: obj.roleCode
+  });
+  selectedRoleName.value = obj.roleName;
+}
+
+const afterDeleteItem = () => {
+  store.commit('setFilterValues', new FilterModel({
+    ...filter.value
+  }));
+}
+
+/**
+ * @param {SortModel} obj
+ */
+const setSortValues = (obj) => {
+  (obj.sort === filter.value.sort)
+    ? (obj.order = obj.order === ASCorderCode ? DESCorderCode : ASCorderCode)
+    : (obj.order = ASCorderCode);
+  store.commit('setFilterValues', obj);
+}
+
+const deleteSelectedItems = async () => {
+  await deleteAccounts(new AccountDeleteModel({
+    ids: selectedItems.value
+  }))
+    .then((response) => {
+      ElMessage({
+        type: SuccessStatusCode,
+        message: response?.data,
+      });
+      afterDeleteItem();
+    })
+    .catch((error) => {
+      console.error('POST error:{accounts/delete}', error);
+    });
+}
+
+const editSelectedItem = () => {
+  editItem(selectedItems.value[0]);
+}
+
+/**
+ * @param {Number} id
+ */
+const editItem = (id) => {
+  if (!id) {
+    return;
+  }
+  store.commit('setModalProps', new ModalModel({
+    toggle: true,
+    title: loc.value.account.titleEdit,
+    code: AccountFormComponentModalCode,
+    accountEditId: id
+  }));
+}
+
+const refresh = async () => {
+  const request = new Request();
+  const queryObj = {...filter.value, ...pagination.value};
+  const queryString = request.getQueryString(queryObj);
+  await getAccounts(queryString)
+    .then((response) => {
+      /**
+       * @type {Array<AccountModel>}
+       */
+      const responseDataList = response?.data?.map((item) => {
+        return new AccountModel(item);
+      });
+      items.value = items.value.concat(responseDataList);
+      store.dispatch('nextPage', responseDataList.length)
+        .then((result) => {
+          isLoading.value = result;
+        });
+    })
+    .catch((error) => {
+      console.error('GET error:{accounts/list}', error);
+      store.dispatch('nextPage', FirstElementIndex)
+      .then((result) => {
+          isLoading.value = result;
+        });
+    });
+}
+
+const onInit = async () => {
+  isInit.value = true;
+  await store.dispatch('initFilterValues');
+  await store.dispatch('initPagination');
+  await refresh();
+  isInit.value = false;
+}
+
+onInit();
+
 </script>

@@ -1,10 +1,11 @@
 # fe-test-task
 
-## Задание "FE Test Task"
-### Общие задачи:
-- Закрепить HTML CSS + БЭМ
-- Использование Vue 3 + Element plus
-- Обращение к REST сервера на node js
+## Тестовое задание "FE Test Task", на момент реализации ТЗ удалено с github
+### Задача:
+- Реализовать адаптивную вёрстку согласно макету - https://www.figma.com/design/okyYwGZKg9ZUkTzZth3YXK/FE-Test-Task-(Copy)
+- Реализовать операции над данными, которые визуально показаны на макете
+- Операции: базовый CRUD, фильтрация, сортировка, пагинация
+### Cсылка на реозиторий с backend - https://github.com/ArtyomKorn1lov/FE-Test-Task-Backend
 
 ## Установка проекта
 
