@@ -1,0 +1,15 @@
+{
+  "fields": {
+    "default": {
+      "error": "This field is required"
+    },
+    "email": {
+      "error": "Invalid email"
+    }
+  },
+  "messageBox": {
+    "successTitle": "Success",
+    "errorTitle": "Error",
+    "confirmButtonText": "Close"
+  }
+}

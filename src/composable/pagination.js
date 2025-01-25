@@ -1,6 +1,12 @@
 import { onMounted, onUnmounted, computed } from 'vue';
 import { ReloadPaginationEmit, PaginationSelector } from '@/lib/constants';
 
+/**
+ * Хук с общей логикой пагинации через IntersectionObserver
+ * @param {String} paginationSelector
+ * @param {_defineEmits} emit
+ * @param {String} refreshEmitCode
+ */
 export default function usePagination(paginationSelector, emit, refreshEmitCode = ReloadPaginationEmit) {
 
   /**

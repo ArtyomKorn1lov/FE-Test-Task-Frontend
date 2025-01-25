@@ -1,5 +1,5 @@
 export default class AccountDeleteModel {
-  /** @type {Array<number>} */
+  /** @type {Array<Number>} */
   ids;
 
   /**

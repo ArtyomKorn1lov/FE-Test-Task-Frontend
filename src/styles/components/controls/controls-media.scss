@@ -7,6 +7,7 @@
 @media (max-width: $sml) {
   .b-controls {
     @include flex(column, start);
+    position: relative;
     gap: $m10;
   }
 }

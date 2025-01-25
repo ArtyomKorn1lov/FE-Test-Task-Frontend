@@ -6,7 +6,7 @@
     @click.prevent.stop="clickItemCard"
   >
     <div class="b-account__item-inside b-account__row">
-      <div class="b-account__col b-account__col_left" data-label="User">
+      <div class="b-account__col b-account__col_left">
         <div class="b-account__inside">
           <el-checkbox
             class="b-checkbox"
@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="b-account__col" data-label="Permission">
+      <div class="b-account__col">
         <div class="b-account__inside b-account__inside_editable">
           <el-button
             class="b-btn b-btn_tag"
@@ -43,7 +43,7 @@
           <div class="b-controls__btns b-account__controls">
             <el-button
               class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-              v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
+              v-html="'<span>' + iconEdit + loc.editBtnTitle + '</span>'"
               @click.prevent.stop="editItem"
             >
             </el-button>
@@ -62,13 +62,16 @@
 </template>
 <script setup>
 import { ElButton, ElCheckbox, ElMessage } from 'element-plus';
+import { computed, ref, watch } from 'vue';
+import useTranslation from '@/composable/translations';
 import AccountModel from '@/models/AccountModel';
 import { deleteAccount } from '@/api/accounts';
-import { computed, ref, watch } from 'vue';
-import { NoImageUrl, TagAccountListModifier } from '@/lib/constants';
+import { NoImageUrl, TagAccountListModifier, SuccessStatusCode, ErrorStatusCode } from '@/lib/constants';
 import { getIcon, confirmedAction } from '@/lib/template';
 import SelectItemModel from '@/models/SelectItemModel';
 import SelectRoleModel from '@/models/SelectRoleModel';
+
+const loc = useTranslation('accountSection');
 
 const { element, isSelected } = defineProps({
   element: {
@@ -87,11 +90,18 @@ const emit = defineEmits(['select-item', 'select-role', 'after-delete-item', 'ed
  * @type {Boolean}
  */
 const selected = ref(false);
+/**
+ * @type {Boolean}
+ */
 const disabledDelete = ref(false);
 
-/** @type {String} */
+/**
+ * @type {String}
+ */
 const iconDelete = computed(() => getIcon('delete'));
-/** @type {String} */
+/**
+ * @type {String}
+ */
 const iconEdit = computed(() => getIcon('edit'));
 /**
  * @type {String}
@@ -140,14 +150,14 @@ const selectRole = () => {
 
 const deleteItem = async () => {
   await confirmedAction(
-    'Delete account',
-    'Are you sure you want to delete this account?',
+    loc.value.deleteItem.questionTitle,
+    loc.value.deleteItem.questionDescription,
     async () => {
       disabledDelete.value = true;
       await deleteAccount(element.id)
         .then((response) => {
           ElMessage({
-            type: 'success',
+            type: SuccessStatusCode,
             message: response?.data,
           });
           emit('after-delete-item');
@@ -156,12 +166,12 @@ const deleteItem = async () => {
           console.error('DELETE error:{accounts/delete}', error);
           disabledDelete.value = false;
           ElMessage({
-            type: 'error',
+            type: ErrorStatusCode,
             message: error,
           });
         });
     },
-    'Delete canceled'
+    loc.value.deleteItem.cancelBtnTitle
   );
 }
 

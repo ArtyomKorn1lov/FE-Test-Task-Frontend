@@ -37,6 +37,7 @@
 import { ElMessage } from 'element-plus';
 import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
+import useTranslation from '@/composable/translations';
 import Request from '@/lib/request';
 import { getAccounts, deleteAccounts } from '@/api/accounts';
 import AccountModel from '@/models/AccountModel';
@@ -50,8 +51,10 @@ import SelectRoleModel from '@/models/SelectRoleModel';
 import NextPageModel from '@/models/NextPageModel';
 import AccountDeleteModel from '@/models/AccountDeleteModel';
 import ModalModel from '@/models/ModalModel';
-import { OneCountElement, FirstElementIndex, ASCorderCode, DESCorderCode } from '@/lib/constants';
+import { OneCountElement, FirstElementIndex, ASCorderCode, DESCorderCode, SuccessStatusCode, AccountFormComponentModalCode } from '@/lib/constants';
 import SortModel from '@/models/SortModel';
+
+const loc = useTranslation('modal');
 
 /**
  * @type {Array<AccountModel>}
@@ -177,7 +180,7 @@ const deleteSelectedItems = async () => {
   }))
     .then((response) => {
       ElMessage({
-        type: 'success',
+        type: SuccessStatusCode,
         message: response?.data,
       });
       afterDeleteItem();
@@ -200,8 +203,8 @@ const editItem = (id) => {
   }
   store.commit('setModalProps', new ModalModel({
     toggle: true,
-    title: "Edit user",
-    code: "Account",
+    title: loc.value.account.titleEdit,
+    code: AccountFormComponentModalCode,
     accountEditId: id
   }));
 }

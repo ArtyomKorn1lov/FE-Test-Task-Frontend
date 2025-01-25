@@ -31,7 +31,7 @@
                 v-if="formData[field.code]?.url"
                 :src="formData[field.code].url"
                 class="b-upload__img"
-                alt="Preview Image"
+                :alt="loc.uploadImgAlt"
               />
               <el-icon v-else class="b-upload__icon">
                 <Plus />
@@ -92,16 +92,19 @@ import {
 } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
 import { ref, reactive, computed } from 'vue';
+import useTranslation from '@/composable/translations';
 import useForm from '@/composable/form';
 import { getRoles, createAccount, getAccountById, editAccount } from '@/api/accounts';
 import AccountFormFields from '@/models/AccountFormFields';
 import { uploadFileUrl } from '@/api/options';
-import { EmailValidatorRegex, AccountRoleFieldCode } from '@/lib/constants';
+import { EmailValidatorRegex, AccountRoleFieldCode, MaxFileSize, FileDividerTypeCasting, SuccessStatusCode, ErrorStatusCode } from '@/lib/constants';
 import Request from '@/lib/request';
 import AccountFormValidatorsModel from '@/models/AccountFormValidatorsModel';
 import AccountCreateModel from '@/models/AccountCreateModel';
 import AccountCreateFileModel from '@/models/AccountCreateFileModel';
 import AccountEditModel from '@/models/AccountEditModel';
+
+const loc = useTranslation('accountForm');
 
 const { accountEditId } = defineProps({
   accountEditId: {
@@ -112,7 +115,13 @@ const { accountEditId } = defineProps({
 
 const emit = defineEmits(['update']);
 
+/**
+ * @type {ShallowRef}
+ */
 const formRef = ref();
+/**
+ * @type {Object}
+ */
 const fields = reactive(AccountFormFields);
 
 const {
@@ -131,8 +140,11 @@ const {
   new AccountFormValidatorsModel({ email: EmailValidatorRegex })
 );
 
+/**
+ * @type {String}
+ */
 const submitMessage = computed(() => {
-  return !!accountEditId ? 'Edit' : 'Create';
+  return !!accountEditId ? loc.value.editBtnTitle : loc.value.createBtnTitle;
 });
 
 const getAccountRoles = async () => {
@@ -198,7 +210,7 @@ const getEditAccount = async (id) => {
       console.error('GET error:{accounts/:id}', error);
       ElMessage({
         message: error,
-        type: 'error',
+        type: ErrorStatusCode,
       });
     });
   for (const key in accountModel) {
@@ -214,7 +226,7 @@ const getEditAccount = async (id) => {
 const handleFileUploadSuccess = async (code, response, uploadFile) => {
   ElMessage({
     message: response,
-    type: 'success',
+    type: SuccessStatusCode,
   });
   const request = new Request();
   formData[code] = new AccountCreateFileModel({
@@ -228,8 +240,8 @@ const handleFileUploadSuccess = async (code, response, uploadFile) => {
  * @param {File} rawFile
  */
 const beforeFileUpload = (rawFile) => {
-  if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.success('Picture size can not exceed 2MB!');
+  if (rawFile.size / FileDividerTypeCasting / FileDividerTypeCasting > MaxFileSize) {
+    ElMessage.error(`${loc.value.pictureUploadSizeError} ${MaxFileSize}MB!`);
     return false;
   }
   return true;

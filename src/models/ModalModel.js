@@ -11,8 +11,6 @@ export class CloseModalModel {
   }
 }
 
-CloseModalModel.TOGGLE = 'toggle';
-
 export default class ModalModel {
   /** @type {boolean} */
   toggle;
@@ -34,7 +32,3 @@ export default class ModalModel {
     this.accountEditId = data?.accountEditId;
   }
 }
-
-ModalModel.TOGGLE = 'toggle';
-ModalModel.CODE = 'code';
-ModalModel.TITLE = 'title';

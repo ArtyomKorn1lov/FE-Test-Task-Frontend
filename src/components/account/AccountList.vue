@@ -21,6 +21,7 @@ import AccountModel from '@/models/AccountModel';
 import AccountCard from '@/components/account/AccountCard.vue';
 import AccountsPagination from '@/components/pagination/AccountsPagination.vue';
 import SelectItemModel from '@/models/SelectItemModel';
+import SelectRoleModel from '@/models/SelectRoleModel';
 
 const { items, selectedItems, isLoading } = defineProps({
   items: {
@@ -57,6 +58,9 @@ const isSelectedItem = (id) => {
   return selectedItems.includes(id);
 }
 
+/**
+ * @param {SelectRoleModel} obj
+ */
 const selectRole = (obj) => {
   emit('select-role', obj);
 }

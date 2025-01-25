@@ -4,7 +4,7 @@
       <div class="b-section__header b-header__section">
 
         <span class="b-header__title">
-          Account users
+          {{ loc.title }}
         </span>
 
         <form
@@ -35,7 +35,7 @@
             native-type="button"
             @click="openModal"
           >
-            Connect users
+            {{ loc.createBtnTitle }}
           </el-button>
 
         </form>
@@ -47,12 +47,15 @@
 <script setup>
 import { ElIcon, ElButton, ElAutocomplete } from 'element-plus';
 import { ref, computed } from 'vue';
+import useTranslation from '@/composable/translations';
 import { getIcon } from '@/lib/template';
 import { getContextSearch } from '@/api/accounts';
 import Converter from '@/lib/helpers/converter';
 import Request from '@/lib/request';
 import ContextSearchModel from '@/models/ContextSearchModel';
 import { AccountLoginFieldCode, FieldContextSearchCode } from '@/lib/constants';
+
+const loc = useTranslation('header');
 
 const { roleCode } = defineProps({
   roleCode: {
@@ -61,10 +64,16 @@ const { roleCode } = defineProps({
   }
 });
 
+/**
+ * @type {String}
+ */
 const search = ref('');
 
 const emit = defineEmits(['open-modal', 'search']);
 
+/**
+ * @type {String}
+ */
 const iconSearch = computed(() => getIcon('search'));
 
 const openModal = () => {

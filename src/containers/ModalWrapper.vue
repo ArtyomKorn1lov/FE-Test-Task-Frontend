@@ -22,9 +22,13 @@ import ResetModalComponentModel from '@/models/ResetModalComponentModel';
 
 const store = useStore();
 
-/** @type {ModalModel} */
+/**
+ * @type {ModalModel}
+ */
 const modalProps = computed(() => store.getters.getModalProps);
-/** @type {component} */
+/**
+ * @type {component}
+ */
 const selectedComponent = computed(() => {
   if (!ModalComponents[modalProps.value.code]) {
     return ComponentNotExist;

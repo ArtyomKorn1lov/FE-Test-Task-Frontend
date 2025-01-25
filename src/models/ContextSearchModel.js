@@ -3,7 +3,9 @@ export default class ContextSearchModel {
    * @type {String}
    */
   search;
-  /** @type {String} */
+  /**
+   * @type {String}
+   */
   roleCode;
 
   /**

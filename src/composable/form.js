@@ -1,13 +1,18 @@
 import { ref, reactive } from "vue";
 import { ElMessageBox } from "element-plus";
+import useTranslation from '@/composable/translations';
+import { SuccessStatusCode, ErrorStatusCode } from "@/lib/constants";
 
 /**
+ * Хук с общей логикой форм обратной связи
  * @param {Array<Object>} fields
  * @param {Function} ajaxFunc
  * @param {Object} validators
  * @returns {Object}
  */
 export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {}) {
+
+  const loc = useTranslation('form');
 
   /**
    * @type {RegExp}
@@ -43,7 +48,7 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
             switch (field.type) {
               case 'email':
                 rules[field.code] = [
-                  { required: true, message: 'This field is required', trigger: 'blur' },
+                  { required: true, message: loc.value.fields.default.error, trigger: 'blur' },
                   {
                     validator:
                       (rule, value, callback) => {
@@ -51,7 +56,7 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
                         if (regularExpression.test(value)) {
                           return callback();
                         }
-                        return callback(new Error('Invalid email'));
+                        return callback(new Error(loc.value.fields.email.error));
                       },
                     trigger: "change"
                   }
@@ -59,12 +64,12 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
                 break;
               case 'select':
                 rules[field.code] = [
-                  { required: true, message: 'This field is required', trigger: 'change' },
+                  { required: true, message: loc.value.fields.default.error, trigger: 'change' },
                 ];
                 break;
               default:
                 rules[field.code] = [
-                  { required: true, message: 'This field is required', trigger: 'blur' },
+                  { required: true, message: loc.value.fields.default.error, trigger: 'blur' },
                 ];
                 break;
             }
@@ -110,14 +115,15 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
       .then(async (response) => {
         resetForm(formRef);
         isLoading.value = false;
-        await showMessage('Success',
+        await showMessage(
+          loc.value.messageBox.successTitle,
           response?.data,
-          'success',
+          SuccessStatusCode,
           afterSuccess
         );
       })
       .catch(async (error) => {
-        await showMessage('Error', error);
+        await showMessage(loc.value.messageBox.errorTitle, error);
         isLoading.value = false;
       })
   }
@@ -128,20 +134,20 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
    * @param {String} type
    * @param {Function} callback
    */
-  const showMessage = async (title, message, type = 'error', callback = null) => {
+  const showMessage = async (title, message, type = error, callback = null) => {
     await ElMessageBox.alert(
       message,
       title,
       {
         customClass: "b-message-box",
-        showClose: type === 'success',
+        showClose: type === SuccessStatusCode,
         center: true,
         type: type,
-        closeOnPressEscape: type === 'success',
-        closeOnHashChange: type === 'success',
-        showConfirmButton: type === 'error',
+        closeOnPressEscape: type === SuccessStatusCode,
+        closeOnHashChange: type === SuccessStatusCode,
+        showConfirmButton: type === ErrorStatusCode,
         confirmButtonClass: "b-btn b-btn_primary b-btn_normal b-btn_full",
-        confirmButtonText: "Close",
+        confirmButtonText: loc.value.messageBox.confirmButtonText,
         callback: callback
       });
   }

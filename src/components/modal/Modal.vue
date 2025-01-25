@@ -39,12 +39,18 @@ const { toggle, title } = defineProps({
 
 const emit = defineEmits(['close']);
 
+/**
+ * @type {Boolean}
+ */
 const toggleModal = ref(false);
 
 watch(() => toggle, (newValue) => {
   toggleModal.value = newValue;
 });
 
+/**
+ * @type {String}
+ */
 const iconClose = computed(() => getIcon('close'));
 
 const close = () => {

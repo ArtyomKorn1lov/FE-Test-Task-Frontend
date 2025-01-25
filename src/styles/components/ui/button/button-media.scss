@@ -1,3 +1,14 @@
+@media (max-width: $sml) {
+  .el-button.b-btn {
+
+    &_tag-controls {
+      position: absolute;
+      top: 50%;
+      right: 0;
+    }
+  }
+}
+
 @media (max-width: $sm) {
   .el-button.b-btn {
 
@@ -33,6 +44,15 @@
       font-size: $textTiny;
       font-weight: $textNormal;
       height: $m20;
+    }
+  }
+}
+
+@media (max-width: $xs) {
+  .el-button.b-btn {
+
+    &_tag-controls {
+      top: 120%;
     }
   }
 }

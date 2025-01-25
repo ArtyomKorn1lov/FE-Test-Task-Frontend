@@ -2,6 +2,11 @@ import FilterModel from "@/models/FilterModel";
 import PaginationModel from "@/models/PaginationModel";
 
 /**
+ * @type {String}
+ */
+export const Lang = process.env.APP_LANG ?? "en";
+
+/**
  * @type {Number}
  */
 export const FirstElementIndex = 0;
@@ -86,3 +91,28 @@ export const EmailValidatorRegex = /^(([^%№/!<>()\[\]\\.,;:\s@"]+(\.[^%№/!<>
  * @type {String}
  */
 export const AccountRoleFieldCode = "role";
+
+/**
+ * @type {String}
+ */
+export const SuccessStatusCode = "success";
+
+/**
+ * @type {String}
+ */
+export const ErrorStatusCode = "error";
+
+/**
+ * @type {Number}
+ */
+export const MaxFileSize = !!process.env.MAX_UPLOAD_SIZE ? Number(process.env.MAX_UPLOAD_SIZE) : 2;
+
+/**
+ * @type {Number}
+ */
+export const FileDividerTypeCasting = 1024;
+
+/**
+ * @type {String}
+ */
+export const AccountFormComponentModalCode = "Account";

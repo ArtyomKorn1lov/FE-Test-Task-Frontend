@@ -1,7 +1,7 @@
 <template>
   <div class="b-controls">
     <span class="b-controls__title">
-      {{ count }} users selected
+      {{ count }} {{ loc.userCountLabel }}
     </span>
     <div
       v-if="showBtnGroup"
@@ -10,20 +10,20 @@
       <el-button
         v-if="!disableEditBtn"
         class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-        v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
+        v-html="'<span>' + iconEdit + loc.editBtnTitle + '</span>'"
         @click="editItem"
       >
       </el-button>
       <el-button
         class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-        v-html="'<span>' + iconDelete + 'Delete' + '</span>'"
+        v-html="'<span>' + iconDelete + loc.deleteBtnTitle + '</span>'"
         @click="deleteItems"
       >
       </el-button>
     </div>
     <el-button
       v-if="!!roleCode"
-      class="b-btn b-btn_tag b-btn_icon"
+      class="b-btn b-btn_tag b-btn_tag-controls b-btn_icon"
       :class="tagClassModifier"
       @click="clearRoleFilter"
     >
@@ -37,10 +37,13 @@
 <script setup>
 import { computed } from 'vue';
 import { ElButton, ElIcon } from 'element-plus';
+import useTranslation from '@/composable/translations';
 import { CircleClose } from '@element-plus/icons-vue';
 import { getIcon, confirmedAction } from '@/lib/template';
 import { TagAccountListModifier } from '@/lib/constants';
 import SelectRoleModel from '@/models/SelectRoleModel';
+
+const loc = useTranslation('controls');
 
 const { count, disableEditBtn, roleCode, roleName } = defineProps({
   count: {
@@ -80,7 +83,7 @@ const showBtnGroup = computed(() => {
 /**
  * @type {String}
  */
- const tagClassModifier = computed(() => {
+const tagClassModifier = computed(() => {
   return `${TagAccountListModifier}${roleCode}`
 });
 
@@ -93,10 +96,10 @@ const clearRoleFilter = () => {
 
 const deleteItems = () => {
   confirmedAction(
-    'Delete accounts',
-    'Are you sure you want to delete this accounts?',
+    loc.value.deleteItems.questionTitle,
+    loc.value.deleteItems.questionDescription,
     () => emit('delete-items'),
-    'Delete canceled'
+    loc.value.deleteItems.cancelBtnTitle
   );
 }
 

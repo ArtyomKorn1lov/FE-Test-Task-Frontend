@@ -14,7 +14,7 @@
           @click="setSortValues(AccountSortPropCode)"
         >
           <span class="b-account__table-title b-account__table-title_left">
-            User
+            {{ loc.userColTitle }}
           </span>
           <span
             v-if="sort === AccountSortPropCode"
@@ -34,7 +34,7 @@
           @click="setSortValues(PermissionNameSortPropCode)"
         >
           <span class="b-account__table-title">
-            Permission
+            {{ loc.permissionColTitle }}
           </span>
           <span
             v-if="sort === PermissionNameSortPropCode"
@@ -51,9 +51,12 @@
 <script setup>
 import { computed, ref, watch } from 'vue';
 import { ElCheckbox } from 'element-plus';
+import useTranslation from '@/composable/translations';
 import { getIcon } from '@/lib/template';
-import { AccountSortPropCode, PermissionNameSortPropCode, DESCorderCode } from '@/lib/constants';
+import { AccountSortPropCode, PermissionNameSortPropCode, DESCorderCode, ASCorderCode } from '@/lib/constants';
 import SortModel from '@/models/SortModel';
+
+const loc = useTranslation('accountSection');
 
 const { isSelected, sort, order } = defineProps({
   isSelected: {
@@ -66,7 +69,7 @@ const { isSelected, sort, order } = defineProps({
   },
   order: {
     type: String,
-    default: 'ASC'
+    default: ASCorderCode
   }
 });
 
