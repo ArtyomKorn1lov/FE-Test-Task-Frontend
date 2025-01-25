@@ -11,6 +11,7 @@
         v-if="!disableEditBtn"
         class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
         v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
+        @click="editItem"
       >
       </el-button>
       <el-button
@@ -60,7 +61,7 @@ const { count, disableEditBtn, roleCode, roleName } = defineProps({
   }
 });
 
-const emit = defineEmits(['clear-role', 'delete-items']);
+const emit = defineEmits(['clear-role', 'delete-items', 'edit-item']);
 
 /**
  * @type {String}
@@ -97,6 +98,10 @@ const deleteItems = () => {
     () => emit('delete-items'),
     'Delete canceled'
   );
+}
+
+const editItem = () => {
+  emit('edit-item');
 }
 
 </script>

@@ -1,7 +1,8 @@
-import { mutationGetRequest, mutationPostRequest, mutationDeleteRequest } from "@/api/mutations";
+import { mutationGetRequest, mutationPostRequest, mutationDeleteRequest, mutationPutRequest } from "@/api/mutations";
 import AccountModel from "@/models/AccountModel";
 import AccountCreateModel from "@/models/AccountCreateModel";
 import AccountDeleteModel from "@/models/AccountDeleteModel";
+import AccountEditModel from "@/models/AccountEditModel";
 
 /**
  * Получить список аккаунтов
@@ -77,4 +78,24 @@ export const deleteAccount  = async (id, headers = false) => {
  */
 export const deleteAccounts = async (formData, headers = false) => {
   return await mutationPostRequest(`/accounts/delete/`, formData, headers);
+}
+
+/**
+ * Получить аккаунт по id
+ * @param {Number} id
+ * @param {Boolean|Object} headers
+ * @returns {AccountEditModel}
+ */
+export const getAccountById = async (id, headers = false) => {
+  return await mutationGetRequest(`/accounts/${id}`, headers);
+}
+
+/**
+ * Изменить аккаунт
+ * @param {AccountEditModel} formData
+ * @param {Boolean|Object} headers
+ * @returns {Object}
+ */
+export const editAccount = async (formData, headers = false) => {
+  return await mutationPutRequest(`/accounts/edit/`, formData, headers);
 }

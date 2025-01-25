@@ -4,7 +4,7 @@
     ref="formRef"
     :rules="rules"
     :model="formData"
-    @submit.prevent.native="onSubmit(formRef, afterSumbmit)"
+    @submit.prevent.native="onSubmit(formRef, afterSubmit)"
   >
     <el-row class="b-form__row">
       <el-col
@@ -18,16 +18,14 @@
           :label="field.title"
           :prop="field.code"
         >
-          <template
-            v-if="field.type === 'file'"
-          >
+          <template v-if="field.type === 'file'">
             <el-upload
               class="b-upload"
               :show-file-list="true"
               :action="uploadFileUrl"
               :on-success="(response, uploadFile) => handleFileUploadSuccess(field.code, response, uploadFile)"
               :before-upload="beforeFileUpload"
-              :on-remove="() => removeFile(field.code)"
+              :on-remove="() => removeFormDataValue(field.code)"
             >
               <img
                 v-if="formData[field.code]?.url"
@@ -72,7 +70,7 @@
           native-type="submit"
           :loading="isLoading"
         >
-          Create
+          {{ submitMessage }}
         </el-button>
       </el-col>
     </el-row>
@@ -93,9 +91,9 @@ import {
   ElMessage,
 } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import useForm from '@/composable/form';
-import { getRoles, createAccount } from '@/api/accounts';
+import { getRoles, createAccount, getAccountById, editAccount } from '@/api/accounts';
 import AccountFormFields from '@/models/AccountFormFields';
 import { uploadFileUrl } from '@/api/options';
 import { EmailValidatorRegex, AccountRoleFieldCode } from '@/lib/constants';
@@ -103,6 +101,14 @@ import Request from '@/lib/request';
 import AccountFormValidatorsModel from '@/models/AccountFormValidatorsModel';
 import AccountCreateModel from '@/models/AccountCreateModel';
 import AccountCreateFileModel from '@/models/AccountCreateFileModel';
+import AccountEditModel from '@/models/AccountEditModel';
+
+const { accountEditId } = defineProps({
+  accountEditId: {
+    type: [Number, Boolean],
+    default: false
+  }
+});
 
 const emit = defineEmits(['update']);
 
@@ -114,7 +120,20 @@ const {
   isLoading,
   rules,
   onSubmit
-} = useForm(fields, createAccount, new AccountCreateModel(), new AccountFormValidatorsModel({ email: EmailValidatorRegex }));
+} = useForm(
+  fields,
+  !accountEditId
+    ? createAccount
+    : editAccount,
+  !accountEditId
+    ? new AccountCreateModel()
+    : new AccountEditModel(),
+  new AccountFormValidatorsModel({ email: EmailValidatorRegex })
+);
+
+const submitMessage = computed(() => {
+  return !!accountEditId ? 'Edit' : 'Create';
+});
 
 const getAccountRoles = async () => {
   await getRoles()
@@ -135,14 +154,14 @@ const setAccountRoleOptions = (roleOptions) => {
     return;
   }
   (!!fields.groups && fields.groups.length > 0)
-      && fields.groups.forEach((group, groupIndex) => {
-        (!!group.items && group.items.length > 0)
-          && group.items.forEach((field, fieldIndex) => {
-            const items = fields.groups[groupIndex].items[fieldIndex].items;
-            (!!items && fields.groups[groupIndex].items[fieldIndex].code === AccountRoleFieldCode)
-              && (fields.groups[groupIndex].items[fieldIndex].items = roleOptions);
-          });
-      });
+    && fields.groups.forEach((group, groupIndex) => {
+      (!!group.items && group.items.length > 0)
+        && group.items.forEach((field, fieldIndex) => {
+          const items = fields.groups[groupIndex].items[fieldIndex].items;
+          (!!items && fields.groups[groupIndex].items[fieldIndex].code === AccountRoleFieldCode)
+            && (fields.groups[groupIndex].items[fieldIndex].items = roleOptions);
+        });
+    });
 }
 
 /**
@@ -154,16 +173,37 @@ const getRoleCodeById = (id) => {
   }
   let result = '';
   (!!fields.groups && fields.groups.length > 0)
-      && fields.groups.forEach((group, groupIndex) => {
-        (!!group.items && group.items.length > 0)
-          && group.items.forEach((field, fieldIndex) => {
-            const items = fields.groups[groupIndex].items[fieldIndex].items;
-            if (!!items && items.length > 0) {
-              result = items.filter((item) => item.id === id)[0]?.code;
-            }
-          });
-      });
+    && fields.groups.forEach((group, groupIndex) => {
+      (!!group.items && group.items.length > 0)
+        && group.items.forEach((field, fieldIndex) => {
+          const items = fields.groups[groupIndex].items[fieldIndex].items;
+          if (!!items && items.length > 0) {
+            result = items.filter((item) => item.id === id)[0]?.code;
+          }
+        });
+    });
   return result;
+}
+
+/**
+ * @param {Number} id
+ */
+const getEditAccount = async (id) => {
+  let accountModel = {};
+  await getAccountById(id)
+    .then((response) => {
+      accountModel = new AccountEditModel(response?.data);
+    })
+    .catch((error) => {
+      console.error('GET error:{accounts/:id}', error);
+      ElMessage({
+        message: error,
+        type: 'error',
+      });
+    });
+  for (const key in accountModel) {
+    formData[key] = accountModel[key];
+  }
 }
 
 /**
@@ -198,14 +238,19 @@ const beforeFileUpload = (rawFile) => {
 /**
  * @param {String} code
  */
-const removeFile = (code) => {
+const removeFormDataValue = (code) => {
   formData[code] = null;
 }
 
-const afterSumbmit = () => {
+const afterSubmit = () => {
   emit('update');
 }
 
-getAccountRoles();
+const onInit = async () => {
+  await getAccountRoles();
+  !!accountEditId && await getEditAccount(accountEditId);
+}
+
+onInit();
 
 </script>

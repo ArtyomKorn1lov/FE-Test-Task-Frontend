@@ -31,5 +31,15 @@ export const getFilter = state => {
  * @returns {PaginationModel}
  */
 export const getPagination = state => {
-  return state.pagination
+  return state.pagination;
 };
+
+
+/**
+ *
+ * @param {StoreModel} state
+ * @returns {Number|Boolean}
+ */
+export const getAccountEditId = state => {
+  return state.accountEditId;
+}

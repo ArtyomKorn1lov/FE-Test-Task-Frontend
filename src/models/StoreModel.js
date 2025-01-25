@@ -8,6 +8,8 @@ export default class StoreModel {
   modalCode;
   /** @type {String|Boolean} */
   modalTitle;
+  /** @type {String} */
+  accountEditId;
   /** @type {FilterModel} */
   filter;
   /** @type {PaginationModel} */
@@ -19,6 +21,7 @@ export default class StoreModel {
     this.modalToggle = !!data?.modalToggle ? data?.modalToggle : false;
     this.modalCode = !!data?.modalCode ? data?.modalCode : false;
     this.modalTitle = !!data?.modalTitle ? data?.modalTitle : false;
+    this.accountEditId = !!data?.accountEditId ? data?.accountEditId : false;
     this.filter = !!data?.filter ? data?.filter : new FilterModel();
     this.pagination = !!data?.pagination ? data?.pagination : new PaginationModel();
   }

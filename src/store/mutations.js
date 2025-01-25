@@ -11,6 +11,14 @@ export const setModalProps = (state, payload) => {
   state.modalToggle = payload.toggle;
   state.modalCode = payload.code;
   state.modalTitle = payload.title;
+  state.accountEditId = !!payload.accountEditId ? payload.accountEditId : false;
+}
+
+/**
+ * @param {StoreModel} state
+ */
+export const resetModalComponent = (state) => {
+  state.modalCode = false;
 }
 
 /**

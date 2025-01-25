@@ -8,6 +8,7 @@
       @select-item="selectItem"
       @select-role="selectRole"
       @after-delete-item="afterDeleteItem"
+      @edit-item="editItem"
     />
     <AccountsPagination
       v-if="isLoading"
@@ -36,7 +37,7 @@ const { items, selectedItems, isLoading } = defineProps({
   }
 });
 
-const emit = defineEmits(['refresh', 'select-item', 'select-role', 'after-delete-item']);
+const emit = defineEmits(['refresh', 'select-item', 'select-role', 'after-delete-item', 'edit-item']);
 
 const refresh = () => {
   emit('refresh');
@@ -60,11 +61,15 @@ const selectRole = (obj) => {
   emit('select-role', obj);
 }
 
+ const afterDeleteItem = () => {
+  emit('after-delete-item');
+}
+
 /**
  * @param {Number} id
  */
- const afterDeleteItem = () => {
-  emit('after-delete-item');
+const editItem = (id) => {
+  emit('edit-item', id);
 }
 
 </script>

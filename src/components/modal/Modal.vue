@@ -4,6 +4,7 @@
     v-model="toggleModal"
     :title="title"
     :show-close="false"
+    :before-close="close"
     align-center
   >
     <template #header="{ close }">
@@ -40,25 +41,16 @@ const emit = defineEmits(['close']);
 
 const toggleModal = ref(false);
 
+watch(() => toggle, (newValue) => {
+  toggleModal.value = newValue;
+});
+
 const iconClose = computed(() => getIcon('close'));
 
-watch(() => toggle,
-  /** @param {boolean} newValue */
-  (newValue) => {
-    if (newValue === toggleModal.value) {
-      return;
-    }
-    toggleModal.value = newValue;
-  });
-
-watch(toggleModal,
-  /** @param {boolean} newValue */
-  (newValue) => {
-    if (newValue === toggle.value || newValue === true) {
-      return;
-    }
-    emit('close', new CloseModalModel({
+const close = () => {
+  emit('close', new CloseModalModel({
       toggle: false
     }));
-  });
+}
+
 </script>

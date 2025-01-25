@@ -105,15 +105,19 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
    */
   const sendRequest = async (formRef, afterSuccess = null) => {
     isLoading.value = true;
-    const data = {...sendModel, ...formData};
+    const data = { ...sendModel, ...formData };
     await ajaxFunc(data)
-      .then((response) => {
-        showMessage('Success', response?.data, 'success', afterSuccess);
-        isLoading.value = false;
+      .then(async (response) => {
         resetForm(formRef);
+        isLoading.value = false;
+        await showMessage('Success',
+          response?.data,
+          'success',
+          afterSuccess
+        );
       })
-      .catch((error) => {
-        showMessage('Error', error);
+      .catch(async (error) => {
+        await showMessage('Error', error);
         isLoading.value = false;
       })
   }
@@ -122,9 +126,10 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
    * @param {String} title
    * @param {String} message
    * @param {String} type
+   * @param {Function} callback
    */
-  const showMessage = (title, message, type = 'error', callback = null) => {
-    ElMessageBox.alert(
+  const showMessage = async (title, message, type = 'error', callback = null) => {
+    await ElMessageBox.alert(
       message,
       title,
       {
@@ -138,7 +143,7 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
         confirmButtonClass: "b-btn b-btn_primary b-btn_normal b-btn_full",
         confirmButtonText: "Close",
         callback: callback
-      })
+      });
   }
 
   /**

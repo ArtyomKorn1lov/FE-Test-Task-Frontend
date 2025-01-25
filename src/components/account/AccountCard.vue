@@ -41,8 +41,11 @@
             {{ element.role }}
           </el-button>
           <div class="b-controls__btns b-account__controls">
-            <el-button class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-              v-html="'<span>' + iconEdit + 'Edit' + '</span>'">
+            <el-button
+              class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
+              v-html="'<span>' + iconEdit + 'Edit' + '</span>'"
+              @click.prevent.stop="editItem"
+            >
             </el-button>
             <el-button
               class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
@@ -78,7 +81,7 @@ const { element, isSelected } = defineProps({
   }
 });
 
-const emit = defineEmits(['select-item', 'select-role', 'after-delete-item']);
+const emit = defineEmits(['select-item', 'select-role', 'after-delete-item', 'edit-item']);
 
 /**
  * @type {Boolean}
@@ -160,6 +163,10 @@ const deleteItem = async () => {
     },
     'Delete canceled'
   );
+}
+
+const editItem = () => {
+  emit('edit-item', element.id);
 }
 
 </script>

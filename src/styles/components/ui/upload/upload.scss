@@ -33,5 +33,11 @@
         text-align: center;
       }
     }
+
+    img {
+      width: $full;
+      height: $full;
+      object-fit: cover;
+    }
   }
 }

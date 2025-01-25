@@ -6,8 +6,9 @@
   >
     <component
       :is="selectedComponent"
+      :account-edit-id="accountEditId"
       @update="update"
-      ></component>
+    />
   </Modal>
 </template>
 <script setup>
@@ -15,8 +16,9 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 import Modal from '@/components/modal/Modal.vue';
 import ModalModel, { CloseModalModel } from '@/models/ModalModel';
-import FilterModel from '@/models/FilterModel';
 import ModalComponents, { ComponentNotExist } from '@/models/ModalComponents';
+import FilterModel from '@/models/FilterModel';
+import ResetModalComponentModel from '@/models/ResetModalComponentModel';
 
 const store = useStore();
 
@@ -30,6 +32,7 @@ const selectedComponent = computed(() => {
   return ModalComponents[modalProps.value.code];
 });
 const filter = computed(() => store.getters.getFilter);
+const accountEditId = computed(() => store.getters.getAccountEditId);
 
 /**
  * @param {CloseModalModel} objClose
@@ -37,9 +40,15 @@ const filter = computed(() => store.getters.getFilter);
 const closeModal = (objClose) => {
   store.commit('setModalProps', new ModalModel({
     toggle: objClose.toggle,
-    title: false,
-    code: false
+    title: modalProps.value.title,
+    code: modalProps.value.code
   }));
+  // Сброс компонента в модальном окне, после закрытия модалки
+  setTimeout(() => {
+    store.commit('resetModalComponent', new ResetModalComponentModel({
+      modalCode: false
+    }));
+  }, 100);
 }
 
 const update = () => {

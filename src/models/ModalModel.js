@@ -20,6 +20,8 @@ export default class ModalModel {
   code;
   /** @type {string|boolean} */
   title;
+  /** @type {string|boolean} */
+  accountEditId;
 
   /**
    * @param {ModalModel|null} data
@@ -29,6 +31,7 @@ export default class ModalModel {
     this.toggle = data?.toggle;
     this.code = data?.code;
     this.title = data?.title;
+    this.accountEditId = data?.accountEditId;
   }
 }
 

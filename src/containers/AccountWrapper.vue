@@ -8,6 +8,7 @@
         :role-name="selectedRoleName"
         @clear-role="onSelectRole"
         @delete-items="deleteSelectedItems"
+        @edit-item="editSelectedItem"
       />
       <div class="b-account">
         <AccountTop
@@ -26,6 +27,7 @@
           @select-role="onSelectRole"
           @refresh="refresh"
           @after-delete-item="afterDeleteItem"
+          @edit-item="editItem"
         />
       </div>
     </div>
@@ -47,6 +49,7 @@ import SelectItemModel from '@/models/SelectItemModel';
 import SelectRoleModel from '@/models/SelectRoleModel';
 import NextPageModel from '@/models/NextPageModel';
 import AccountDeleteModel from '@/models/AccountDeleteModel';
+import ModalModel from '@/models/ModalModel';
 import { OneCountElement, FirstElementIndex, ASCorderCode, DESCorderCode } from '@/lib/constants';
 import SortModel from '@/models/SortModel';
 
@@ -182,6 +185,25 @@ const deleteSelectedItems = async () => {
     .catch((error) => {
       console.error('POST error:{accounts/delete}', error);
     });
+}
+
+const editSelectedItem = () => {
+  editItem(selectedItems.value[0]);
+}
+
+/**
+ * @param {Number} id
+ */
+const editItem = (id) => {
+  if (!id) {
+    return;
+  }
+  store.commit('setModalProps', new ModalModel({
+    toggle: true,
+    title: "Edit user",
+    code: "Account",
+    accountEditId: id
+  }));
 }
 
 const refresh = async () => {
