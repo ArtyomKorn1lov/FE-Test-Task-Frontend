@@ -1,4 +1,4 @@
-import '@/styles/index.scss';
+import '@/assets/styles/index.scss';
 import 'virtual:svg-icons-register';
 
 import { createApp } from 'vue';
@@ -6,7 +6,7 @@ import App from '@/App.vue';
 import router from '@/router';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-import store from '@/store';
+import store from '@/modules/accounts/store';
 
 const app = createApp(App);
 

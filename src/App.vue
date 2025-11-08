@@ -8,6 +8,6 @@
 
 <script setup>
 import { RouterView } from 'vue-router';
-import HeaderWrapper from '@/containers/HeaderWrapper.vue';
-import ModalWrapper from '@/containers/ModalWrapper.vue';
+import HeaderWrapper from '@/modules/accounts/containers/HeaderWrapper.vue';
+import ModalWrapper from '@/modules/accounts/containers/ModalWrapper.vue';
 </script>
