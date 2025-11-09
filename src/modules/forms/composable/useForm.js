@@ -1,5 +1,5 @@
 import { ref, reactive, Ref, Reactive, ComputedRef } from "vue";
-import useTranslation from '@/core/composable/translations';
+import useTranslation from '@/core/composable/useTranslation.js';
 import { MessageHelper } from "@/core/utils";
 import { MessageBoxParams } from "@/core/models";
 import { ResponseStatus } from "@/core/enums";
@@ -19,7 +19,7 @@ export default function useForm({fields, ajaxFunc, sendModel, validators = {}}) 
   /**
    * @type {ComputedRef<Object>}
    */
-  const messageTranslations = useTranslation('messages');
+  const messageTranslations = useTranslation('core');
 
   /**
    * @type {RegExp}
@@ -138,7 +138,7 @@ export default function useForm({fields, ajaxFunc, sendModel, validators = {}}) 
         resetForm(formRef);
         isLoading.value = false;
         await MessageHelper.showMessageBox(new MessageBoxParams({
-          title: messageTranslations.value.successTitle,
+          title: messageTranslations.value.messages.successTitle,
           message: response?.data,
           type: ResponseStatus.success,
           callback: afterSuccess

@@ -37,7 +37,7 @@
 <script setup>
 import { computed } from 'vue';
 import { ElButton, ElIcon } from 'element-plus';
-import useTranslation from '@/core/composable/translations.js';
+import useTranslation from '@/core/composable/useTranslation.js';
 import { CircleClose } from '@element-plus/icons-vue';
 import { getIcon, confirmedAction } from '@/core/lib/template.js';
 import { TagAccountListModifier } from '@/core/lib/constants.js';

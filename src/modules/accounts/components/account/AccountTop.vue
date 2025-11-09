@@ -51,7 +51,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue';
 import { ElCheckbox } from 'element-plus';
-import useTranslation from '@/core/composable/translations.js';
+import useTranslation from '@/core/composable/useTranslation.js';
 import { getIcon } from '@/core/lib/template.js';
 import { AccountSortPropCode, PermissionNameSortPropCode, DESCorderCode, ASCorderCode } from '@/core/lib/constants.js';
 import SortModel from '@/core/models/SortModel.js';

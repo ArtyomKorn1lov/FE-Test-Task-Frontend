@@ -4,7 +4,7 @@
   </div>
 </template>
 <script setup>
-import useTranslation from '@/core/composable/translations.js';
+import useTranslation from '@/core/composable/useTranslation.js';
 
 const loc = useTranslation('modal');
 

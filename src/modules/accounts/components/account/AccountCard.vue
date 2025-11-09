@@ -63,7 +63,7 @@
 <script setup>
 import { ElButton, ElCheckbox, ElMessage } from 'element-plus';
 import { computed, ref, watch } from 'vue';
-import useTranslation from '@/core/composable/translations.js';
+import useTranslation from '@/core/composable/useTranslation.js';
 import AccountModel from '@/core/models/AccountModel.js';
 import { deleteAccount } from '@/core/api/accounts.js';
 import { NoImageUrl, TagAccountListModifier, SuccessStatusCode, ErrorStatusCode } from '@/core/lib/constants.js';

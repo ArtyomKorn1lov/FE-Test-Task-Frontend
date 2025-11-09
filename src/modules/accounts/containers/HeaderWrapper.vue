@@ -9,7 +9,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useStore } from 'vuex';
-import useTranslation from '@/core/composable/translations.js';
+import useTranslation from '@/core/composable/useTranslation.js';
 import Header from '@/modules/accounts/components/header/Header.vue';
 import ModalModel from '@/core/models/ModalModel.js';
 import SearchModel from '@/core/models/SearchModel.js';

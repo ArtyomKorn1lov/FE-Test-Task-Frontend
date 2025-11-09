@@ -37,7 +37,7 @@
 import { ElMessage } from 'element-plus';
 import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
-import useTranslation from '@/core/composable/translations.js';
+import useTranslation from '@/core/composable/useTranslation.js';
 import Request from '@/core/lib/request.js';
 import { getAccounts, deleteAccounts } from '@/core/api/accounts.js';
 import AccountModel from '@/core/models/AccountModel.js';

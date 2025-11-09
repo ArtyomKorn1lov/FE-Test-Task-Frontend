@@ -1,0 +1,13 @@
+{
+  "messages": {
+    "successTitle": "Success",
+    "errorTitle": "Error",
+    "confirmButtonText": "Close"
+  },
+  "injection": {
+    "notFound": "Dependence not registered in IoC: "
+  },
+  "api": {
+    "serverError": "An internal error occurred"
+  }
+}

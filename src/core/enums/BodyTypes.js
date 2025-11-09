@@ -1,4 +1,4 @@
 export default {
-  FormData: 'formData',
-  Json: 'json',
+  formData: 'formData',
+  json: 'json',
 }

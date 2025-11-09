@@ -92,7 +92,7 @@ import {
 } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
 import { ref, reactive, computed, ComputedRef } from 'vue';
-import useTranslation from '@/core/composable/translations.js';
+import useTranslation from '@/core/composable/useTranslation.js';
 import useForm from '@/modules/forms/composable/useForm.js';
 import { getRoles, createAccount, getAccountById, editAccount } from '@/core/api/accounts.js';
 import AccountFormFields from '@/core/models/AccountFormFields.js';

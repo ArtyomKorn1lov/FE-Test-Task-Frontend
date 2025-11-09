@@ -47,7 +47,7 @@
 <script setup>
 import { ElIcon, ElButton, ElAutocomplete } from 'element-plus';
 import { ref, computed } from 'vue';
-import useTranslation from '@/core/composable/translations.js';
+import useTranslation from '@/core/composable/useTranslation.js';
 import { getIcon } from '@/core/lib/template.js';
 import { getContextSearch } from '@/core/api/accounts.js';
 import Converter from '@/core/lib/helpers/converter.js';

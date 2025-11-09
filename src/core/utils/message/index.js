@@ -1,15 +1,15 @@
 import { ElMessageBox, ElNotification } from "element-plus";
 import { ResponseStatus } from "@/core/enums";
-import useTranslation from "@/core/composable/translations";
+import useTranslation from "@/core/composable/useTranslation.js";
 import { MessageBoxParams, NotificationParams } from "@/core/models";
 
-const loc = useTranslation('messages');
+const translation = useTranslation('core');
 
 /**
  * @param {MessageBoxParams} args
  * @return {Promise<void>}
  */
-export const showMessageBox = async ({title = loc.value.errorTitle, message, type = ResponseStatus.error, callback = null}) => {
+export const showMessageBox = async ({title = translation.value.messages.errorTitle, message, type = ResponseStatus.error, callback = null}) => {
   await ElMessageBox.alert(
     message,
     title,
@@ -22,7 +22,7 @@ export const showMessageBox = async ({title = loc.value.errorTitle, message, typ
       closeOnHashChange: type === ResponseStatus.success,
       showConfirmButton: true,
       confirmButtonClass: "b-btn b-btn_primary b-btn_normal b-btn_full",
-      confirmButtonText: loc.value.confirmButtonText,
+      confirmButtonText: translation.value.messages.confirmButtonText,
       callback: callback
     });
 }
@@ -31,7 +31,7 @@ export const showMessageBox = async ({title = loc.value.errorTitle, message, typ
  * @param {NotificationParams} args
  * @return {void}
  */
-export const showNotification = ({title, message, type =  ResponseStatus.error}) => {
+export const showNotification = ({title = translation.value.messages.errorTitle, message, type =  ResponseStatus.error}) => {
   ElNotification({
     title: title,
     message: message,
