@@ -6,10 +6,5 @@
     "email": {
       "error": "Invalid email"
     }
-  },
-  "messageBox": {
-    "successTitle": "Success",
-    "errorTitle": "Error",
-    "confirmButtonText": "Close"
   }
 }

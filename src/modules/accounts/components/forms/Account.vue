@@ -91,9 +91,9 @@ import {
   ElMessage,
 } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, computed, ComputedRef } from 'vue';
 import useTranslation from '@/core/composable/translations.js';
-import useForm from '@/core/composable/form.js';
+import useForm from '@/modules/forms/composable/useForm.js';
 import { getRoles, createAccount, getAccountById, editAccount } from '@/core/api/accounts.js';
 import AccountFormFields from '@/core/models/AccountFormFields.js';
 import { uploadFileUrl } from '@/core/api/options.js';
@@ -103,6 +103,7 @@ import AccountFormValidatorsModel from '@/core/models/AccountFormValidatorsModel
 import AccountCreateModel from '@/core/models/AccountCreateModel.js';
 import AccountCreateFileModel from '@/core/models/AccountCreateFileModel.js';
 import AccountEditModel from '@/core/models/AccountEditModel.js';
+import { UseFormParams } from "@/modules/forms";
 
 const loc = useTranslation('accountForm');
 
@@ -130,18 +131,16 @@ const {
   rules,
   onSubmit
 } = useForm(
-  fields,
-  !accountEditId
-    ? createAccount
-    : editAccount,
-  !accountEditId
-    ? new AccountCreateModel()
-    : new AccountEditModel(),
-  new AccountFormValidatorsModel({ email: EmailValidatorRegex })
+  new UseFormParams({
+    fields: fields,
+    ajaxFunc: !accountEditId ? createAccount : editAccount,
+    sendModel: accountEditId ? AccountCreateModel : AccountEditModel,
+    validators: new AccountFormValidatorsModel({ email: EmailValidatorRegex })
+  })
 );
 
 /**
- * @type {String}
+ * @type {ComputedRef<String>}
  */
 const submitMessage = computed(() => {
   return !!accountEditId ? loc.value.editBtnTitle : loc.value.createBtnTitle;

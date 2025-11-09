@@ -1,19 +1,25 @@
-import { ref, reactive, Ref, Reactive } from "vue";
-import { ElMessageBox } from "element-plus";
-import useTranslation from '@/core/composable/translations.js';
-import { SuccessStatusCode, ErrorStatusCode } from "@/core/lib/constants.js";
+import { ref, reactive, Ref, Reactive, ComputedRef } from "vue";
+import useTranslation from '@/core/composable/translations';
+import { MessageHelper } from "@/core/utils";
+import { MessageBoxParams } from "@/core/models";
+import { ResponseStatus } from "@/core/enums";
+import { UseFormParams, FormField } from "@/modules/forms/models";
 
 /**
  * Хук с общей логикой форм обратной связи
- * @param {Array<Object>} fields
- * @param {Function} ajaxFunc
- * @param {Object} sendModel
- * @param {Object} validators
+ * @param {UseFormParams} args
  * @returns {Object}
  */
-export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {}) {
+export default function useForm({fields, ajaxFunc, sendModel, validators = {}}) {
 
-  const loc = useTranslation('form');
+  /**
+   * @type {ComputedRef<Object>}
+   */
+  const formTranslations = useTranslation('form');
+  /**
+   * @type {ComputedRef<Object>}
+   */
+  const messageTranslations = useTranslation('messages');
 
   /**
    * @type {RegExp}
@@ -49,6 +55,9 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
     });
   }
 
+  /**
+   * @param {FormField} field
+   */
   const setRuleValidation = (field) => {
     rules[field.code] = [];
 
@@ -59,7 +68,7 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
           if (regularExpression.test(value)) {
             return callback();
           }
-          return callback(new Error(loc.value.fields.email.error));
+          return callback(new Error(formTranslations.value.fields.email.error));
         }
         rules[field.code] = [
           {
@@ -77,8 +86,8 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
     }
 
     const requiredRule = rules[field.code] = [
-      { required: true, message: loc.value.fields.default.error, trigger: 'change' },
-      { required: true, message: loc.value.fields.default.error, trigger: 'blur' },
+      { required: true, message: formTranslations.value.fields.default.error, trigger: 'change' },
+      { required: true, message: formTranslations.value.fields.default.error, trigger: 'blur' },
     ];
 
     rules[field.code] = [...rules[field.code], ...requiredRule];
@@ -92,13 +101,16 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
     });
   }
 
+  /**
+   * @param {FormField} field
+   */
   const setFormDataValue = (field) => {
     formData[field.code] = null;
   }
 
   /**
    * @param {Object} formRef
-   * @param {Function} afterSuccess
+   * @param {VoidFunction} afterSuccess
    */
   const onSubmit = async (formRef, afterSuccess = null) => {
     if (!formRef) {
@@ -115,50 +127,29 @@ export default function useForm(fields, ajaxFunc, sendModel = {}, validators = {
 
   /**
    * @param {Object} formRef
-   * @param {Function} afterSuccess
+   * @param {VoidFunction} afterSuccess
    */
   const sendRequest = async (formRef, afterSuccess = null) => {
     isLoading.value = true;
     const data = { ...sendModel, ...formData };
+    const model = new sendModel(formData);
     await ajaxFunc(data)
       .then(async (response) => {
         resetForm(formRef);
         isLoading.value = false;
-        await showMessage(
-          loc.value.messageBox.successTitle,
-          response?.data,
-          SuccessStatusCode,
-          afterSuccess
-        );
+        await MessageHelper.showMessageBox(new MessageBoxParams({
+          title: messageTranslations.value.successTitle,
+          message: response?.data,
+          type: ResponseStatus.success,
+          callback: afterSuccess
+        }));
       })
       .catch(async (error) => {
-        await showMessage(loc.value.messageBox.errorTitle, error);
+        await MessageHelper.showMessageBox(new MessageBoxParams({
+          message: error?.message
+        }));
         isLoading.value = false;
       })
-  }
-
-  /**
-   * @param {String} title
-   * @param {String} message
-   * @param {String} type
-   * @param {Function} callback
-   */
-  const showMessage = async (title, message, type = 'error', callback = null) => {
-    await ElMessageBox.alert(
-      message,
-      title,
-      {
-        customClass: "b-message-box",
-        showClose: type === SuccessStatusCode,
-        center: true,
-        type: type,
-        closeOnPressEscape: type === SuccessStatusCode,
-        closeOnHashChange: type === SuccessStatusCode,
-        showConfirmButton: type === ErrorStatusCode,
-        confirmButtonClass: "b-btn b-btn_primary b-btn_normal b-btn_full",
-        confirmButtonText: loc.value.messageBox.confirmButtonText,
-        callback: callback
-      });
   }
 
   /**
