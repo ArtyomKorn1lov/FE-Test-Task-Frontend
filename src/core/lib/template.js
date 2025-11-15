@@ -17,6 +17,7 @@ export const getIcon = (code, prefix = 'icon') => {
  * @param {String} title
  * @param {String} message
  * @param {Function} callback
+ * @param {String} cancelMessage
  */
 export const confirmedAction = (title, message, callback, cancelMessage = 'Canceled') => {
   ElMessageBox.confirm(

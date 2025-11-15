@@ -1,18 +1,18 @@
 import { RequestConfig } from "@/core/models";
 import { RequestTypes } from "@/core/enums";
-import BaseApiClient from "@/core/api/BaseApiClient.js";
+import BaseApiClient from "@/core/api/BaseApiClient";
 
 /**
  * @description API-клиент
  */
-class ApiClient extends BaseApiClient {
+export default class ApiClient extends BaseApiClient {
   /**
    * @public
    * @param {String} url
    * @param {RequestConfig} config
    * @return {Promise<any>}
    */
-  async postRequest(url, config) {
+  async postRequest(url, config = new RequestConfig()) {
     return await this.executeRequest(url, {...config, requestType: RequestTypes.post});
   }
 
@@ -22,7 +22,7 @@ class ApiClient extends BaseApiClient {
    * @param {RequestConfig} config
    * @return {Promise<any>}
    */
-  async putRequest(url, config) {
+  async putRequest(url, config = new RequestConfig()) {
     return await this.executeRequest(url, {...config, requestType: RequestTypes.put});
   }
 
@@ -32,7 +32,7 @@ class ApiClient extends BaseApiClient {
    * @param {RequestConfig} config
    * @return {Promise<any>}
    */
-  async deleteRequest(url, config) {
+  async deleteRequest(url, config = new RequestConfig()) {
     return await this.executeRequest(url, {...config, requestType: RequestTypes.delete});
   }
 
@@ -42,9 +42,9 @@ class ApiClient extends BaseApiClient {
    * @param {RequestConfig} config
    * @return {Promise<any>}
    */
-  async getRequest(url, config) {
+  async getRequest(url, config = new RequestConfig()) {
     return await this.executeRequest(url, {...config, requestType: RequestTypes.get});
   }
 }
 
-export default new ApiClient(process.env.REST_API_URL ?? "/");
+//export default new ApiClient(process.env.REST_API_URL ?? "/");

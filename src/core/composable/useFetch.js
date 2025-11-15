@@ -4,7 +4,7 @@ import { NotificationParams, MessageBoxParams } from "@/core/models";
 import { MessageHelper } from "@/core/utils";
 
 /**
- * @param {Function} ajaxFunc
+ * @param {Promise<any>} ajaxFunc
  * @param {Boolean} showMessage
  * @param {MessageTypes|String} messageType
  * @param {any} args

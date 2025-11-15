@@ -3,7 +3,7 @@ import { NotificationParams } from "@/core/models";
 import { MessageHelper } from "@/core/utils";
 
 /**
- * @param {Function} ajaxFunc
+ * @param {Promise<any>} ajaxFunc
  * @param {Boolean} showMessage
  * @param {any} args
  * @return {Object}

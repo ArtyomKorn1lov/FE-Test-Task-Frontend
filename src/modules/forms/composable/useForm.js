@@ -85,7 +85,7 @@ export default function useForm({fields, ajaxFunc, sendModel, validators = {}}) 
         break;
     }
 
-    const requiredRule = rules[field.code] = [
+    const requiredRule = [
       { required: true, message: formTranslations.value.fields.default.error, trigger: 'change' },
       { required: true, message: formTranslations.value.fields.default.error, trigger: 'blur' },
     ];

@@ -54,11 +54,10 @@ export default class Converter {
       return [];
     }
 
-    let newArray = array.map((item) => {
+    return array.map((item) => {
       let obj = {};
       obj[newKey] = item[key];
       return obj;
     });
-    return newArray;
   }
 }

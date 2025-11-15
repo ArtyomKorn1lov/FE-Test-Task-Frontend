@@ -1,13 +1,9 @@
 <template>
-  <div class="mainContainer">
-    <HeaderWrapper />
+  <AccountLayout>
     <RouterView />
-    <ModalWrapper />
-  </div>
+  </AccountLayout>
 </template>
-
 <script setup>
 import { RouterView } from 'vue-router';
-import HeaderWrapper from '@/modules/accounts/containers/HeaderWrapper.vue';
-import ModalWrapper from '@/modules/accounts/containers/ModalWrapper.vue';
+import { AccountLayout } from "@/modules/accounts";
 </script>

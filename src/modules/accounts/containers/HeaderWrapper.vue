@@ -20,7 +20,7 @@ const loc = useTranslation('modal');
 const store = useStore();
 
 /**
- * @type {FilterModel}
+ * @type {Filter}
  */
  const filter = computed(() => store.getters.getFilter);
 

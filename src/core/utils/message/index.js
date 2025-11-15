@@ -1,7 +1,7 @@
-import { ElMessageBox, ElNotification } from "element-plus";
+import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
 import { ResponseStatus } from "@/core/enums";
 import useTranslation from "@/core/composable/useTranslation.js";
-import { MessageBoxParams, NotificationParams } from "@/core/models";
+import { MessageBoxParams, NotificationParams, MessageConfirmParams } from "@/core/models";
 
 const translation = useTranslation('core');
 
@@ -37,4 +37,32 @@ export const showNotification = ({title = translation.value.messages.errorTitle,
     message: message,
     type: type,
   });
+}
+
+/**
+ * @param {MessageConfirmParams} args
+ * @return {void}
+ */
+export const showConfirmMessageBox = ({title, message, callback, cancelMessage = 'Canceled'}) => {
+  ElMessageBox.confirm(
+    message,
+    title,
+    {
+      customClass: "b-message-box b-message-box_confirm",
+      type: 'warning',
+      confirmButtonText: 'Confirm',
+      confirmButtonClass: "b-btn b-btn_primary b-btn_normal",
+      cancelButtonClass: "b-btn b-btn_secondary b-btn_normal",
+      cancelButtonText: 'Cancel',
+    }
+  )
+    .then(() => {
+      callback();
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: cancelMessage,
+      });
+    });
 }

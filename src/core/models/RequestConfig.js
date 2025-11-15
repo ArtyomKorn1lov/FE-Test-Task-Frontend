@@ -29,9 +29,9 @@ export default class RequestConfig {
 
   /**
    * @constructor
-   * @param {RequestConfig} data
+   * @param {RequestConfig|null} data
    */
-  constructor(data) {
+  constructor(data = null) {
     this.data = data?.data;
     this.dataType = data?.dataType;
     this.params = data?.params;

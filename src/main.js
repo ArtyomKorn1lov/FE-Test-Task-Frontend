@@ -1,4 +1,5 @@
 import '@/assets/styles/index.scss';
+import "@/di";
 import 'virtual:svg-icons-register';
 
 import { createApp } from 'vue';
