@@ -1,13 +1,26 @@
-import { createStore } from 'vuex';
-import * as getters from './getters.js';
-import * as mutations from './mutations.js';
-import * as actions from './actions.js';
-import StoreModel from '@/core/models/StoreModel.js';
+import {createStore} from 'vuex';
+import * as getters from '@/modules/accounts/store/getters';
+import * as mutations from '@/modules/accounts/store/mutations';
+import * as actions from '@/modules/accounts/store/actions';
+import {AccountStore} from "@/modules/accounts/models";
+import {
+  DefaultFilterValues,
+  DefaultPaginationValues
+} from "@/modules/accounts/constants";
 
 /**
- * @type {StoreModel}
+ * @type {AccountStore}
  */
-const state = new StoreModel();
+const state = new AccountStore({
+  modalToggle: false,
+  modalCode: false,
+  modalTitle: false,
+  accountEditId: null,
+  filter: DefaultFilterValues,
+  pagination: DefaultPaginationValues,
+  items: [],
+  isLoading: true
+});
 
 export default createStore({
   state,

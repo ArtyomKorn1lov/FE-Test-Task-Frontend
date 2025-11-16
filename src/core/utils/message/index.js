@@ -43,8 +43,8 @@ export const showNotification = ({title = translation.value.messages.errorTitle,
  * @param {MessageConfirmParams} args
  * @return {void}
  */
-export const showConfirmMessageBox = ({title, message, callback, cancelMessage = 'Canceled'}) => {
-  ElMessageBox.confirm(
+export const showConfirmMessageBox = async ({title, message, callback, cancelMessage = 'Canceled'}) => {
+  await ElMessageBox.confirm(
     message,
     title,
     {

@@ -1,4 +1,4 @@
-import { NotFoundException } from "@/core/exceptions";
+import {NotFoundException} from "@/core/exceptions";
 import useTranslation from "@/core/composable/useTranslation.js";
 
 const translation = useTranslation('core');
@@ -16,7 +16,7 @@ export default {
    * @param {String[]} dependencyNames
    */
   register(name, className, dependencyNames = []) {
-    this.dependencies.set(name, { className, dependencyNames });
+    this.dependencies.set(name, {className, dependencyNames});
   },
 
   /**
@@ -29,7 +29,7 @@ export default {
       throw new NotFoundException(translation.value.injection.notFound + name);
     }
 
-    const { className, dependencyNames } = registration;
+    const {className, dependencyNames} = registration;
     const resolvedDependencies = dependencyNames.map(dependenceName => this.resolve(dependenceName));
 
     return new className(...resolvedDependencies);

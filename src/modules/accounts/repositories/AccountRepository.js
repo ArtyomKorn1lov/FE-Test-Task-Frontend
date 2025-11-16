@@ -5,6 +5,7 @@ import {
   CommonResponse
 } from "@/core";
 import {
+  OptionResponse,
   Filter,
   Pagination,
   Role,
@@ -36,20 +37,20 @@ export default class AccountRepository {
 
   /**
    * @public
-   * @return {Promise<Filter>}
+   * @return {Promise<OptionResponse[]>}
    * @throws {ResponseException}
    */
   async getFilterValues() {
-    return await this.apiClient.getRequest("/accounts/filter-values");
+    return await this.apiClient.get("/accounts/filter-values");
   }
 
   /**
    * @public
-   * @return {Promise<Pagination>}
+   * @return {Promise<OptionResponse[]>}
    * @throws {ResponseException}
    */
   async getPageNav() {
-    return await this.apiClient.getRequest("/accounts/page-nav");
+    return await this.apiClient.get("/accounts/page-nav");
   }
 
   /**
@@ -58,7 +59,7 @@ export default class AccountRepository {
    * @throws {ResponseException}
    */
   async getRoles() {
-    return await this.apiClient.getRequest("/accounts/roles");
+    return await this.apiClient.get("/accounts/roles");
   }
 
   /**
@@ -68,7 +69,7 @@ export default class AccountRepository {
    * @throws {ResponseException}
    */
   async search(contextSearch) {
-    return await this.apiClient.getRequest(
+    return await this.apiClient.get(
       "/accounts/search",
       new RequestConfig({
         params: contextSearch
@@ -84,7 +85,7 @@ export default class AccountRepository {
    * @throws {ResponseException}
    */
   async getList(filter, pageNav = null) {
-    return await this.apiClient.getRequest(
+    return await this.apiClient.get(
       "/accounts/list",
       new RequestConfig({
         params: {...filter, ...pageNav}
@@ -99,7 +100,7 @@ export default class AccountRepository {
    * @throws {ResponseException}
    */
   async getById(id) {
-    return await this.apiClient.getRequest(`/accounts/${id}`);
+    return await this.apiClient.get(`/accounts/${id}`);
   }
 
   /**
@@ -109,7 +110,7 @@ export default class AccountRepository {
    * @throws {ResponseException}
    */
   async create(object) {
-    return await this.apiClient.postRequest(
+    return await this.apiClient.post(
       "/accounts/create",
       new RequestConfig({
         data: object
@@ -124,7 +125,7 @@ export default class AccountRepository {
    * @throws {ResponseException}
    */
   async update(object) {
-    return await this.apiClient.putRequest(
+    return await this.apiClient.put(
       "/accounts/edit",
       new RequestConfig({
         data: object
@@ -134,12 +135,22 @@ export default class AccountRepository {
 
   /**
    * @public
+   * @param {Number} id
+   * @return {Promise<CommonResponse>}
+   * @throws {ResponseException}
+   */
+  async delete(id) {
+    return await this.apiClient.delete(`/accounts/delete/${id}`);
+  }
+
+  /**
+   * @public
    * @param {AccountDelete} object
    * @return {Promise<CommonResponse>}
    * @throws {ResponseException}
    */
-  async delete(object) {
-    return await this.apiClient.deleteRequest(
+  async deleteItems(object) {
+    return await this.apiClient.delete(
       "/accounts/delete",
       new RequestConfig({
         data: object

@@ -1,4 +1,4 @@
-import { FormFields } from "@/modules/forms/models/fields";
+import { FormFields } from "@/modules/forms/models";
 
 export default class UseFormParams {
   /**

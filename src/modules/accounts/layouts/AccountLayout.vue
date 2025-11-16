@@ -1,9 +1,10 @@
 <template>
   <div class="mainContainer">
-    <HeaderWrapper />
-    <slot />
+    <Header />
+    <slot/>
+    <ModalWrapper />
   </div>
 </template>
 <script setup>
-import HeaderWrapper from "@/modules/accounts/containers/HeaderWrapper.vue";
+import {Header, ModalWrapper} from "@/modules/accounts/components";
 </script>

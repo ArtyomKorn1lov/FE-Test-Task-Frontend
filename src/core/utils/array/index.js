@@ -2,7 +2,7 @@
  * @param {Array} array
  * @return {Object}
  */
-const convertArrayToObject = (array) => {
+export const convertArrayToObject = (array) => {
   if (!array || array.length <= 0) {
     return {};
   }
@@ -16,32 +16,12 @@ const convertArrayToObject = (array) => {
 }
 
 /**
- * @param {Object} object
- * @return {Array}
- */
-const convertObjectToArray = (object) => {
-  if (!!object) {
-    return [];
-  }
-
-  let array = [];
-  for (const key in object) {
-    !!object[key] && (array.push({
-      code: key,
-      value: object[key]
-    }));
-  }
-
-  return array;
-}
-
-/**
  * @param {Array} array
  * @param {String} key
  * @param {String} newKey
  * @return {Array}
  */
-const changeArrayObjectsCode = (array, key, newKey) => {
+export const changeArrayObjectsCode = (array, key, newKey) => {
   if (!array || array.length <= 0 || !key || !newKey) {
     return [];
   }

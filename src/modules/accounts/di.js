@@ -1,4 +1,4 @@
-import InversionControl from "@/core/di/InversionControl";
+import {InversionControl} from "@/core";
 import {AccountRepository} from "@/modules/accounts/repositories";
 import {
   CreateAccount,

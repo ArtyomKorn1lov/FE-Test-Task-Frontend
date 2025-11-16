@@ -1,15 +1,13 @@
-import StoreModel from "@/core/models/StoreModel.js";
-import ModalModel from "@/core/models/ModalModel.js";
-import FilterModel from "@/core/models/FilterModel.js";
-import PaginationModel from "@/core/models/PaginationModel.js";
+import {ModalParams} from "@/modules/ui";
+import {AccountStore, Filter, Pagination, Account} from "@/modules/accounts";
 
 /**
  *
- * @param {StoreModel} state
- * @returns {ModalModel}
+ * @param {AccountStore} state
+ * @returns {ModalParams}
  */
 export const getModalProps = state => {
-  return new ModalModel({
+  return new ModalParams({
     toggle: state.modalToggle,
     code: state.modalCode,
     title: state.modalTitle
@@ -18,8 +16,8 @@ export const getModalProps = state => {
 
 /**
  *
- * @param {StoreModel} state
- * @returns {FilterModel}
+ * @param {AccountStore} state
+ * @returns {Filter}
  */
 export const getFilter = state => {
   return state.filter;
@@ -27,8 +25,8 @@ export const getFilter = state => {
 
 /**
  *
- * @param {StoreModel} state
- * @returns {PaginationModel}
+ * @param {AccountStore} state
+ * @returns {Pagination}
  */
 export const getPagination = state => {
   return state.pagination;
@@ -37,9 +35,25 @@ export const getPagination = state => {
 
 /**
  *
- * @param {StoreModel} state
+ * @param {AccountStore} state
  * @returns {Number|Boolean}
  */
 export const getAccountEditId = state => {
   return state.accountEditId;
+}
+
+/**
+ * @param {AccountStore} state
+ * @returns {Account[]}
+ */
+export const getItems = state => {
+  return state.items;
+}
+
+/**
+ * @param {AccountStore} state
+ * @returns {Boolean}
+ */
+export const getIsLoading = state => {
+  return state.isLoading
 }

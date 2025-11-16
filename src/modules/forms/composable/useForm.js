@@ -1,16 +1,28 @@
-import { ref, reactive, Ref, Reactive, ComputedRef } from "vue";
-import useTranslation from '@/core/composable/useTranslation.js';
-import { MessageHelper } from "@/core/utils";
-import { MessageBoxParams } from "@/core/models";
-import { ResponseStatus } from "@/core/enums";
-import { UseFormParams, FormField } from "@/modules/forms/models";
+import {ref, reactive, Ref, Reactive, ComputedRef} from "vue";
+import {
+  ResponseStatus,
+  MessageTypes,
+  MessageBoxParams,
+  MessageHelper,
+  useFetch,
+  useTranslation,
+} from "@/core";
+import {emailRegex} from "@/modules/forms";
+import {UseFormParams, FormField} from "@/modules/forms/models";
 
 /**
- * Хук с общей логикой форм обратной связи
+ * Примесь с общей логикой форм обратной связи
  * @param {UseFormParams} args
  * @returns {Object}
  */
-export default function useForm({fields, ajaxFunc, sendModel, validators = {}}) {
+export default function useForm(
+  {
+    fields,
+    ajaxFunc,
+    sendModel,
+    validators = {}
+  }
+) {
 
   /**
    * @type {ComputedRef<Object>}
@@ -20,11 +32,6 @@ export default function useForm({fields, ajaxFunc, sendModel, validators = {}}) 
    * @type {ComputedRef<Object>}
    */
   const messageTranslations = useTranslation('core');
-
-  /**
-   * @type {RegExp}
-   */
-  const defaultEmailRegex = /^(([^%№/!<>()\[\]\\.,;:\s@"]+(\.[^%№/!<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   /**
    * @type {Reactive<Object>}
@@ -38,6 +45,14 @@ export default function useForm({fields, ajaxFunc, sendModel, validators = {}}) 
    * @type {Reactive<Object>}
    */
   const rules = reactive({});
+
+  /**
+   * @type {(function(...args): Promise<any>)}
+   */
+  const fetch = useFetch({
+    ajaxFunc: ajaxFunc,
+    messageType: MessageTypes.messageBox
+  });
 
   const onInit = () => {
     initRules();
@@ -64,7 +79,7 @@ export default function useForm({fields, ajaxFunc, sendModel, validators = {}}) 
     switch (field.type) {
       case 'email':
         const emailValidator = (rule, value, callback) => {
-          const regularExpression = !!validators[field.type] ? validators[field.type] : defaultEmailRegex;
+          const regularExpression = !!validators[field.type] ? validators[field.type] : emailRegex;
           if (regularExpression.test(value)) {
             return callback();
           }
@@ -86,8 +101,16 @@ export default function useForm({fields, ajaxFunc, sendModel, validators = {}}) 
     }
 
     const requiredRule = [
-      { required: true, message: formTranslations.value.fields.default.error, trigger: 'change' },
-      { required: true, message: formTranslations.value.fields.default.error, trigger: 'blur' },
+      {
+        required: true,
+        message: formTranslations.value.fields.default.error,
+        trigger: 'change'
+      },
+      {
+        required: true,
+        message: formTranslations.value.fields.default.error,
+        trigger: 'blur'
+      },
     ];
 
     rules[field.code] = [...rules[field.code], ...requiredRule];
@@ -130,26 +153,21 @@ export default function useForm({fields, ajaxFunc, sendModel, validators = {}}) 
    * @param {VoidFunction} afterSuccess
    */
   const sendRequest = async (formRef, afterSuccess = null) => {
-    isLoading.value = true;
-    const data = { ...sendModel, ...formData };
-    const model = new sendModel(formData);
-    await ajaxFunc(data)
-      .then(async (response) => {
-        resetForm(formRef);
-        isLoading.value = false;
-        await MessageHelper.showMessageBox(new MessageBoxParams({
-          title: messageTranslations.value.messages.successTitle,
-          message: response?.data,
-          type: ResponseStatus.success,
-          callback: afterSuccess
-        }));
-      })
-      .catch(async (error) => {
-        await MessageHelper.showMessageBox(new MessageBoxParams({
-          message: error?.message
-        }));
-        isLoading.value = false;
-      })
+    try {
+      isLoading.value = true;
+      const model = new sendModel(formData);
+      const response = await fetch(model);
+      resetForm(formRef);
+      isLoading.value = false;
+      await MessageHelper.showMessageBox(new MessageBoxParams({
+        title: messageTranslations.value.messages.successTitle,
+        message: response?.data,
+        type: ResponseStatus.success,
+        callback: afterSuccess
+      }));
+    } catch (e) {
+      isLoading.value = false;
+    }
   }
 
   /**

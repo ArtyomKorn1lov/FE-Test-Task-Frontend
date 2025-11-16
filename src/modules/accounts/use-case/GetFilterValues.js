@@ -1,6 +1,7 @@
-import {ResponseException, BaseUseCase} from "@/core";
+import {ResponseException, NotFoundException, BaseUseCase, ObjectHelper} from "@/core";
 import {Filter} from "@/modules/accounts";
 import {AccountRepository} from "@/modules/accounts/repositories";
+import {AccountMapper} from "@/modules/accounts/mappers";
 
 export default class GetFilterValues extends BaseUseCase {
   /**
@@ -22,12 +23,18 @@ export default class GetFilterValues extends BaseUseCase {
    * @override
    * @public
    * @return {Promise<Filter>}
+   * @throws {ResponseException}
+   * @throws {NotFoundException}
    */
   async execute() {
     try {
       //TODO перенести бизнес-логику
-      return await this.repository.getFilterValues();
-    } catch (/** @type {ResponseException} */ error) {
+      const filter = AccountMapper.mapFilterValuesResponseToModel(await this.repository.getFilterValues());
+      if (ObjectHelper.isEmpty(filter)) {
+        throw new NotFoundException("Filter values cannot be empty");
+      }
+      return filter;
+    } catch (/** @type {ResponseException|NotFoundException} */ error) {
       console.error(error);
       throw error;
     }

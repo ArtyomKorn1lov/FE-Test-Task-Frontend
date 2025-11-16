@@ -1,5 +1,5 @@
-import ServiceLocator from "@/core/di/InversionControl.js";
+import InversionControl from "@/core/di/InversionControl.js";
 
 export {
-  ServiceLocator
+  InversionControl
 }

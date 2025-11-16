@@ -1,20 +1,20 @@
-import { ref, Ref } from 'vue';
-import { MessageTypes } from "@/core/enums";
-import { NotificationParams, MessageBoxParams } from "@/core/models";
-import { MessageHelper } from "@/core/utils";
+import {MessageTypes} from "@/core/enums";
+import {MessageBoxParams, NotificationParams} from "@/core/models";
+import {MessageHelper} from "@/core/utils";
 
 /**
- * @param {Promise<any>} ajaxFunc
+ * @param {Function} ajaxFunc
  * @param {Boolean} showMessage
  * @param {MessageTypes|String} messageType
- * @param {any} args
- * @return {(function(): Promise<any>)}
+ * @return {(function(...args): Promise<any>)}
  */
-export default function useFetch({ajaxFunc, showMessage = true, messageType = MessageTypes.notification, ...args}) {
-  /**
-   * @type {Ref<Boolean>}
-   */
-  const isLoading = ref(false);
+export default function useFetch(
+  {
+    ajaxFunc,
+    showMessage = true,
+    messageType = MessageTypes.notification
+  }
+) {
 
   /**
    * @param {String} message
@@ -35,15 +35,17 @@ export default function useFetch({ajaxFunc, showMessage = true, messageType = Me
     }
   }
 
-  return async () => {
+  /**
+   * @param {any} args
+   * @return {(function(...args): Promise<any>)}
+   */
+  return async (...args) => {
     try {
-      isLoading.value = true;
-      const result = await ajaxFunc(...args);
-      isLoading.value = false;
-      return result;
+      return await ajaxFunc(...args);
     } catch (exception) {
-      isLoading.value = false;
-      await displayMessage(exception?.message);
+      if (showMessage) {
+        await displayMessage(exception?.message);
+      }
       throw exception;
     }
   };

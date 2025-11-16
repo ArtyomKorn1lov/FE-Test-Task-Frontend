@@ -1,4 +1,4 @@
-import FormFields from "@/modules/accounts/config/form-fields.json";
+import FormFields from "@/modules/accounts/config/form-fields";
 
 export {
   FormFields

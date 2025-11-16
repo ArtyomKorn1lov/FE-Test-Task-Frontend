@@ -25,13 +25,13 @@ export default class DeleteAccount extends BaseUseCase {
   /**
    * @override
    * @public
-   * @param {AccountDelete} object
+   * @param {Number} id
    * @return {Promise<CommonResponse>}
    */
-  async execute(object) {
+  async execute(id) {
     try {
       //TODO перенести бизнес-логику
-      return await this.repository.delete(object);
+      return await this.repository.delete(id);
     } catch (/** @type {ResponseException} */ error) {
       console.error(error);
       throw error;

@@ -1,9 +1,9 @@
-import { ref, Ref } from 'vue';
-import { NotificationParams } from "@/core/models";
-import { MessageHelper } from "@/core/utils";
+import {ref, Ref} from 'vue';
+import {NotificationParams} from "@/core/models";
+import {MessageHelper} from "@/core/utils";
 
 /**
- * @param {Promise<any>} ajaxFunc
+ * @param {Function} ajaxFunc
  * @param {Boolean} showMessage
  * @param {any} args
  * @return {Object}

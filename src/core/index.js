@@ -1,4 +1,4 @@
-export * from "@/core/api";
+export * from "@/core/api-client";
 export * from "@/core/composable";
 export * from "@/core/di";
 export * from "@/core/enums";

@@ -1,4 +1,4 @@
-import InversionControl from "@/core/di/InversionControl";
-import {ApiClient} from "@/core/api";
+import {InversionControl} from "@/core/di";
+import {ApiClient} from "@/core/api-client";
 
-InversionControl.register("ApiClient", ApiClient);
+InversionControl.register("ApiClient", ApiClient, [process.env.REST_API_URL ?? "/"]);

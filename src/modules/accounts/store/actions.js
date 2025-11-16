@@ -1,54 +1,130 @@
-import { getFilter, getPagination } from "@/core/api/accounts.js";
-import FilterModel from "@/core/models/FilterModel.js";
-import Converter from "@/core/lib/helpers/converter.js";
-import { DefaultFilterValues, DefaultPaginationValues } from "@/core/lib/constants.js";
-import NextPageModel from "@/core/models/NextPageModel.js";
+import {InversionControl, useFetch} from "@/core";
+import {
+  AccountStore,
+  Filter,
+  Sort,
+  Search,
+  Pagination,
+  Account,
+  NextPage
+} from "@/modules/accounts/models";
+import {
+  GetFilterValues,
+  GetPageNav,
+  GetAccounts
+} from "@/modules/accounts/use-case";
 
 /**
- * @param {*} param0
+ * @type {GetFilterValues}
  */
-export const initFilterValues = async ({ commit }) => {
-  await getFilter()
-    .then((response) => {
-      /**
-       * @type {FilterModel}
-       */
-      let filterObj = Converter.convertArrayToObject(response?.data);
-      !filterObj && (filterObj = DefaultFilterValues);
-      commit('setFilterValues', filterObj);
-    })
-    .catch((error) => {
-      console.error('GET error:{accounts/filter}', error);
-      commit('setFilterValues', DefaultFilterValues);
-    });
-}
+const getFilterValues = InversionControl.resolve("GetFilterValues");
+/**
+ * @type {GetPageNav}
+ */
+const getPageNav = InversionControl.resolve("GetPageNav");
+/**
+ * @type {GetAccounts}
+ */
+const getAccounts = InversionControl.resolve("GetAccounts");
 
 /**
- * @param {*} param0
+ * @type {(function(): Promise<Filter>)}
  */
-export const initPagination = async ({ commit }) => {
-  await getPagination()
-    .then((response) => {
-      let pageObj = Converter.convertArrayToObject(response?.data);
-      !pageObj && (pageObj = DefaultPaginationValues);
-      commit('setPaginationValues', pageObj);
-    })
-    .catch((error) => {
-      console.error('GET error:{accounts/page-nav}', error);
-      commit('setPaginationValues', DefaultPaginationValues);
-    });
-}
+const fetchFilterValues = useFetch({
+  ajaxFunc: getFilterValues.execute
+});
 
 /**
- * @param {*} param0
- * @param {Number} itemsCount
- * @returns {Boolean}
+ * @type {(function(): Promise<Pagination>)}
  */
-export const nextPage = ({ commit, state }, itemsCount) => {
-  if (!itemsCount || itemsCount < state.pagination.pageCount) {
-    return false;
+const fetchPageNav = useFetch({
+  ajaxFunc: getPageNav.execute
+});
+
+/**
+ * @type {(function(filter: Filter, pagination: Pagination): Promise<Account[]>)}
+ */
+const fetchAccountList = useFetch({
+  ajaxFunc: getAccounts.execute
+});
+
+/**
+ * @param {{ commit: VoidFunction }} params
+ * @return {Promise<void>}
+ */
+export const initFilterValues = async ({commit}) => {
+  try {
+    commit('setFilterValues', await fetchFilterValues());
+  } catch (e) {
   }
+}
 
-  commit('setPaginationValues', new NextPageModel({page: Number(state.pagination.page) + 1}));
-  return true;
+/**
+ * @param {{ commit: VoidFunction }} params
+ * @return {Promise<void>}
+ */
+export const initPagination = async ({commit}) => {
+  try {
+    commit('setPaginationValues', await fetchPageNav());
+  } catch (e) {
+  }
+}
+
+/**
+ * @param {{ commit: VoidFunction, state: AccountStore }} params
+ * @param {Number} itemsCount
+ * @returns {void}
+ */
+const nextPage = ({commit, state}, itemsCount) => {
+  if (!itemsCount || itemsCount < state.pagination.pageCount) {
+    commit('setIsLoading', false);
+    return;
+  }
+  commit('setPaginationValues', new NextPage({page: Number(state.pagination.page) + 1}));
+}
+
+/**
+ * @param {{ commit: VoidFunction, state: AccountStore }} params
+ * @return {Promise<void>}
+ */
+export const initAccountList = async ({commit, state}) => {
+  try {
+    const response = await fetchAccountList(state.filter, state.pagination);
+    nextPage({commit, state}, response.length);
+    commit('setAccounts', response);
+  } catch (e) {
+    nextPage({commit, state}, 1);
+  }
+}
+
+/**
+ * @param {{ commit: VoidFunction, state: AccountStore }} params
+ * @return {Promise<void>}
+ */
+export const addAccountList = async ({commit, state}) => {
+  try {
+    const response = await fetchAccountList(state.filter, state.pagination);
+    nextPage({commit, state}, response.length);
+    commit('addAccounts', response);
+  } catch (e) {
+    nextPage({commit, state}, 1);
+  }
+}
+
+/**
+ * @param {{ commit: VoidFunction, state: AccountStore, dispatch: VoidFunction }} params
+ * @param {Filter|Sort} filter
+ * @returns {Promise<void>}
+ */
+export const onFilter = async ({commit, state, dispatch}, filter) => {
+  try {
+    commit("setFilterValues", filter);
+    commit("setPaginationValues", new Pagination({
+      page: 1,
+      pageCount: state.pagination.pageCount
+    }));
+    await dispatch("initAccountList");
+  } catch (e) {
+    nextPage({commit, state}, 1);
+  }
 }
