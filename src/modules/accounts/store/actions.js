@@ -1,4 +1,4 @@
-import {InversionControl, useFetch} from "@/core";
+import {DependencyInjection, useFetch} from "@/core";
 import {
   AccountStore,
   Filter,
@@ -17,35 +17,33 @@ import {
 /**
  * @type {GetFilterValues}
  */
-const getFilterValues = InversionControl.resolve("GetFilterValues");
+const getFilterValues = DependencyInjection.resolve("GetFilterValues");
 /**
  * @type {GetPageNav}
  */
-const getPageNav = InversionControl.resolve("GetPageNav");
+const getPageNav = DependencyInjection.resolve("GetPageNav");
 /**
  * @type {GetAccounts}
  */
-const getAccounts = InversionControl.resolve("GetAccounts");
+const getAccounts = DependencyInjection.resolve("GetAccounts");
 
 /**
  * @type {(function(): Promise<Filter>)}
  */
 const fetchFilterValues = useFetch({
-  ajaxFunc: getFilterValues.execute
+  useCase: getFilterValues
 });
-
 /**
  * @type {(function(): Promise<Pagination>)}
  */
 const fetchPageNav = useFetch({
-  ajaxFunc: getPageNav.execute
+  useCase: getPageNav
 });
-
 /**
  * @type {(function(filter: Filter, pagination: Pagination): Promise<Account[]>)}
  */
 const fetchAccountList = useFetch({
-  ajaxFunc: getAccounts.execute
+  useCase: getAccounts
 });
 
 /**

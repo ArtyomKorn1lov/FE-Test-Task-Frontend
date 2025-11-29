@@ -44,15 +44,13 @@
 <script setup>
 import {computed, ref, Ref, ComputedRef} from 'vue';
 import {useStore, Store} from 'vuex';
-import {ElMessage} from 'element-plus';
 import {
   MessageHelper,
-  InversionControl,
+  DependencyInjection,
   MessageTypes,
   ResponseStatus,
   SortTypes,
   CommonResponse,
-  MessageConfirmParams,
   useFetch,
   useTranslation
 } from "@/core";
@@ -76,11 +74,11 @@ import {DeleteAccount, DeleteAccounts} from "@/modules/accounts/use-case";
 /**
  * @type {DeleteAccount}
  */
-const deleteAccount = InversionControl.resolve('DeleteAccount');
+const deleteAccount = DependencyInjection.resolve('DeleteAccount');
 /**
  * @type {DeleteAccounts}
  */
-const deleteAccounts = InversionControl.resolve('DeleteAccounts');
+const deleteAccounts = DependencyInjection.resolve('DeleteAccounts');
 
 /**
  * @type {ComputedRef<Object>}
@@ -201,19 +199,19 @@ const onSelectRole = async (obj) => {
  */
 const deleteItem = async (id) => {
   try {
-    await MessageHelper.showConfirmMessageBox(new MessageConfirmParams({
+    await MessageHelper.showConfirmMessageBox({
       title: locSection.value.deleteItem.questionTitle,
       message: locSection.value.deleteItem.questionDescription,
       cancelMessage: loc.value.deleteItem.cancelBtnTitle,
       callback: async () => {
         const response = await fetchDelete(id);
-        ElMessage({
+        MessageHelper.showNotification({
           type: ResponseStatus.success,
           message: response?.message,
         });
-        afterDeleteItem();
+        await afterDeleteItem();
       },
-    }))
+    });
   } catch (e) {
   }
 }
@@ -223,21 +221,21 @@ const deleteItem = async (id) => {
  */
 const deleteSelectedItems = async () => {
   try {
-    await MessageHelper.showConfirmMessageBox(new MessageConfirmParams({
+    await MessageHelper.showConfirmMessageBox({
       title: locControls.value.deleteItems.questionTitle,
       message: locControls.value.deleteItems.questionDescription,
       callback: async () => {
         const response = await fetchDeleteItems(new AccountDelete({
           ids: selectedItems.value
         }));
-        ElMessage({
-          type: SuccessStatusCode,
+        MessageHelper.showNotification({
+          type: ResponseStatus.success,
           message: response?.message,
         });
         afterDeleteItem();
       },
       cancelMessage: loc.value.deleteItems.cancelBtnTitle
-    }));
+    });
   } catch (e) {
   }
 }

@@ -1,4 +1,4 @@
-import {SortTypes} from "@/core";
+import {SortTypes, EnvService} from "@/core";
 import {Filter, Pagination} from "@/modules/accounts/models";
 
 /**
@@ -51,3 +51,8 @@ export const PermissionNameSortPropCode = "permission";
  * @type {String}
  */
 export const AccountRoleFieldCode = "role";
+
+/**
+ * @type {String}
+ */
+export const UploadFileUrl = EnvService.get("REST_API_URL") + '/accounts/upload/';

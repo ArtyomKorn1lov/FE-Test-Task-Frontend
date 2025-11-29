@@ -1,4 +1,4 @@
-import {InversionControl} from "@/core";
+import {DependencyInjection} from "@/core";
 import {AccountRepository} from "@/modules/accounts/repositories";
 import {
   CreateAccount,
@@ -12,14 +12,14 @@ import {
   UpdateAccount
 } from "@/modules/accounts/use-case";
 
-InversionControl.register("AccountRepository", AccountRepository, ["ApiClient"]);
+DependencyInjection.register("AccountRepository", AccountRepository, ["ApiClient"]);
 
-InversionControl.register("CreateAccount", CreateAccount, ["AccountRepository"]);
-InversionControl.register("DeleteAccount", DeleteAccount, ["AccountRepository"]);
-InversionControl.register("GetAccountById", GetAccountById, ["AccountRepository"]);
-InversionControl.register("GetAccounts", GetAccounts, ["AccountRepository"]);
-InversionControl.register("GetFilterValues", GetFilterValues, ["AccountRepository"]);
-InversionControl.register("GetPageNav", GetPageNav, ["AccountRepository"]);
-InversionControl.register("GetRoles", GetRoles, ["AccountRepository"]);
-InversionControl.register("SearchAccounts", SearchAccounts, ["AccountRepository"]);
-InversionControl.register("UpdateAccount", UpdateAccount, ["AccountRepository"]);
+DependencyInjection.register("CreateAccount", CreateAccount, ["AccountRepository"]);
+DependencyInjection.register("DeleteAccount", DeleteAccount, ["AccountRepository"]);
+DependencyInjection.register("GetAccountById", GetAccountById, ["AccountRepository"]);
+DependencyInjection.register("GetAccounts", GetAccounts, ["AccountRepository"]);
+DependencyInjection.register("GetFilterValues", GetFilterValues, ["AccountRepository"]);
+DependencyInjection.register("GetPageNav", GetPageNav, ["AccountRepository"]);
+DependencyInjection.register("GetRoles", GetRoles, ["AccountRepository"]);
+DependencyInjection.register("SearchAccounts", SearchAccounts, ["AccountRepository"]);
+DependencyInjection.register("UpdateAccount", UpdateAccount, ["AccountRepository"]);

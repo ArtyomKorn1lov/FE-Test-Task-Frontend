@@ -3,7 +3,8 @@ import AccountCreate from "@/modules/accounts/models/AccountCreate";
 import AccountDelete from "@/modules/accounts/models/AccountDelete";
 import AccountUpdate from "@/modules/accounts/models/AccountUpdate.js";
 import ContextSearch from "@/modules/accounts/models/ContextSearch";
-import ContextSearchResponse from "@/modules/accounts/models/ContextSearchResponse";
+import ContextSearchResponse
+  from "@/modules/accounts/models/ContextSearchResponse";
 import Filter from "@/modules/accounts/models/Filter";
 import Sort from "@/modules/accounts/models/Sort";
 import Pagination from "@/modules/accounts/models/Pagination";

@@ -16,7 +16,7 @@ import {computed, ComputedRef, Component} from 'vue';
 import {useStore, Store} from 'vuex';
 import {ModalParams, CloseModalParams, Modal} from "@/modules/ui";
 import {ModalComponentsCodes} from "@/modules/accounts/enums";
-import {Filter, AccountStore} from "@/modules/accounts/models";
+import {AccountStore} from "@/modules/accounts/models";
 import ModalComponents from "@/modules/accounts/components/ModalComponents";
 
 /**
@@ -38,10 +38,6 @@ const selectedComponent = computed(() => {
   return ModalComponents[modalProps.value.code];
 });
 /**
- * @type {ComputedRef<Filter>}
- */
-const filter = computed(() => store.getters.getFilter);
-/**
  * @type {ComputedRef<Number|Boolean>}
  */
 const accountEditId = computed(() => store.getters.getAccountEditId);
@@ -62,8 +58,6 @@ const update = () => {
   closeModal(new CloseModalParams({
     toggle: false
   }));
-  store.commit('setFilterValues', new Filter({
-    ...filter.value
-  }));
+  store.dispatch('initAccountList');
 }
 </script>

@@ -1,4 +1,4 @@
-import File from "@/core/models/File.js";
+import {File} from "@/core";
 
 export default class AccountCreate {
   /**

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { BodyTypes, RequestTypes } from "@/core/enums";
-import { ResponseException } from "@/core/exceptions";
-import { RequestConfig } from "@/core/models";
+import {BodyTypes, RequestTypes} from "@/core/enums";
+import {ResponseException} from "@/core/exceptions";
+import {RequestConfig} from "@/core/models";
 import useTranslation from "@/core/composable/useTranslation";
 
 const translation = useTranslation('core');
@@ -92,7 +92,13 @@ export default class BaseApiClient {
    * @param {RequestConfig} config
    * @return {Promise<any>}
    */
-  async buildRequest(url, {data, dataType = BodyTypes.json, params = null, headers = {}, requestType = RequestTypes.post}) {
+  async buildRequest(url, {
+    data,
+    dataType = BodyTypes.json,
+    params = null,
+    headers = {},
+    requestType = RequestTypes.post
+  }) {
     const requestUrl = this.#prepareUrl(url, params);
 
     const payload = !!data ? this.setPayload(data, dataType) : {};

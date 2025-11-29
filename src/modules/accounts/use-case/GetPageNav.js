@@ -1,10 +1,15 @@
-import {ResponseException, NotFoundException, BaseUseCase, ObjectHelper} from "@/core";
+import {
+  ResponseException,
+  NotFoundException,
+  BaseUseCase,
+  ObjectHelper
+} from "@/core";
 import {Pagination} from "@/modules/accounts";
 import {AccountRepository} from "@/modules/accounts/repositories";
 import {AccountMapper} from "@/modules/accounts/mappers";
 import {
   mapPaginationValuesResponseToModel
-} from "@/modules/accounts/mappers/AccountMapper.js";
+} from "@/modules/accounts/mappers/AccountMapper";
 
 /**
  * @final

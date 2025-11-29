@@ -1,5 +1,5 @@
-import InversionControl from "@/core/di/InversionControl.js";
+import DependencyInjection from "@/core/di/DependencyInjection.js";
 
 export {
-  InversionControl
+  DependencyInjection
 }

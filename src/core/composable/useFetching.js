@@ -1,14 +1,24 @@
 import {ref, Ref} from 'vue';
-import {NotificationParams} from "@/core/models";
+import {ArgumentException} from "@/core/exceptions";
 import {MessageHelper} from "@/core/utils";
+import {BaseUseCase} from "@/core/use-case";
 
 /**
  * @param {Function} ajaxFunc
+ * @param {BaseUseCase} useCase
  * @param {Boolean} showMessage
  * @param {any} args
  * @return {Object}
+ * @throws {ArgumentException|Error}
  */
-export default function useFetching({ajaxFunc, showMessage = true, ...args}) {
+export default function useFetching(
+  {
+    ajaxFunc = null,
+    useCase = null,
+    showMessage = true,
+    ...args
+  }
+) {
   /**
    * @type {Ref<any>}
    */
@@ -28,17 +38,26 @@ export default function useFetching({ajaxFunc, showMessage = true, ...args}) {
   const fetch = async () => {
     try {
       isLoading.value = true;
-      data.value = await ajaxFunc(...args);
+      if (!!useCase) {
+        data.value = await useCase.execute(...args);
+      } else {
+        data.value = await ajaxFunc(...args);
+      }
       isLoading.value = false;
     } catch (exception) {
       isLoading.value = false;
       error.value = {...exception};
-      MessageHelper.showNotification(new NotificationParams({
-        message: exception?.message
-      }));
+      if (showMessage) {
+        MessageHelper.showNotification({
+          message: exception?.message
+        });
+      }
     }
   }
 
+  if (!useCase && !ajaxFunc) {
+    throw new ArgumentException("The request execution method cannot be empty");
+  }
   fetch();
   return {
     data,

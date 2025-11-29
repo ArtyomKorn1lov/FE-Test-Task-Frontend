@@ -1,12 +1,9 @@
+import {EnvService} from "@/core/utils";
+
 /**
  * @type {String}
  */
-export const Lang = process.env.APP_LANG ?? "en";
-
-/**
- * @type {Number}
- */
-export const MaxFileSize = !!process.env.MAX_UPLOAD_SIZE ? Number(process.env.MAX_UPLOAD_SIZE) : 2;
+export const Lang = EnvService.get("APP_LANG") ?? "en";
 
 /**
  * @type {Number}

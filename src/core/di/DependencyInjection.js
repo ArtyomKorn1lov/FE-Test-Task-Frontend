@@ -5,7 +5,7 @@ const translation = useTranslation('core');
 
 /**
  * @const
- * @description IoC - контейнер
+ * @description Внедрение зависимостей
  */
 export default {
   dependencies: new Map(),
@@ -14,9 +14,10 @@ export default {
    * @param {String} name
    * @param {Function} className
    * @param {String[]} dependencyNames
+   * @param {any[]} constructorArgs
    */
-  register(name, className, dependencyNames = []) {
-    this.dependencies.set(name, {className, dependencyNames});
+  register(name, className, dependencyNames = [], constructorArgs = []) {
+    this.dependencies.set(name, {className, dependencyNames, constructorArgs});
   },
 
   /**
@@ -29,9 +30,9 @@ export default {
       throw new NotFoundException(translation.value.injection.notFound + name);
     }
 
-    const {className, dependencyNames} = registration;
+    const {className, dependencyNames, constructorArgs} = registration;
     const resolvedDependencies = dependencyNames.map(dependenceName => this.resolve(dependenceName));
 
-    return new className(...resolvedDependencies);
+    return new className(...resolvedDependencies, ...constructorArgs);
   }
 }

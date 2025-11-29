@@ -9,7 +9,7 @@ export default class ContextSearchResponse {
    * @constructor
    * @param {ContextSearchResponse|null} data
    */
-  constructor(data= null) {
+  constructor(data = null) {
     this.login = data?.login;
   }
 }

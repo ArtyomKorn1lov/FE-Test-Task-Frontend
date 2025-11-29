@@ -20,11 +20,20 @@ export const convertObjectToArray = (object) => {
 
 /**
  * @param {Object} object
+ * @param {String} propCode
+ * @return {Boolean}
+ */
+export const hasProperty = (object, propCode) => {
+  return object.hasOwnProperty(propCode);
+}
+
+/**
+ * @param {Object} object
  * @return {Boolean}
  */
 export const isEmpty = (object) => {
   for (const key in object) {
-    if (!object.hasOwnProperty(key)) {
+    if (!hasProperty(object, key)) {
       continue;
     }
     return false;

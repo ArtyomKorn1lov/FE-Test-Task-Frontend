@@ -1,7 +1,7 @@
 <template>
   <div class="mainContainer">
     <Header />
-    <slot/>
+    <slot />
     <ModalWrapper />
   </div>
 </template>

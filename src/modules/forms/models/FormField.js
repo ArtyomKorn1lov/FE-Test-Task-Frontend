@@ -1,5 +1,3 @@
-import FormFieldValue from "@/modules/forms/models/FormFieldValue.js";
-
 export default class FormField {
   /**
    * @public
@@ -33,9 +31,19 @@ export default class FormField {
   required;
   /**
    * @public
-   * @type {FormFieldValue[]|String|Number|Boolean}
+   * @type {String|Number|Boolean}
    */
   value;
+  /**
+   * @public
+   * @type {Array}
+   */
+  items;
+  /**
+   * @public
+   * @type {Array}
+   */
+  customRule;
 
   /**
    * @constructor
@@ -49,5 +57,7 @@ export default class FormField {
     this.placeholder = data?.placeholder;
     this.required = data?.required;
     this.value = data?.value;
+    this.items = data?.items;
+    this.customRule = data?.customRule;
   }
 }

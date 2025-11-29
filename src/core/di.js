@@ -1,4 +1,5 @@
-import {InversionControl} from "@/core/di";
+import {DependencyInjection} from "@/core/di";
+import {EnvService} from "@/core/utils";
 import {ApiClient} from "@/core/api-client";
 
-InversionControl.register("ApiClient", ApiClient, [process.env.REST_API_URL ?? "/"]);
+DependencyInjection.register("ApiClient", ApiClient, [], [EnvService.get("REST_API_URL") ?? "/"]);

@@ -2,41 +2,48 @@ import {ref, reactive, Ref, Reactive, ComputedRef} from "vue";
 import {
   ResponseStatus,
   MessageTypes,
-  MessageBoxParams,
   MessageHelper,
+  FileHelper,
+  File as CustomFile,
+  BaseUseCase,
   useFetch,
   useTranslation,
 } from "@/core";
-import {emailRegex} from "@/modules/forms";
-import {UseFormParams, FormField} from "@/modules/forms/models";
+import {FileDividerTypeCasting} from "@/core";
+import {MaxFileSize} from "@/modules/forms/constants";
+import {FileUploadException} from "@/modules/forms/exceptions";
+import {FormFields, FormField} from "@/modules/forms/models";
+import {FormFieldsBuilder} from "@/modules/forms/fabrics";
 
 /**
- * Примесь с общей логикой форм обратной связи
- * @param {UseFormParams} args
+ * @description Примесь с общей логикой форм обратной связи
+ * @param {{ formFields: FormFields, ajaxFunc: Function, useCase: BaseUseCase, sendModel: Class, validators: Object }} args
  * @returns {Object}
  */
 export default function useForm(
   {
-    fields,
-    ajaxFunc,
-    sendModel,
+    formFields,
+    ajaxFunc = null,
+    useCase = null,
+    sendModel = null,
     validators = {}
   }
 ) {
-
-  /**
-   * @type {ComputedRef<Object>}
-   */
-  const formTranslations = useTranslation('form');
   /**
    * @type {ComputedRef<Object>}
    */
   const messageTranslations = useTranslation('core');
 
+  const fieldBuilder = new FormFieldsBuilder(formFields, validators);
+
+  /**
+   * @type {Reactive<FormFields>}
+   */
+  const fields = reactive(formFields);
   /**
    * @type {Reactive<Object>}
    */
-  const formData = reactive({});
+  const formData = reactive(fieldBuilder.formData);
   /**
    * @type {Ref<Boolean>}
    */
@@ -44,91 +51,82 @@ export default function useForm(
   /**
    * @type {Reactive<Object>}
    */
-  const rules = reactive({});
+  const rules = reactive(fieldBuilder.rules);
 
   /**
    * @type {(function(...args): Promise<any>)}
    */
   const fetch = useFetch({
+    useCase: useCase,
     ajaxFunc: ajaxFunc,
     messageType: MessageTypes.messageBox
   });
 
-  const onInit = () => {
-    initRules();
-    initFormData();
-  }
-
-  const initRules = () => {
-    fields?.groups?.forEach(group => {
-      group?.items?.forEach(field => {
-        if (!field.required) {
-          return;
-        }
-        setRuleValidation(field);
-      });
-    });
+  /**
+   * @param {String} fieldCode
+   * @param {Array} items
+   */
+  const setFieldItems = (fieldCode, items) => {
+    fieldBuilder.setFields(fields);
+    fieldBuilder.setFormFieldItems(fieldCode, items);
+    Object.assign(fields, fieldBuilder.fields);
   }
 
   /**
-   * @param {FormField} field
+   * @param {Object} values
    */
-  const setRuleValidation = (field) => {
-    rules[field.code] = [];
+  const setFormDataValues = (values) => {
+    Object.assign(formData, values);
+  }
 
-    switch (field.type) {
-      case 'email':
-        const emailValidator = (rule, value, callback) => {
-          const regularExpression = !!validators[field.type] ? validators[field.type] : emailRegex;
-          if (regularExpression.test(value)) {
-            return callback();
-          }
-          return callback(new Error(formTranslations.value.fields.email.error));
-        }
-        rules[field.code] = [
-          {
-            validator: emailValidator,
-            trigger: "change"
-          },
-          {
-            validator: emailValidator,
-            trigger: "blur"
-          }
-        ];
-        break;
-      default:
-        break;
+  /**
+   * @param {String} code
+   */
+  const removeFormDataValue = (code) => {
+    formData[code] = null;
+  }
+
+  /**
+   * @param {File} rawFile
+   * @return {Boolean}
+   */
+  const onFileUpload = (rawFile) => {
+    try {
+      const maxFileSizInBytes = MaxFileSize * Math.pow(FileDividerTypeCasting, 2);
+      if (!FileHelper.checkMaxFileSize(rawFile, maxFileSizInBytes)) {
+        throw new FileUploadException("Picture size can not exceed");
+      }
+      return true;
+    } catch (/** @type {Error} */ exception) {
+      MessageHelper.showNotification({
+        message: exception.message
+      });
+      return false;
     }
-
-    const requiredRule = [
-      {
-        required: true,
-        message: formTranslations.value.fields.default.error,
-        trigger: 'change'
-      },
-      {
-        required: true,
-        message: formTranslations.value.fields.default.error,
-        trigger: 'blur'
-      },
-    ];
-
-    rules[field.code] = [...rules[field.code], ...requiredRule];
-  }
-
-  const initFormData = () => {
-    fields?.groups?.forEach(group => {
-      group?.items?.forEach((field) => {
-        setFormDataValue(field);
-      });
-    });
   }
 
   /**
-   * @param {FormField} field
+   * @param {String} code
+   * @param {String} response
+   * @param {Object} uploadFile
    */
-  const setFormDataValue = (field) => {
-    formData[field.code] = null;
+  const onFileUploadSuccess = async (code, response, uploadFile) => {
+    try {
+      MessageHelper.showNotification({
+        message: response,
+        type: ResponseStatus.success
+      });
+      formData[code] = new CustomFile({
+        file: await FileHelper.convertToBase64(uploadFile.raw),
+        name: uploadFile.name,
+        url: FileHelper.createFileUrl(uploadFile.raw)
+      });
+    } catch (/** @type {Error} */ exception) {
+      console.error(exception);
+      MessageHelper.showNotification({
+        message: exception.message,
+      });
+    }
   }
 
   /**
@@ -154,17 +152,22 @@ export default function useForm(
    */
   const sendRequest = async (formRef, afterSuccess = null) => {
     try {
+      let model;
+      if (!sendModel) {
+        model = formData;
+      } else {
+        model = new sendModel({...formData});
+      }
       isLoading.value = true;
-      const model = new sendModel(formData);
       const response = await fetch(model);
-      resetForm(formRef);
       isLoading.value = false;
-      await MessageHelper.showMessageBox(new MessageBoxParams({
+      resetForm(formRef);
+      await MessageHelper.showMessageBox({
         title: messageTranslations.value.messages.successTitle,
         message: response?.data,
         type: ResponseStatus.success,
         callback: afterSuccess
-      }));
+      });
     } catch (e) {
       isLoading.value = false;
     }
@@ -178,12 +181,17 @@ export default function useForm(
     formRef.resetFields()
   }
 
-  onInit();
-
   return {
+    fields,
     formData,
     isLoading,
     rules,
-    onSubmit
+    setFieldItems,
+    setFormDataValues,
+    removeFormDataValue,
+    onFileUpload,
+    onFileUploadSuccess,
+    onSubmit,
+    resetForm
   }
 }

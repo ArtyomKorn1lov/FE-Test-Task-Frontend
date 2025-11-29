@@ -1,9 +1,8 @@
 <template>
   <main class="b-main">
-    <AccountList />
+    <AccountList/>
   </main>
 </template>
-
 <script setup>
-import AccountList from '@/modules/accounts/components/AccountList.vue';
+import {AccountList} from '@/modules/accounts/components';
 </script>

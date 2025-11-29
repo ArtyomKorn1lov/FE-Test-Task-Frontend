@@ -16,7 +16,7 @@
       >
       </button>
     </template>
-    <slot />
+    <slot/>
   </el-dialog>
 </template>
 <script setup>

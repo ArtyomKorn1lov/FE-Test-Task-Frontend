@@ -50,7 +50,7 @@ import {ElIcon, ElButton, ElAutocomplete} from 'element-plus';
 import {
   TemplateHelper,
   ArrayHelper,
-  InversionControl,
+  DependencyInjection,
   useFetch,
   useTranslation
 } from "@/core";
@@ -77,7 +77,7 @@ const loc = useTranslation('header');
 /**
  * @type {SearchAccounts}
  */
-const searchAccounts = InversionControl.resolve("SearchAccounts");
+const searchAccounts = DependencyInjection.resolve("SearchAccounts");
 
 /**
  * @type {Store<AccountStore>}
@@ -93,7 +93,6 @@ const searchString = ref('');
  * @type {ComputedRef<String>}
  */
 const iconSearch = computed(() => TemplateHelper.getIcon('search'));
-
 /**
  * @type {ComputedRef<Filter>}
  */

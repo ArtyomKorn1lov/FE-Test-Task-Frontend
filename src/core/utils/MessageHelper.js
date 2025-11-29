@@ -1,15 +1,21 @@
-import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
-import { ResponseStatus } from "@/core/enums";
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
+import {ResponseStatus} from "@/core/enums";
 import useTranslation from "@/core/composable/useTranslation.js";
-import { MessageBoxParams, NotificationParams, MessageConfirmParams } from "@/core/models";
 
 const translation = useTranslation('core');
 
 /**
- * @param {MessageBoxParams} args
+ * @param {{ title: String, message: String, type: String|ResponseStatus, callback: VoidFunction }} args
  * @return {Promise<void>}
  */
-export const showMessageBox = async ({title = translation.value.messages.errorTitle, message, type = ResponseStatus.error, callback = null}) => {
+export const showMessageBox = async (
+  {
+    title = translation.value.messages.errorTitle,
+    message,
+    type = ResponseStatus.error,
+    callback = null
+  }
+) => {
   await ElMessageBox.alert(
     message,
     title,
@@ -28,10 +34,16 @@ export const showMessageBox = async ({title = translation.value.messages.errorTi
 }
 
 /**
- * @param {NotificationParams} args
+ * @param {{ title: String, message: String, type: String|ResponseStatus }} args
  * @return {void}
  */
-export const showNotification = ({title = translation.value.messages.errorTitle, message, type =  ResponseStatus.error}) => {
+export const showNotification = (
+  {
+    title = translation.value.messages.errorTitle,
+    message,
+    type = ResponseStatus.error
+  }
+) => {
   ElNotification({
     title: title,
     message: message,
@@ -40,10 +52,17 @@ export const showNotification = ({title = translation.value.messages.errorTitle,
 }
 
 /**
- * @param {MessageConfirmParams} args
+ * @param {{ title: String, message: String, callback: VoidFunction, cancelMessage: String }} args
  * @return {void}
  */
-export const showConfirmMessageBox = async ({title, message, callback, cancelMessage = 'Canceled'}) => {
+export const showConfirmMessageBox = async (
+  {
+    title,
+    message,
+    callback,
+    cancelMessage = 'Canceled'
+  }
+) => {
   await ElMessageBox.confirm(
     message,
     title,

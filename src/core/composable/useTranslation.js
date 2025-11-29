@@ -1,6 +1,6 @@
-import { computed, ComputedRef } from 'vue';
+import {computed, ComputedRef} from 'vue';
 import translations from '@/translations';
-import { Lang } from '@/core/lib/constants.js';
+import {Lang} from "@/core/constants";
 
 /**
  * @param {String} component

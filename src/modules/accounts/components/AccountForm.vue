@@ -1,5 +1,6 @@
 <template>
   <el-form
+    v-loading="isLoadingData"
     class="b-form"
     ref="formRef"
     :rules="rules"
@@ -22,9 +23,9 @@
             <el-upload
               class="b-upload"
               :show-file-list="true"
-              :action="uploadFileUrl"
-              :on-success="(response, uploadFile) => handleFileUploadSuccess(field.code, response, uploadFile)"
-              :before-upload="beforeFileUpload"
+              :action="UploadFileUrl"
+              :on-success="(response, uploadFile) => onFileUploadSuccess(field.code, response, uploadFile)"
+              :before-upload="onFileUpload"
               :on-remove="() => removeFormDataValue(field.code)"
             >
               <img
@@ -34,7 +35,7 @@
                 :alt="loc.uploadImgAlt"
               />
               <el-icon v-else class="b-upload__icon">
-                <Plus />
+                <Plus/>
               </el-icon>
             </el-upload>
           </template>
@@ -44,7 +45,7 @@
             class="b-select"
             popper-class="b-select__popper"
             :placeholder="field.placeholder"
-            :class="!!formData[field.code] ? `b-select_selected b-select_selected-${getRoleCodeById(formData[field.code])}` : ''"
+            :class="!!formData[field.code] ? `b-select_selected b-select_selected-${getRoleCodeById(formData[field.code], field)}` : ''"
           >
             <el-option
               v-for="option in field.items"
@@ -88,26 +89,45 @@ import {
   ElUpload,
   ElIcon,
   ElButton,
-  ElMessage,
 } from 'element-plus';
-import { Plus } from '@element-plus/icons-vue';
-import { ref, reactive, computed, ComputedRef } from 'vue';
+import {Plus} from '@element-plus/icons-vue';
+import {ref, Ref, computed, ComputedRef} from 'vue';
 import useTranslation from '@/core/composable/useTranslation.js';
-import useForm from '@/modules/forms/composable/useForm.js';
-import { getRoles, createAccount, getAccountById, editAccount } from '@/core/api-client/accounts.js';
-import AccountFormFields from '@/core/models/AccountFormFields.js';
-import { uploadFileUrl } from '@/core/api-client/options.js';
-import { EmailValidatorRegex, AccountRoleFieldCode, MaxFileSize, FileDividerTypeCasting, SuccessStatusCode, ErrorStatusCode } from '@/core/lib/constants.js';
-import Request from '@/core/lib/request.js';
-import AccountFormValidatorsModel from '@/core/models/AccountFormValidatorsModel.js';
-import AccountCreateModel from '@/core/models/AccountCreateModel.js';
-import AccountCreateFileModel from '@/core/models/AccountCreateFileModel.js';
-import AccountEditModel from '@/core/models/AccountEditModel.js';
-import { UseFormParams } from "@/modules/forms/index.js";
+import {DependencyInjection, CommonResponse, useFetch} from "@/core";
+import {FormField, useForm, EmailRegex} from "@/modules/forms";
+import {
+  AccountRoleFieldCode,
+  UploadFileUrl
+} from "@/modules/accounts/constants";
+import {Role, AccountUpdate, AccountCreate} from "@/modules/accounts/models";
+import {
+  GetRoles,
+  CreateAccount,
+  GetAccountById,
+  UpdateAccount
+} from "@/modules/accounts/use-case";
+import {AccountFormFields} from "@/modules/accounts/fields";
+
+/**
+ * @type {GetRoles}
+ */
+const getRoles = DependencyInjection.resolve("GetRoles");
+/**
+ * @type {GetAccountById}
+ */
+const getAccountById = DependencyInjection.resolve("GetAccountById");
+/**
+ * @type {CreateAccount}
+ */
+const createAccount = DependencyInjection.resolve("CreateAccount");
+/**
+ * @type {UpdateAccount}
+ */
+const updateAccount = DependencyInjection.resolve("UpdateAccount");
 
 const loc = useTranslation('accountForm');
 
-const { accountEditId } = defineProps({
+const {accountEditId} = defineProps({
   accountEditId: {
     type: [Number, Boolean],
     default: false
@@ -117,27 +137,46 @@ const { accountEditId } = defineProps({
 const emit = defineEmits(['update']);
 
 /**
+ * @type {(function(): Promise<Role[]>)}
+ */
+const fetchRoles = useFetch({
+  useCase: getRoles
+});
+/**
+ * @type {(function(id: Number): Promise<AccountUpdate>)}
+ */
+const fetchAccountById = useFetch({
+  useCase: getAccountById
+});
+
+const {
+  fields,
+  formData,
+  isLoading,
+  rules,
+  setFieldItems,
+  setFormDataValues,
+  removeFormDataValue,
+  onFileUpload,
+  onFileUploadSuccess,
+  onSubmit
+} = useForm(
+  {
+    formFields: AccountFormFields,
+    useCase: !accountEditId ? createAccount : updateAccount,
+    sendModel: accountEditId ? AccountCreate : AccountUpdate,
+    validators: {email: EmailRegex}
+  }
+);
+
+/**
  * @type {ShallowRef}
  */
 const formRef = ref();
 /**
- * @type {Object}
+ * @type {Ref<Boolean>}
  */
-const fields = reactive(AccountFormFields);
-
-const {
-  formData,
-  isLoading,
-  rules,
-  onSubmit
-} = useForm(
-  new UseFormParams({
-    fields: fields,
-    ajaxFunc: !accountEditId ? createAccount : editAccount,
-    sendModel: accountEditId ? AccountCreateModel : AccountEditModel,
-    validators: new AccountFormValidatorsModel({ email: EmailValidatorRegex })
-  })
-);
+const isLoadingData = ref(false);
 
 /**
  * @type {ComputedRef<String>}
@@ -146,120 +185,62 @@ const submitMessage = computed(() => {
   return !!accountEditId ? loc.value.editBtnTitle : loc.value.createBtnTitle;
 });
 
+/**
+ * @return {Promise<void>}
+ */
 const getAccountRoles = async () => {
-  await getRoles()
-    .then((response) => {
-      const roleOptions = response?.data;
-      setAccountRoleOptions(roleOptions);
-    })
-    .catch((error) => {
-      console.error('GET error:{accounts/roles}', error);
-    });
+  try {
+    setAccountRoleOptions(await fetchRoles());
+  } catch (e) {
+    isLoadingData.value = false;
+  }
 }
 
 /**
- * @param {Array<Object>} roleOptions
+ * @param {Array<Role[]>} roleOptions
  */
 const setAccountRoleOptions = (roleOptions) => {
   if (!roleOptions || roleOptions.length < 0) {
     return;
   }
-  (!!fields.groups && fields.groups.length > 0)
-    && fields.groups.forEach((group, groupIndex) => {
-      (!!group.items && group.items.length > 0)
-        && group.items.forEach((field, fieldIndex) => {
-          const items = fields.groups[groupIndex].items[fieldIndex].items;
-          (!!items && fields.groups[groupIndex].items[fieldIndex].code === AccountRoleFieldCode)
-            && (fields.groups[groupIndex].items[fieldIndex].items = roleOptions);
-        });
-    });
+  setFieldItems(AccountRoleFieldCode, roleOptions);
 }
 
 /**
  * @param {Number} id
+ * @param {FormField} field
  */
-const getRoleCodeById = (id) => {
+const getRoleCodeById = (id, field) => {
   if (!id) {
     return '';
   }
-  let result = '';
-  (!!fields.groups && fields.groups.length > 0)
-    && fields.groups.forEach((group, groupIndex) => {
-      (!!group.items && group.items.length > 0)
-        && group.items.forEach((field, fieldIndex) => {
-          const items = fields.groups[groupIndex].items[fieldIndex].items;
-          if (!!items && items.length > 0) {
-            result = items.filter((item) => item.id === id)[0]?.code;
-          }
-        });
-    });
-  return result;
+  return field.items?.find((item) => item.id === id)?.code ?? "";
 }
 
 /**
  * @param {Number} id
  */
 const getEditAccount = async (id) => {
-  let accountModel = {};
-  await getAccountById(id)
-    .then((response) => {
-      accountModel = new AccountEditModel(response?.data);
-    })
-    .catch((error) => {
-      console.error('GET error:{accounts/:id}', error);
-      ElMessage({
-        message: error,
-        type: ErrorStatusCode,
-      });
-    });
-  for (const key in accountModel) {
-    formData[key] = accountModel[key];
+  try {
+    const response = await fetchAccountById(id);
+    setFormDataValues(response);
+  } catch (e) {
+    isLoadingData.value = false;
   }
-}
-
-/**
- * @param {String} code
- * @param {String} response
- * @param {File} uploadFile
- */
-const handleFileUploadSuccess = async (code, response, uploadFile) => {
-  ElMessage({
-    message: response,
-    type: SuccessStatusCode,
-  });
-  const request = new Request();
-  formData[code] = new AccountCreateFileModel({
-    file: await request.convertToBase64(uploadFile.raw),
-    name: uploadFile.name,
-    url: URL.createObjectURL(uploadFile.raw)
-  });
-}
-
-/**
- * @param {File} rawFile
- */
-const beforeFileUpload = (rawFile) => {
-  if (rawFile.size / FileDividerTypeCasting / FileDividerTypeCasting > MaxFileSize) {
-    ElMessage.error(`${loc.value.pictureUploadSizeError} ${MaxFileSize}MB!`);
-    return false;
-  }
-  return true;
-}
-
-/**
- * @param {String} code
- */
-const removeFormDataValue = (code) => {
-  formData[code] = null;
 }
 
 const afterSubmit = () => {
   emit('update');
 }
 
+/**
+ * @return {Promise<void>}
+ */
 const onInit = async () => {
+  isLoadingData.value = true;
   await getAccountRoles();
   !!accountEditId && await getEditAccount(accountEditId);
+  isLoadingData.value = false;
 }
 
 onInit();
