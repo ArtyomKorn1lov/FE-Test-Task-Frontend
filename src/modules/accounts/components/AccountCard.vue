@@ -62,7 +62,7 @@
   </a>
 </template>
 <script setup>
-import {computed, ComputedRef, EmitFn} from 'vue';
+import {computed} from 'vue';
 import {ElButton, ElCheckbox} from 'element-plus';
 import {useI18n} from 'vue-i18n';
 import {TemplateHelper} from "@/core";
@@ -86,25 +86,22 @@ const {element, isSelected, disableActions} = defineProps({
   }
 });
 
-/**
- * @type {EmitFn<String[]>}
- */
 const emit = defineEmits(['select-item', 'select-role', 'delete', 'edit']);
 
 /**
- * @type {ComputedRef<String>}
+ * @type {import('vue').ComputedRef<String>}
  */
 const emailLink = computed(() => {
   return `mailto:${element?.email}`;
 });
 /**
- * @type {ComputedRef<String>}
+ * @type {import('vue').ComputedRef<String>}
  */
 const picture = computed(() => {
   return (!!element?.picture) ? element?.picture : NoImageUrl;
 });
 /**
- * @type {ComputedRef<String>}
+ * @type {import('vue').ComputedRef<String>}
  */
 const tagClassModifier = computed(() => {
   return `${TagAccountListModifier}${element?.roleCode}`

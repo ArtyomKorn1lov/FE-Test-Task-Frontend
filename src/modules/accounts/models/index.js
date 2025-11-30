@@ -6,6 +6,7 @@ import ContextSearch from "@/modules/accounts/models/ContextSearch";
 import ContextSearchResponse
   from "@/modules/accounts/models/ContextSearchResponse";
 import Filter from "@/modules/accounts/models/Filter";
+import FilterRole from "@/modules/accounts/models/FilterRole";
 import Sort from "@/modules/accounts/models/Sort";
 import Pagination from "@/modules/accounts/models/Pagination";
 import Role from "@/modules/accounts/models/Role";
@@ -24,6 +25,7 @@ export {
   ContextSearch,
   ContextSearchResponse,
   Filter,
+  FilterRole,
   Sort,
   Pagination,
   Role,

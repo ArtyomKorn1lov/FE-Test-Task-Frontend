@@ -206,6 +206,10 @@ export default class FormFieldsBuilder {
    * @param {FormField} field
    */
   addCustomRule(field) {
+    if (!field.customRule) {
+      return;
+    }
+
     if (!this.rules[field.code]) {
       this.rules[field.code] = [...field.customRule];
     } else {

@@ -11,7 +11,7 @@ import VLoading from "element-plus/es/components/loading/index";
 import router from '@/router';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-import App from '@/App';
+import App from '@/App.vue';
 import store from '@/modules/accounts/store';
 import Translations from "@/translations";
 

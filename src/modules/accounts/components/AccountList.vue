@@ -42,8 +42,9 @@
   </div>
 </template>
 <script setup>
-import {computed, ref, Ref, ComputedRef} from 'vue';
+import {computed, ref} from 'vue';
 import {useStore, Store} from 'vuex';
+import {useI18n} from "vue-i18n";
 import {
   MessageHelper,
   DependencyInjection,
@@ -54,22 +55,20 @@ import {
   useFetch
 } from "@/core";
 import {Pagination as PaginationComponent, ModalParams} from "@/modules/ui";
-import AccountControls from "@/modules/accounts/components/AccountControls";
-import AccountTop from "@/modules/accounts/components/AccountTop";
-import AccountCard from "@/modules/accounts/components/AccountCard";
+import {AccountControls, AccountTop, AccountCard} from "@/modules/accounts/components";
 import {ModalComponentsCodes} from "@/modules/accounts/enums";
 import {
   AccountStore,
   AccountDelete,
   Account,
   Filter,
+  FilterRole,
   Pagination,
   Sort,
   SelectRole,
   SelectItem
 } from "@/modules/accounts/models";
 import {DeleteAccount, DeleteAccounts} from "@/modules/accounts/use-case";
-import {useI18n} from "vue-i18n";
 
 /**
  * @type {DeleteAccount}
@@ -88,40 +87,40 @@ const {t} = useI18n();
 const store = useStore();
 
 /**
- * @type {Ref<Number[]>}
+ * @type {import('vue').Ref<Number[]>}
  */
 const selectedItems = ref([]);
 /**
- * @type {Ref<Boolean>}
+ * @type {import('vue').Ref<Boolean>}
  */
 const isSelectAll = ref(false);
 /**
- * @type {Ref<String>}
+ * @type {import('vue').Ref<String>}
  */
 const selectedRoleName = ref('');
 
 /**
- * @type {ComputedRef<Filter>}
+ * @type {import('vue').ComputedRef<Filter>}
  */
 const filter = computed(() => store.getters.getFilter);
 /**
- * @type {ComputedRef<Account[]>}
+ * @type {import('vue').ComputedRef<Account[]>}
  */
 const items = computed(() => store.getters.getItems);
 /**
- * @type {ComputedRef<Boolean>}
+ * @type {import('vue').ComputedRef<Boolean>}
  */
 const isLoading = computed(() => store.getters.getIsLoading);
 /**
- * @type {ComputedRef<Boolean>}
+ * @type {import('vue').ComputedRef<Boolean>}
  */
 const showItems = computed(() => !!items.value && items.value.length > 0);
 /**
- * @type {ComputedRef<Number>}
+ * @type {import('vue').ComputedRef<Number>}
  */
 const itemsCount = computed(() => selectedItems.value.length);
 /**
- * @type {ComputedRef<Boolean>}
+ * @type {import('vue').ComputedRef<Boolean>}
  */
 const disableEditTop = computed(() => selectedItems.value.length > 1);
 
@@ -129,14 +128,14 @@ const disableEditTop = computed(() => selectedItems.value.length > 1);
  * @type {(function(id: Number): Promise<CommonResponse>)}
  */
 const fetchDelete = useFetch({
-  ajaxFunc: deleteAccount.execute,
+  useCase: deleteAccount,
   messageType: MessageTypes.messageBox
 });
 /**
  * @type {(function(object: AccountDelete): Promise<CommonResponse>)}
  */
 const fetchDeleteItems = useFetch({
-  ajaxFunc: deleteAccounts.execute,
+  useCase: deleteAccounts,
   messageType: MessageTypes.messageBox
 });
 
@@ -177,7 +176,7 @@ const onSelectAll = (value) => {
  */
 const onSelectRole = async (obj) => {
   selectedRoleName.value = obj.roleName;
-  await store.dispatch("onFilter", new Filter({
+  await store.dispatch("onFilter", new FilterRole({
     roleCode: obj.roleCode
   }));
 }
@@ -236,11 +235,11 @@ const afterDeleteItem = async () => {
 /**
  * @param {Sort} obj
  */
-const setSortValues = (obj) => {
+const setSortValues = async (obj) => {
   (obj.sort === filter.value.sort)
     ? (obj.order = obj.order === SortTypes.asc ? SortTypes.desc : SortTypes.asc)
     : (obj.order = SortTypes.asc);
-  store.dispatch('onFilter', obj);
+  await store.dispatch('onFilter', obj);
 }
 
 const editSelectedItem = () => {

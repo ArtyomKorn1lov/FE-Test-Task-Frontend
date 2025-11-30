@@ -1,8 +1,8 @@
 import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
-import {useI18n} from "vue-i18n";
+import Translations from "@/translations";
 import {ResponseStatus} from "@/core/enums";
 
-const {t} = useI18n();
+const t = Translations.global.t;
 
 /**
  * @param {{ title: String, message: String, type: String|ResponseStatus, callback: VoidFunction }} args

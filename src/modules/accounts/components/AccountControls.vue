@@ -35,7 +35,7 @@
   </div>
 </template>
 <script setup>
-import {computed, ComputedRef} from 'vue';
+import {computed} from 'vue';
 import {ElButton, ElIcon} from 'element-plus';
 import {CircleClose} from '@element-plus/icons-vue';
 import {useI18n} from "vue-i18n";
@@ -69,13 +69,13 @@ const {count, disableEditBtn, roleCode, roleName} = defineProps({
 const emit = defineEmits(['clear-role', 'delete-items', 'edit-item']);
 
 /**
- * @type {ComputedRef<Boolean>}
+ * @type {import('vue').ComputedRef<Boolean>}
  */
 const showBtnGroup = computed(() => {
   return count > 0;
 });
 /**
- * @type {ComputedRef<String>}
+ * @type {import('vue').ComputedRef<String>}
  */
 const tagClassModifier = computed(() => {
   return `${TagAccountListModifier}${roleCode}`

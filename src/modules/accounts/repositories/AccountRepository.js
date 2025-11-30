@@ -150,7 +150,7 @@ export default class AccountRepository {
    * @throws {ResponseException}
    */
   async deleteItems(object) {
-    return await this.apiClient.delete(
+    return await this.apiClient.post(
       "/accounts/delete",
       new RequestConfig({
         data: object

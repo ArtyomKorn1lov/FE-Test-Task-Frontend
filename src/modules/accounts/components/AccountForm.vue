@@ -2,6 +2,8 @@
   <el-form
     v-loading="isLoadingData"
     class="b-form"
+    label-width="auto"
+    label-position="top"
     ref="formRef"
     :rules="rules"
     :model="formData"
@@ -78,7 +80,7 @@
   </el-form>
 </template>
 <script setup>
-import {ref, Ref, computed, ComputedRef} from 'vue';
+import {ref, computed} from 'vue';
 import {
   ElForm,
   ElFormItem,
@@ -164,7 +166,7 @@ const {
   {
     formFields: AccountFormFields,
     useCase: !accountEditId ? createAccount : updateAccount,
-    sendModel: accountEditId ? AccountCreate : AccountUpdate,
+    sendModel: !accountEditId ? AccountCreate : AccountUpdate,
     validators: {email: EmailRegex}
   }
 );
@@ -174,12 +176,12 @@ const {
  */
 const formRef = ref();
 /**
- * @type {Ref<Boolean>}
+ * @type {import('vue').Ref<Boolean>}
  */
 const isLoadingData = ref(false);
 
 /**
- * @type {ComputedRef<String>}
+ * @type {import('vue').ComputedRef<String>}
  */
 const submitMessage = computed(() => {
   return !!accountEditId ? t('accountForm.editBtnTitle') : t('accountForm.createBtnTitle');

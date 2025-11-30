@@ -1,3 +1,3 @@
-import en from '@/translations/form/en.json';
+import en from '@/translations/core/en.json';
 
 export { en };

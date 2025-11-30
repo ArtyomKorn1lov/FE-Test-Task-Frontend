@@ -44,7 +44,7 @@
   </header>
 </template>
 <script setup>
-import {ref, computed, ComputedRef, Ref} from 'vue';
+import {ref, computed} from 'vue';
 import {useStore, Store} from "vuex";
 import {ElIcon, ElButton, ElAutocomplete} from 'element-plus';
 import {useI18n} from "vue-i18n";
@@ -82,16 +82,16 @@ const searchAccounts = DependencyInjection.resolve("SearchAccounts");
 const store = useStore();
 
 /**
- * @type {Ref<String>}
+ * @type {import('vue').Ref<String>}
  */
 const searchString = ref('');
 
 /**
- * @type {ComputedRef<String>}
+ * @type {import('vue').ComputedRef<String>}
  */
 const iconSearch = computed(() => TemplateHelper.getIcon('search'));
 /**
- * @type {ComputedRef<Filter>}
+ * @type {import('vue').ComputedRef<Filter>}
  */
 const filter = computed(() => store.getters.getFilter);
 
@@ -99,13 +99,13 @@ const filter = computed(() => store.getters.getFilter);
  * @type {(function(object: ContextSearch): Promise<ContextSearchResponse>)}
  */
 const fetchContextSearch = useFetch({
-  ajaxFunc: searchAccounts.execute
+  useCase: searchAccounts
 });
 
 const openModal = () => {
   store.commit('setModalProps', new ModalParams({
     toggle: true,
-    title: t('header.account.titleCreate'),
+    title: t('modal.account.titleCreate'),
     code: ModalComponentsCodes.account
   }));
 }

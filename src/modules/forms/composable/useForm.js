@@ -1,4 +1,4 @@
-import {ref, reactive, Ref, Reactive, ComputedRef} from "vue";
+import {ref, reactive} from "vue";
 import {useI18n} from "vue-i18n";
 import {
   ResponseStatus,
@@ -6,6 +6,7 @@ import {
   MessageHelper,
   FileHelper,
   File as CustomFile,
+  CommonResponse,
   BaseUseCase,
   useFetch,
 } from "@/core";
@@ -35,24 +36,24 @@ export default function useForm(
   const fieldBuilder = new FormFieldsBuilder(formFields, validators);
 
   /**
-   * @type {Reactive<FormFields>}
+   * @type {import('vue').Reactive<FormFields>}
    */
   const fields = reactive(formFields);
   /**
-   * @type {Reactive<Object>}
+   * @type {import('vue').Reactive<Object>}
    */
   const formData = reactive(fieldBuilder.formData);
   /**
-   * @type {Ref<Boolean>}
+   * @type {import('vue').Ref<Boolean>}
    */
   const isLoading = ref(false);
   /**
-   * @type {Reactive<Object>}
+   * @type {import('vue').Reactive<Object>}
    */
   const rules = reactive(fieldBuilder.rules);
 
   /**
-   * @type {(function(...args): Promise<any>)}
+   * @type {(function(...args): Promise<CommonResponse>)}
    */
   const fetch = useFetch({
     useCase: useCase,
@@ -105,13 +106,14 @@ export default function useForm(
 
   /**
    * @param {String} code
-   * @param {String} response
+   * @param {CommonResponse} response
    * @param {Object} uploadFile
    */
   const onFileUploadSuccess = async (code, response, uploadFile) => {
     try {
       MessageHelper.showNotification({
-        message: response,
+        title: t('core.messages.successTitle'),
+        message: response?.message,
         type: ResponseStatus.success
       });
       formData[code] = new CustomFile({
@@ -162,7 +164,7 @@ export default function useForm(
       resetForm(formRef);
       await MessageHelper.showMessageBox({
         title: t('core.messages.successTitle'),
-        message: response?.data,
+        message: response?.message,
         type: ResponseStatus.success,
         callback: afterSuccess
       });

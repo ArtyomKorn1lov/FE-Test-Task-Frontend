@@ -1,4 +1,4 @@
-import {onMounted, onUnmounted, computed, ComputedRef} from 'vue';
+import {onMounted, onUnmounted, computed} from 'vue';
 import {ReloadPaginationEmit, PaginationSelector} from "@/modules/ui";
 
 /**
@@ -9,7 +9,7 @@ import {ReloadPaginationEmit, PaginationSelector} from "@/modules/ui";
  */
 export default function useObserverPagination(paginationSelector, emit, refreshEmitCode = ReloadPaginationEmit) {
   /**
-   * @type {ComputedRef<String>}
+   * @type {import('vue').ComputedRef<String>}
    */
   const observerSelector = computed(() => !!paginationSelector ? paginationSelector : PaginationSelector);
 

@@ -1,7 +1,7 @@
-import {useI18n} from "vue-i18n";
+import Translations from "@/translations";
 import {NotFoundException} from "@/core/exceptions";
 
-const {t} = useI18n();
+const t = Translations.global.t;
 
 /**
  * @const
@@ -28,7 +28,7 @@ export default {
   resolve(name) {
     const registration = this.dependencies.get(name);
     if (!registration) {
-      throw new NotFoundException(t('core.injection.notFound') + name);
+      throw new NotFoundException(t('core.injection.notFound', { name: name }));
     }
 
     const {className, dependencyNames, constructorArgs} = registration;

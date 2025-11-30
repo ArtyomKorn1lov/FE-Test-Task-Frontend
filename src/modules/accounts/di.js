@@ -3,6 +3,7 @@ import {AccountRepository} from "@/modules/accounts/repositories";
 import {
   CreateAccount,
   DeleteAccount,
+  DeleteAccounts,
   GetAccountById,
   GetAccounts,
   GetFilterValues,
@@ -16,6 +17,7 @@ DependencyInjection.register("AccountRepository", AccountRepository, ["ApiClient
 
 DependencyInjection.register("CreateAccount", CreateAccount, ["AccountRepository"]);
 DependencyInjection.register("DeleteAccount", DeleteAccount, ["AccountRepository"]);
+DependencyInjection.register("DeleteAccounts", DeleteAccounts, ["AccountRepository"]);
 DependencyInjection.register("GetAccountById", GetAccountById, ["AccountRepository"]);
 DependencyInjection.register("GetAccounts", GetAccounts, ["AccountRepository"]);
 DependencyInjection.register("GetFilterValues", GetFilterValues, ["AccountRepository"]);

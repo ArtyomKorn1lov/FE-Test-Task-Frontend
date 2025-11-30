@@ -9,18 +9,19 @@
   >
     <template #header="{ close }">
       <span class="b-dialog__title">{{ title }}</span>
-      <button
-        @click="close"
+      <a
         class="b-dialog__close"
         v-html="iconClose"
+        href="javascript:void(0)"
+        @click="close"
       >
-      </button>
+      </a>
     </template>
     <slot/>
   </el-dialog>
 </template>
 <script setup>
-import {computed, ComputedRef, EmitFn} from 'vue';
+import {computed} from 'vue';
 import {ElDialog} from 'element-plus';
 import {TemplateHelper} from "@/core";
 import {CloseModalParams} from "@/modules/ui/models";
@@ -36,13 +37,10 @@ const {toggle, title} = defineProps({
   }
 });
 
-/**
- * @type {EmitFn<String[]>}
- */
 const emit = defineEmits(['close']);
 
 /**
- * @type {ComputedRef<String>}
+ * @type {import('vue').ComputedRef<String>}
  */
 const iconClose = computed(() => TemplateHelper.getIcon('close'));
 

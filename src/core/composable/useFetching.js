@@ -1,4 +1,4 @@
-import {ref, Ref} from 'vue';
+import {ref} from 'vue';
 import {ArgumentException} from "@/core/exceptions";
 import {MessageHelper} from "@/core/utils";
 import {BaseUseCase} from "@/core/use-case";
@@ -20,15 +20,15 @@ export default function useFetching(
   }
 ) {
   /**
-   * @type {Ref<any>}
+   * @type {import('vue').Ref<any>}
    */
   const data = ref(null);
   /**
-   * @type {Ref<Boolean>}
+   * @type {import('vue').Ref<Boolean>}
    */
   const isLoading = ref(false);
   /**
-   * @type {Ref<Error|null>}
+   * @type {import('vue').Ref<Error|null>}
    */
   const error = ref(null);
 

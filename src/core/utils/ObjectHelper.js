@@ -40,3 +40,18 @@ export const isEmpty = (object) => {
   }
   return true;
 }
+
+/**
+ * @param {Object} object
+ * @return {Object}
+ */
+export const removeEmptyProperties = (object) => {
+  for (const key in object) {
+    if (typeof object[key] === "object") {
+      object[key] = removeEmptyProperties(object[key]);
+    } else if (object[key] === undefined || object[key] === null || object[key] === "") {
+      delete object[key];
+    }
+  }
+  return object;
+}

@@ -3,6 +3,7 @@ import {
   AccountStore,
   Filter,
   Sort,
+  FilterRole,
   Search,
   Pagination,
   Account,
@@ -87,6 +88,11 @@ const nextPage = ({commit, state}, itemsCount) => {
  */
 export const initAccountList = async ({commit, state}) => {
   try {
+    commit("setPaginationValues", new Pagination({
+      page: 1,
+      pageCount: state.pagination.pageCount
+    }));
+    commit("setIsLoading", true);
     const response = await fetchAccountList(state.filter, state.pagination);
     nextPage({commit, state}, response.length);
     commit('setAccounts', response);
@@ -111,7 +117,7 @@ export const addAccountList = async ({commit, state}) => {
 
 /**
  * @param {{ commit: VoidFunction, state: AccountStore, dispatch: VoidFunction }} params
- * @param {Filter|Sort} filter
+ * @param {Filter|Sort|FilterRole} filter
  * @returns {Promise<void>}
  */
 export const onFilter = async ({commit, state, dispatch}, filter) => {

@@ -1,4 +1,4 @@
-import {DependencyInjection} from "@/core/di";
+import {DependencyInjection} from "@/core/di/index.js";
 import {EnvService} from "@/core/utils";
 import {ApiClient} from "@/core/api-client";
 

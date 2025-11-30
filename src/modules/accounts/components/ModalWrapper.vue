@@ -5,6 +5,7 @@
     @close="closeModal"
   >
     <component
+      :key="modalProps"
       :is="selectedComponent"
       :account-edit-id="accountEditId"
       @update="update"
@@ -12,7 +13,7 @@
   </Modal>
 </template>
 <script setup>
-import {computed, ComputedRef, Component} from 'vue';
+import {computed} from 'vue';
 import {useStore, Store} from 'vuex';
 import {ModalParams, CloseModalParams, Modal} from "@/modules/ui";
 import {ModalComponentsCodes} from "@/modules/accounts/enums";
@@ -25,11 +26,11 @@ import ModalComponents from "@/modules/accounts/components/ModalComponents";
 const store = useStore();
 
 /**
- * @type {ComputedRef<ModalParams>}
+ * @type {import('vue').ComputedRef<ModalParams>}
  */
 const modalProps = computed(() => store.getters.getModalProps);
 /**
- * @type {ComputedRef<Component>}
+ * @type {import('vue').ComputedRef<Component>}
  */
 const selectedComponent = computed(() => {
   if (!ModalComponents[modalProps.value.code]) {
@@ -38,7 +39,7 @@ const selectedComponent = computed(() => {
   return ModalComponents[modalProps.value.code];
 });
 /**
- * @type {ComputedRef<Number|Boolean>}
+ * @type {import('vue').ComputedRef<Number|Boolean>}
  */
 const accountEditId = computed(() => store.getters.getAccountEditId);
 
@@ -54,10 +55,10 @@ const closeModal = (objClose) => {
 }
 
 // TODO нужно ли тут ещё делать обновление ещё вопрос
-const update = () => {
+const update = async () => {
   closeModal(new CloseModalParams({
     toggle: false
   }));
-  store.dispatch('initAccountList');
+  await store.dispatch('initAccountList');
 }
 </script>

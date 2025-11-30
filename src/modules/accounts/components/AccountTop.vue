@@ -7,8 +7,9 @@
           :model-value="isSelected"
           @change="selectAllItems"
         />
-        <button
+        <a
           class="b-account__table"
+          href="javascript:void(0)"
           @click="setSortValues(AccountSortPropCode)"
         >
           <span class="b-account__table-title b-account__table-title_left">
@@ -20,14 +21,15 @@
             :class="{'b-account__arrow-icon_rotate': order === SortTypes.desc}"
             v-html="TemplateHelper.getIcon('arrow')"
           />
-        </button>
+        </a>
       </div>
     </div>
     <div class="b-account__col">
       <div
         class="b-account__inside b-account__inside_table b-account__inside_right">
-        <button
+        <a
           class="b-account__table"
+          href="javascript:void(0)"
           @click="setSortValues(PermissionNameSortPropCode)"
         >
           <span class="b-account__table-title">
@@ -39,7 +41,7 @@
             :class="{'b-account__arrow-icon_rotate': order === SortTypes.desc}"
             v-html="TemplateHelper.getIcon('arrow')"
           />
-        </button>
+        </a>
       </div>
     </div>
   </div>

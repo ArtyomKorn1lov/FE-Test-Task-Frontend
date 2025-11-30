@@ -1,4 +1,4 @@
-import DependencyInjection from "@/core/di/DependencyInjection.js";
+import DependencyInjection from "@/core/di/DependencyInjection";
 
 export {
   DependencyInjection

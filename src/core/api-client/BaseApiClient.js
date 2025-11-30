@@ -1,10 +1,11 @@
 import axios from "axios";
-import {useI18n} from "vue-i18n";
+import Translations from "@/translations";
 import {BodyTypes, RequestTypes} from "@/core/enums";
 import {ResponseException} from "@/core/exceptions";
 import {RequestConfig} from "@/core/models";
+import {ObjectHelper} from "@/core/utils";
 
-const {t} = useI18n();
+const t = Translations.global.t;
 
 /**
  * @abstract
@@ -33,8 +34,8 @@ export default class BaseApiClient {
    */
   #prepareUrl(url, params = null) {
     let queryString = "";
-    if (!!params) {
-      queryString = '?' + new URLSearchParams(params);
+    if (!!params && !ObjectHelper.isEmpty(params)) {
+      queryString = '?' + new URLSearchParams(ObjectHelper.removeEmptyProperties(params));
     }
     return `${this.apiUrl}${url}${queryString}`;
   }
