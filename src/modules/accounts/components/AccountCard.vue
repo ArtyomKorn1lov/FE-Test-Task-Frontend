@@ -43,7 +43,7 @@
           <div class="b-controls__btns b-account__controls">
             <el-button
               class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-              v-html="'<span>' + TemplateHelper.getIcon('edit') + loc.editBtnTitle + '</span>'"
+              v-html="'<span>' + TemplateHelper.getIcon('edit') + t('accountSection.editBtnTitle') + '</span>'"
               @click.prevent.stop="editItem"
               :disabled="disableActions"
             >
@@ -64,11 +64,12 @@
 <script setup>
 import {computed, ComputedRef, EmitFn} from 'vue';
 import {ElButton, ElCheckbox} from 'element-plus';
-import {TemplateHelper, useTranslation} from "@/core";
+import {useI18n} from 'vue-i18n';
+import {TemplateHelper} from "@/core";
 import {NoImageUrl, TagAccountListModifier} from "@/modules/accounts/constants";
 import {Account, SelectItem, SelectRole} from "@/modules/accounts/models";
 
-const loc = useTranslation('accountSection');
+const {t} = useI18n();
 
 const {element, isSelected, disableActions} = defineProps({
   element: {

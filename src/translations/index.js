@@ -1,3 +1,6 @@
+import {createI18n} from 'vue-i18n';
+import {Lang} from "@/core";
+
 import * as header from '@/translations/header';
 import * as accountSection from '@/translations/account-section';
 import * as controls from '@/translations/controls';
@@ -6,7 +9,7 @@ import * as accountForm from '@/translations/account-form';
 import * as form from '@/translations/form';
 import * as messages from '@/translations/core/index.js'
 
-export default {
+const namespaces = {
   header,
   accountSection,
   controls,
@@ -15,3 +18,17 @@ export default {
   form,
   messages
 }
+
+const messages = {};
+
+for (const keyNs in namespaces) {
+  for (const keyLang in namespaces[keyNs]) {
+    messages[keyLang][keyNs] = namespaces[keyNs][keyLang];
+  }
+}
+
+export default createI18n({
+  locale: Lang,
+  fallbackLocale: Lang,
+  messages: messages
+});

@@ -5,7 +5,7 @@
     "confirmButtonText": "Close"
   },
   "injection": {
-    "notFound": "Dependence not registered in IoC: "
+    "notFound": "Dependence not registered in DI: "
   },
   "api": {
     "serverError": "An internal error occurred"

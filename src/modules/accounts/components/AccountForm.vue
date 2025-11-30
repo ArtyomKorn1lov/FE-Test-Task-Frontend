@@ -32,7 +32,7 @@
                 v-if="formData[field.code]?.url"
                 :src="formData[field.code].url"
                 class="b-upload__img"
-                :alt="loc.uploadImgAlt"
+                :alt="t('accountForm.uploadImgAlt')"
               />
               <el-icon v-else class="b-upload__icon">
                 <Plus/>
@@ -78,6 +78,7 @@
   </el-form>
 </template>
 <script setup>
+import {ref, Ref, computed, ComputedRef} from 'vue';
 import {
   ElForm,
   ElFormItem,
@@ -91,8 +92,7 @@ import {
   ElButton,
 } from 'element-plus';
 import {Plus} from '@element-plus/icons-vue';
-import {ref, Ref, computed, ComputedRef} from 'vue';
-import useTranslation from '@/core/composable/useTranslation.js';
+import {useI18n} from "vue-i18n";
 import {DependencyInjection, CommonResponse, useFetch} from "@/core";
 import {FormField, useForm, EmailRegex} from "@/modules/forms";
 import {
@@ -125,7 +125,7 @@ const createAccount = DependencyInjection.resolve("CreateAccount");
  */
 const updateAccount = DependencyInjection.resolve("UpdateAccount");
 
-const loc = useTranslation('accountForm');
+const {t} = useI18n();
 
 const {accountEditId} = defineProps({
   accountEditId: {
@@ -182,7 +182,7 @@ const isLoadingData = ref(false);
  * @type {ComputedRef<String>}
  */
 const submitMessage = computed(() => {
-  return !!accountEditId ? loc.value.editBtnTitle : loc.value.createBtnTitle;
+  return !!accountEditId ? t('accountForm.editBtnTitle') : t('accountForm.createBtnTitle');
 });
 
 /**

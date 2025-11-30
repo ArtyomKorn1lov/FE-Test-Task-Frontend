@@ -1,4 +1,5 @@
 import {ref, reactive, Ref, Reactive, ComputedRef} from "vue";
+import {useI18n} from "vue-i18n";
 import {
   ResponseStatus,
   MessageTypes,
@@ -7,7 +8,6 @@ import {
   File as CustomFile,
   BaseUseCase,
   useFetch,
-  useTranslation,
 } from "@/core";
 import {FileDividerTypeCasting} from "@/core";
 import {MaxFileSize} from "@/modules/forms/constants";
@@ -29,10 +29,8 @@ export default function useForm(
     validators = {}
   }
 ) {
-  /**
-   * @type {ComputedRef<Object>}
-   */
-  const messageTranslations = useTranslation('core');
+
+  const {t} = useI18n();
 
   const fieldBuilder = new FormFieldsBuilder(formFields, validators);
 
@@ -163,7 +161,7 @@ export default function useForm(
       isLoading.value = false;
       resetForm(formRef);
       await MessageHelper.showMessageBox({
-        title: messageTranslations.value.messages.successTitle,
+        title: t('core.messages.successTitle'),
         message: response?.data,
         type: ResponseStatus.success,
         callback: afterSuccess

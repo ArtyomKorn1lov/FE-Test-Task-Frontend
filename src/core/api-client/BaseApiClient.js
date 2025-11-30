@@ -1,10 +1,10 @@
 import axios from "axios";
+import {useI18n} from "vue-i18n";
 import {BodyTypes, RequestTypes} from "@/core/enums";
 import {ResponseException} from "@/core/exceptions";
 import {RequestConfig} from "@/core/models";
-import useTranslation from "@/core/composable/useTranslation";
 
-const translation = useTranslation('core');
+const {t} = useI18n();
 
 /**
  * @abstract
@@ -126,7 +126,7 @@ export default class BaseApiClient {
   createSuccess(response) {
     if (!response) {
       throw new ResponseException({
-        message: translation.value.serverError,
+        message: t('core.serverError'),
         status: 500
       });
     }

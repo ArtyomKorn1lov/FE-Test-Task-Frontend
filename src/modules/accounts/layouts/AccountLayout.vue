@@ -1,8 +1,8 @@
 <template>
   <div class="mainContainer">
-    <Header />
-    <slot />
-    <ModalWrapper />
+    <Header/>
+    <slot/>
+    <ModalWrapper/>
   </div>
 </template>
 <script setup>

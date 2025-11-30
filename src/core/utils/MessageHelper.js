@@ -1,8 +1,8 @@
 import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
+import {useI18n} from "vue-i18n";
 import {ResponseStatus} from "@/core/enums";
-import useTranslation from "@/core/composable/useTranslation.js";
 
-const translation = useTranslation('core');
+const {t} = useI18n();
 
 /**
  * @param {{ title: String, message: String, type: String|ResponseStatus, callback: VoidFunction }} args
@@ -10,7 +10,7 @@ const translation = useTranslation('core');
  */
 export const showMessageBox = async (
   {
-    title = translation.value.messages.errorTitle,
+    title = t('core.messages.errorTitle'),
     message,
     type = ResponseStatus.error,
     callback = null
@@ -28,7 +28,7 @@ export const showMessageBox = async (
       closeOnHashChange: type === ResponseStatus.success,
       showConfirmButton: true,
       confirmButtonClass: "b-btn b-btn_primary b-btn_normal b-btn_full",
-      confirmButtonText: translation.value.messages.confirmButtonText,
+      confirmButtonText: t('core.messages.confirmButtonText'),
       callback: callback
     });
 }
@@ -39,7 +39,7 @@ export const showMessageBox = async (
  */
 export const showNotification = (
   {
-    title = translation.value.messages.errorTitle,
+    title = t('core.messages.errorTitle'),
     message,
     type = ResponseStatus.error
   }

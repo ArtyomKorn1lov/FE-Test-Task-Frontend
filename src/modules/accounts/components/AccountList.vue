@@ -51,8 +51,7 @@ import {
   ResponseStatus,
   SortTypes,
   CommonResponse,
-  useFetch,
-  useTranslation
+  useFetch
 } from "@/core";
 import {Pagination as PaginationComponent, ModalParams} from "@/modules/ui";
 import AccountControls from "@/modules/accounts/components/AccountControls";
@@ -70,6 +69,7 @@ import {
   SelectItem
 } from "@/modules/accounts/models";
 import {DeleteAccount, DeleteAccounts} from "@/modules/accounts/use-case";
+import {useI18n} from "vue-i18n";
 
 /**
  * @type {DeleteAccount}
@@ -80,18 +80,7 @@ const deleteAccount = DependencyInjection.resolve('DeleteAccount');
  */
 const deleteAccounts = DependencyInjection.resolve('DeleteAccounts');
 
-/**
- * @type {ComputedRef<Object>}
- */
-const loc = useTranslation('modal');
-/**
- * @type {ComputedRef<Object>}
- */
-const locSection = useTranslation('accountSection');
-/**
- * @type {ComputedRef<Object>}
- */
-const locControls = useTranslation('controls');
+const {t} = useI18n();
 
 /**
  * @type {Store<AccountStore>}
@@ -200,9 +189,9 @@ const onSelectRole = async (obj) => {
 const deleteItem = async (id) => {
   try {
     await MessageHelper.showConfirmMessageBox({
-      title: locSection.value.deleteItem.questionTitle,
-      message: locSection.value.deleteItem.questionDescription,
-      cancelMessage: loc.value.deleteItem.cancelBtnTitle,
+      title: t('accountSection.deleteItem.questionTitle'),
+      message: t('accountSection.deleteItem.questionDescription'),
+      cancelMessage: t('modal.deleteItem.cancelBtnTitle'),
       callback: async () => {
         const response = await fetchDelete(id);
         MessageHelper.showNotification({
@@ -222,8 +211,8 @@ const deleteItem = async (id) => {
 const deleteSelectedItems = async () => {
   try {
     await MessageHelper.showConfirmMessageBox({
-      title: locControls.value.deleteItems.questionTitle,
-      message: locControls.value.deleteItems.questionDescription,
+      title: t('controls.deleteItems.questionTitle'),
+      message: t('controls.deleteItems.questionDescription'),
       callback: async () => {
         const response = await fetchDeleteItems(new AccountDelete({
           ids: selectedItems.value
@@ -234,7 +223,7 @@ const deleteSelectedItems = async () => {
         });
         afterDeleteItem();
       },
-      cancelMessage: loc.value.deleteItems.cancelBtnTitle
+      cancelMessage: t('modal.deleteItems.cancelBtnTitle')
     });
   } catch (e) {
   }
@@ -267,7 +256,7 @@ const editItem = (id) => {
   }
   store.commit('setModalProps', new ModalParams({
     toggle: true,
-    title: loc.value.account.titleEdit,
+    title: t('modal.account.titleEdit'),
     code: ModalComponentsCodes.account,
     accountEditId: id
   }));

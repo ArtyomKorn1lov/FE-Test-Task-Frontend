@@ -1,14 +1,10 @@
 <template>
   <div>
-    <p>{{ loc.notExistTitle }}</p>
+    <p>{{ t('modal.notExistTitle') }}</p>
   </div>
 </template>
 <script setup>
-import {ComputedRef} from "vue";
-import {useTranslation} from '@/core/index.js';
+import {useI18n} from "vue-i18n";
 
-/**
- * @type {ComputedRef<Object>}
- */
-const loc = useTranslation('modal');
+const {t} = useI18n();
 </script>

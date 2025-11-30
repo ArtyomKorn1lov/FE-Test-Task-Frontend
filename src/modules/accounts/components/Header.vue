@@ -4,7 +4,7 @@
       <div class="b-section__header b-header__section">
 
         <span class="b-header__title">
-          {{ loc.title }}
+          {{ t('header.title') }}
         </span>
 
         <form
@@ -35,7 +35,7 @@
             native-type="button"
             @click="openModal"
           >
-            {{ loc.createBtnTitle }}
+            {{ t('header.createBtnTitle') }}
           </el-button>
 
         </form>
@@ -47,12 +47,12 @@
 import {ref, computed, ComputedRef, Ref} from 'vue';
 import {useStore, Store} from "vuex";
 import {ElIcon, ElButton, ElAutocomplete} from 'element-plus';
+import {useI18n} from "vue-i18n";
 import {
   TemplateHelper,
   ArrayHelper,
   DependencyInjection,
   useFetch,
-  useTranslation
 } from "@/core";
 import {ModalParams} from "@/modules/ui";
 import {ModalComponentsCodes} from "@/modules/accounts/enums";
@@ -69,10 +69,7 @@ import {
   FieldContextSearchCode
 } from "@/modules/accounts/constants";
 
-/**
- * @type {ComputedRef<Object>}
- */
-const loc = useTranslation('header');
+const {t} = useI18n();
 
 /**
  * @type {SearchAccounts}
@@ -108,7 +105,7 @@ const fetchContextSearch = useFetch({
 const openModal = () => {
   store.commit('setModalProps', new ModalParams({
     toggle: true,
-    title: loc.value.account.titleCreate,
+    title: t('header.account.titleCreate'),
     code: ModalComponentsCodes.account
   }));
 }
