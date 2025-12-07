@@ -1,7 +1,7 @@
 <template>
   <div class="b-controls">
     <span class="b-controls__title">
-      {{ count }} {{ t('controls.userCountLabel') }}
+      {{ count }} {{ t('accounts.section.userCountLabel') }}
     </span>
     <div
       v-if="showBtnGroup"
@@ -10,12 +10,12 @@
       <el-button
         v-if="!disableEditBtn"
         class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-        v-html="'<span>' + TemplateHelper.getIcon('edit') + t('controls.editBtnTitle') + '</span>'"
+        v-html="'<span>' + TemplateHelper.getIcon('edit') + t('accounts.section.editBtnTitle') + '</span>'"
         @click="editItem"
       />
       <el-button
         class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-        v-html="'<span>' + TemplateHelper.getIcon('delete') + t('controls.deleteBtnTitle') + '</span>'"
+        v-html="'<span>' + TemplateHelper.getIcon('delete') + t('accounts.section.deleteBtnTitle') + '</span>'"
         @click="deleteItems"
       />
     </div>

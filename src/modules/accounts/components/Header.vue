@@ -4,7 +4,7 @@
       <div class="b-section__header b-header__section">
 
         <span class="b-header__title">
-          {{ t('header.title') }}
+          {{ t('accounts.header.title') }}
         </span>
 
         <div class="b-header__controls">
@@ -34,7 +34,7 @@
             native-type="button"
             @click="openModal"
           >
-            {{ t('header.createBtnTitle') }}
+            {{ t('accounts.header.createBtnTitle') }}
           </el-button>
 
         </div>
@@ -104,7 +104,7 @@ const fetchContextSearch = useFetch({
 const openModal = () => {
   store.commit('setModalProps', new ModalParams({
     toggle: true,
-    title: t('modal.account.titleCreate'),
+    title: t('accounts.modal.titleCreate'),
     code: ModalComponentsCodes.account
   }));
 }

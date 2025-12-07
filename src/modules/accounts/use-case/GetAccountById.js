@@ -30,7 +30,6 @@ export default class GetAccountById extends BaseUseCase {
    */
   async execute(id) {
     try {
-      //TODO перенести бизнес-логику
       return await this.repository.getById(id);
     } catch (/** @type {ResponseException} */ error) {
       console.error(error);

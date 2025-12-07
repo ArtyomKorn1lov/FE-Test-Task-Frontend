@@ -47,13 +47,7 @@ import {computed} from 'vue';
 import {useStore, Store} from 'vuex';
 import {useI18n} from "vue-i18n";
 import {
-  MessageHelper,
-  DependencyInjection,
-  MessageTypes,
-  ResponseStatus,
   SortTypes,
-  CommonResponse,
-  useFetch
 } from "@/core";
 import {Pagination as PaginationComponent, ModalParams} from "@/modules/ui";
 import {AccountListWrapperClass} from "@/modules/accounts/constants";
@@ -61,11 +55,9 @@ import {AccountControls, AccountTop, AccountCard} from "@/modules/accounts/compo
 import {ModalComponentsCodes} from "@/modules/accounts/enums";
 import {
   AccountStore,
-  AccountDelete,
   Account,
   Filter,
   FilterRole,
-  Pagination,
   Sort,
   SelectRole,
   SelectItem
@@ -188,7 +180,7 @@ const editItem = (id) => {
   }
   store.commit('setModalProps', new ModalParams({
     toggle: true,
-    title: t('modal.account.titleEdit'),
+    title: t('accounts.modal.titleEdit'),
     code: ModalComponentsCodes.account,
     accountEditId: id
   }));

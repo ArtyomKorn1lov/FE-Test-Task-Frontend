@@ -1,7 +1,10 @@
+import Translations from "@/translations";
 import {ObjectHelper} from "@/core";
 import {EmailRegex} from "@/modules/forms/constants";
 import {FieldsValidateException} from "@/modules/forms/exceptions";
 import {FormFields, FormGroup, FormField} from "@/modules/forms/models";
+
+const t = Translations.global.t;
 
 /**
  * @description Builder полей для реактивных форм, генерация правил валидации формы и value-objet'а для хранения значений формы
@@ -66,7 +69,7 @@ export default class FormFieldsBuilder {
    */
   validate() {
     if (!ObjectHelper.hasProperty(this.fields, "groups")) {
-      throw new FieldsValidateException("Invalid form field data structure");
+      throw new FieldsValidateException(t('form.builder.errors.structure'));
     }
     if (!!this.fields.groups && this.fields.groups.length > 0) {
       this.fields.groups.forEach((group) => this.validateGroup(group));
@@ -80,7 +83,7 @@ export default class FormFieldsBuilder {
    */
   validateGroup(group) {
     if (!ObjectHelper.hasProperty(group, "items")) {
-      throw new FieldsValidateException("Invalid form field data structure");
+      throw new FieldsValidateException(t('form.builder.errors.structure'));
     }
     if (!!group.items && group.items.length > 0) {
       group.items.forEach((field) => this.validateField(field));
@@ -98,7 +101,7 @@ export default class FormFieldsBuilder {
       || !ObjectHelper.hasProperty(field, "type")
       || !ObjectHelper.hasProperty(field, "required")
     ) {
-      throw new FieldsValidateException("Invalid form field data structure");
+      throw new FieldsValidateException(t('form.builder.errors.structure'));
     }
   }
 
@@ -171,7 +174,7 @@ export default class FormFieldsBuilder {
           if (regularExpression.test(value)) {
             return callback();
           }
-          return callback(new Error("Invalid email"));
+          return callback(new Error(t('form.fields.email.error')));
         }
         this.rules[field.code] = [
           {
@@ -191,12 +194,12 @@ export default class FormFieldsBuilder {
     const requiredRule = [
       {
         required: true,
-        message: "This field is required",
+        message: t('form.fields.default.error'),
         trigger: 'change'
       },
       {
         required: true,
-        message: "This field is required",
+        message: t('form.fields.default.error'),
         trigger: 'blur'
       },
     ];

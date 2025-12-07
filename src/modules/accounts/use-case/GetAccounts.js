@@ -31,7 +31,6 @@ export default class GetAccounts extends BaseUseCase {
    */
   async execute(filter, pagination) {
     try {
-      //TODO перенести бизнес-логику
       return await this.repository.getList(filter, pagination);
     } catch (/** @type {ResponseException} */ error) {
       console.error(error);

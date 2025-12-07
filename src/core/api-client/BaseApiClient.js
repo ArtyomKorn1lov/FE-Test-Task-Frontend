@@ -9,7 +9,7 @@ const t = Translations.global.t;
 
 /**
  * @abstract
- * @description абстрактный класс API-клиента
+ * @description абстрактный класс REST API-клиента, доступные типы запросов: GET, PUT, POST, DELETE
  */
 export default class BaseApiClient {
   /**
@@ -127,7 +127,7 @@ export default class BaseApiClient {
   createSuccess(response) {
     if (!response) {
       throw new ResponseException({
-        message: t('core.serverError'),
+        message: t('core.api.serverError'),
         status: 500
       });
     }

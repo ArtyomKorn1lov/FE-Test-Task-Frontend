@@ -1,4 +1,12 @@
+import Translations from "@/translations";
 import {ArgumentException} from "@/core/exceptions";
+
+const t = Translations.global.t;
+
+/**
+ * @fileOverview
+ * @description Хелпер для работы с шаблоном HTML
+ */
 
 /**
  * @param {String|null} code
@@ -6,7 +14,7 @@ import {ArgumentException} from "@/core/exceptions";
  */
 export const getIcon = (code, prefix = 'icon') => {
   if (!code) {
-    throw new ArgumentException("Icon code can not be empty");
+    throw new ArgumentException(t('core.utils.template.emptyIconErrorMessage'));
   }
   return `<svg aria-hidden='true'><use href='#${prefix}-${code}'/></svg>`
 }
@@ -17,7 +25,7 @@ export const getIcon = (code, prefix = 'icon') => {
  */
 export const getElementByClassName = (className) => {
   if (!className) {
-    throw new ArgumentException("Page element code can not be empty");
+    throw new ArgumentException(t('core.utils.template.emptyCodeErrorMessage'));
   }
   return document.querySelector(`.${className}`);
 }

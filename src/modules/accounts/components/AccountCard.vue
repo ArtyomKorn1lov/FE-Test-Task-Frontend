@@ -43,7 +43,7 @@
           <div class="b-controls__btns b-account__controls">
             <el-button
               class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
-              v-html="'<span>' + TemplateHelper.getIcon('edit') + t('accountSection.editBtnTitle') + '</span>'"
+              v-html="'<span>' + TemplateHelper.getIcon('edit') + t('accounts.section.editBtnTitle') + '</span>'"
               @click.prevent.stop="editItem"
               :disabled="disableActions"
             >

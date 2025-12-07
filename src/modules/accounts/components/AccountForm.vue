@@ -34,7 +34,7 @@
                 v-if="formData[field.code]?.url"
                 :src="formData[field.code].url"
                 class="b-upload__img"
-                :alt="t('accountForm.uploadImgAlt')"
+                :alt="t('accounts.form.uploadImgAlt')"
               />
               <el-icon v-else class="b-upload__icon">
                 <Plus/>
@@ -185,7 +185,7 @@ const isLoadingData = ref(false);
  * @type {import('vue').ComputedRef<String>}
  */
 const submitMessage = computed(() => {
-  return !!accountEditId ? t('accountForm.editBtnTitle') : t('accountForm.createBtnTitle');
+  return !!accountEditId ? t('accounts.form.editBtnTitle') : t('accounts.form.createBtnTitle');
 });
 
 /**

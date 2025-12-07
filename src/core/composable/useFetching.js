@@ -1,7 +1,10 @@
 import {ref} from 'vue';
+import Translations from "@/translations";
 import {ArgumentException} from "@/core/exceptions";
 import {MessageHelper} from "@/core/utils";
 import {BaseUseCase} from "@/core/use-case";
+
+const t = Translations.global.t;
 
 /**
  * @description Примесь с общей логикой обработки запросов, получение информации об ошибке, флаг isLoading и получение данных как реактивного значения
@@ -57,7 +60,7 @@ export default function useFetching(
   }
 
   if (!useCase && !ajaxFunc) {
-    throw new ArgumentException("The request execution method cannot be empty");
+    throw new ArgumentException(t('core.composable.emptyRequestMethod'));
   }
   fetch();
   return {

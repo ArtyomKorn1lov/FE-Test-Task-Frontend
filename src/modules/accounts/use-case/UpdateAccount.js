@@ -30,7 +30,6 @@ export default class UpdateAccount extends BaseUseCase {
    */
   async execute(object) {
     try {
-      //TODO перенести бизнес-логику
       return await this.repository.update(object);
     } catch (/** @type {ResponseException} */ error) {
       console.error(error);

@@ -3,7 +3,7 @@ import {RequestTypes} from "@/core/enums";
 import BaseApiClient from "@/core/api-client/BaseApiClient";
 
 /**
- * @description API-клиент
+ * @description реализация API-клиента для данной программной системы
  */
 export default class ApiClient extends BaseApiClient {
   /**

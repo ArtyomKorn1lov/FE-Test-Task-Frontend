@@ -1,0 +1,37 @@
+{
+  "useCase": {
+    "getFilterErrorMessage": "Filter values cannot be empty",
+    "getPageNavErrorMessage": "PageNav values cannot be empty"
+  },
+  "header": {
+    "title": "Account users",
+    "createBtnTitle": "Connect users"
+  },
+  "section": {
+    "userColTitle": "User",
+    "permissionColTitle": "Permission",
+    "editBtnTitle": "Edit",
+    "deleteBtnTitle": "Delete",
+    "userCountLabel": "users selected",
+    "deleteItem": {
+      "questionTitle": "Delete account",
+      "questionDescription": "Are you sure you want to delete this account?",
+      "cancelBtnTitle": "Delete canceled"
+    },
+    "deleteItems": {
+      "questionTitle": "Delete accounts",
+      "questionDescription": "Are you sure you want to delete this accounts?",
+      "cancelBtnTitle": "Delete canceled"
+    }
+  },
+  "modal": {
+    "titleCreate": "Connect user",
+    "titleEdit": "Connect user"
+  },
+  "form": {
+    "uploadImgAlt": "Upload Image",
+    "createBtnTitle": "Create",
+    "editBtnTitle": "Edit",
+    "pictureUploadSizeError": "Picture size can not exceed"
+  }
+}

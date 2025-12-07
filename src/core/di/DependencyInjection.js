@@ -5,7 +5,7 @@ const t = Translations.global.t;
 
 /**
  * @const
- * @description Внедрение зависимостей
+ * @description Контейнер зависимостей, простая реализация DI
  */
 export default {
   dependencies: new Map(),

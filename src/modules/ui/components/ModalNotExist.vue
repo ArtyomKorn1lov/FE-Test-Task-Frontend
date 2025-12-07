@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{ t('modal.notExistTitle') }}</p>
+    <p>{{ t('ui.modal.notExistTitle') }}</p>
   </div>
 </template>
 <script setup>

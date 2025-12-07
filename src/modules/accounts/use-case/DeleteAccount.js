@@ -30,7 +30,6 @@ export default class DeleteAccount extends BaseUseCase {
    */
   async execute(id) {
     try {
-      //TODO перенести бизнес-логику
       return await this.repository.delete(id);
     } catch (/** @type {ResponseException} */ error) {
       console.error(error);

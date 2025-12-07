@@ -93,7 +93,7 @@ export default function useForm(
     try {
       const maxFileSizInBytes = MaxFileSize * Math.pow(FileDividerTypeCasting, 2);
       if (!FileHelper.checkMaxFileSize(rawFile, maxFileSizInBytes)) {
-        throw new FileUploadException("Picture size can not exceed");
+        throw new FileUploadException(t('form.files.fileSizeErrorMessage'));
       }
       return true;
     } catch (/** @type {Error} */ exception) {

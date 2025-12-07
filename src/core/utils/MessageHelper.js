@@ -5,6 +5,11 @@ import {ResponseStatus} from "@/core/enums";
 const t = Translations.global.t;
 
 /**
+ * @fileOverview
+ * @description Хелпер для работы с простыми модальными окнами из element-plus
+ */
+
+/**
  * @param {{ title: String, message: String, type: String|ResponseStatus, callback: VoidFunction }} args
  * @return {Promise<void>}
  */
@@ -28,7 +33,7 @@ export const showMessageBox = async (
       closeOnHashChange: type === ResponseStatus.success,
       showConfirmButton: true,
       confirmButtonClass: "b-btn b-btn_primary b-btn_normal b-btn_full",
-      confirmButtonText: t('core.messages.confirmButtonText'),
+      confirmButtonText: t('core.messages.closeButtonText'),
       callback: callback
     });
 }
@@ -60,7 +65,7 @@ export const showConfirmMessageBox = async (
     title,
     message,
     callback,
-    cancelMessage = 'Canceled'
+    cancelMessage = t('core.messages.cancelDefaultMessage')
   }
 ) => {
   await ElMessageBox.confirm(
@@ -68,11 +73,11 @@ export const showConfirmMessageBox = async (
     title,
     {
       customClass: "b-message-box b-message-box_confirm",
-      type: 'warning',
-      confirmButtonText: 'Confirm',
+      type: ResponseStatus.warning,
+      confirmButtonText: t('core.messages.confirmButtonText'),
       confirmButtonClass: "b-btn b-btn_primary b-btn_normal",
       cancelButtonClass: "b-btn b-btn_secondary b-btn_normal",
-      cancelButtonText: 'Cancel',
+      cancelButtonText: t('core.messages.cancelButtonText'),
     }
   )
     .then(() => {

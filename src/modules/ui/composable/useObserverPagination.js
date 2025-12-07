@@ -3,7 +3,7 @@ import {TemplateHelper} from "@/core";
 import {ReloadPaginationEmit, PaginationSelectorCode} from "@/modules/ui";
 
 /**
- * Примесь с общей логикой пагинации через IntersectionObserver
+ * @description Примесь с общей логикой пагинации через IntersectionObserver
  * @param {String} paginationSelector
  * @param {VoidFunction} emit
  * @param {String} refreshEmitCode

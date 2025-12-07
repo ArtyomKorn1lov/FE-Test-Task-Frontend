@@ -30,7 +30,6 @@ export default class SearchAccounts extends BaseUseCase {
    */
   async execute(object) {
     try {
-      //TODO перенести бизнес-логику
       return await this.repository.search(object);
     } catch (/** @type {ResponseException} */ error) {
       console.error(error);

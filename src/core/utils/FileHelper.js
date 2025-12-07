@@ -1,4 +1,12 @@
+import Translations from "@/translations";
 import {ArgumentException} from "@/core/exceptions";
+
+const t = Translations.global.t;
+
+/**
+ * @fileOverview
+ * @description Хелпер для работы с файлами
+ */
 
 /**
  * @param {File} file
@@ -6,7 +14,7 @@ import {ArgumentException} from "@/core/exceptions";
  */
 export const convertToBase64 = (file) => {
   if (!file) {
-    throw new ArgumentException("File can not been empty");
+    throw new ArgumentException(t('core.utils.file.emptyFileErrorMessage'));
   }
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -28,7 +36,7 @@ export const convertToBase64 = (file) => {
  */
 export const createFileUrl = (file) => {
   if (!file) {
-    throw new ArgumentException("File can not been empty");
+    throw new ArgumentException(t('core.utils.file.emptyFileErrorMessage'));
   }
   return URL.createObjectURL(file);
 }

@@ -25,6 +25,7 @@ export default class File {
    * @param {File} data
    */
   constructor(data = null) {
+    this.id = data?.id;
     this.file = data?.file;
     this.name = data?.name;
     this.url = data?.url;

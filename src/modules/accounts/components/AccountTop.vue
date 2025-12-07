@@ -13,7 +13,7 @@
           @click="setSortValues(AccountSortPropCode)"
         >
           <span class="b-account__table-title b-account__table-title_left">
-            {{ t('accountSection.userColTitle') }}
+            {{ t('accounts.section.userColTitle') }}
           </span>
           <span
             v-if="sort === AccountSortPropCode"
@@ -33,7 +33,7 @@
           @click="setSortValues(PermissionNameSortPropCode)"
         >
           <span class="b-account__table-title">
-            {{ t('accountSection.permissionColTitle') }}
+            {{ t('accounts.section.permissionColTitle') }}
           </span>
           <span
             v-if="sort === PermissionNameSortPropCode"

@@ -1,11 +1,19 @@
+import Translations from "@/translations";
 import {NotFoundException, ArgumentException} from "@/core/exceptions";
+
+const t = Translations.global.t;
+
+/**
+ * @fileOverview
+ * @description Сервис для работы с env-файлами
+ */
 
 /**
  * @throws {NotFoundException}
  */
 export const init = () => {
   if (!process?.env) {
-    throw new NotFoundException("Error! Environment variables not found");
+    throw new NotFoundException(t('core.utils.env.initErrorMessage'));
   }
 }
 
@@ -16,7 +24,7 @@ export const init = () => {
  */
 export const get = (code) => {
   if (!code) {
-    throw ArgumentException("Environment variable code cannot be empty");
+    throw ArgumentException(t('core.utils.env.emptyArgErrorMessage'));
   }
   return process.env[code] ?? "";
 }

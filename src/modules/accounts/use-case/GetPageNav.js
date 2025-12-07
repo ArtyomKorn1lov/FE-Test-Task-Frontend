@@ -1,3 +1,4 @@
+import Translations from "@/translations";
 import {
   ResponseException,
   NotFoundException,
@@ -10,6 +11,8 @@ import {AccountMapper} from "@/modules/accounts/mappers";
 import {
   mapPaginationValuesResponseToModel
 } from "@/modules/accounts/mappers/AccountMapper";
+
+const t = Translations.global.t;
 
 /**
  * @final
@@ -40,10 +43,9 @@ export default class GetPageNav extends BaseUseCase {
    */
   async execute() {
     try {
-      //TODO перенести бизнес-логику
       const pageNav = AccountMapper.mapPaginationValuesResponseToModel(await this.repository.getPageNav());
       if (ObjectHelper.isEmpty(pageNav)) {
-        throw new NotFoundException("PageNav values cannot be empty");
+        throw new NotFoundException(t('accounts.useCase.getPageNavErrorMessage'));
       }
       return pageNav;
     } catch (/** @type {ResponseException|NotFoundException} */ error) {

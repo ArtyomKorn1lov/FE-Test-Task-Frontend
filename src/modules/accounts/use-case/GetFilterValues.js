@@ -1,3 +1,4 @@
+import Translations from "@/translations";
 import {
   ResponseException,
   NotFoundException,
@@ -7,6 +8,8 @@ import {
 import {Filter} from "@/modules/accounts/models";
 import {AccountRepository} from "@/modules/accounts/repositories";
 import {AccountMapper} from "@/modules/accounts/mappers";
+
+const t = Translations.global.t;
 
 export default class GetFilterValues extends BaseUseCase {
   /**
@@ -33,10 +36,9 @@ export default class GetFilterValues extends BaseUseCase {
    */
   async execute() {
     try {
-      //TODO перенести бизнес-логику
       const filter = AccountMapper.mapFilterValuesResponseToModel(await this.repository.getFilterValues());
       if (ObjectHelper.isEmpty(filter)) {
-        throw new NotFoundException("Filter values cannot be empty");
+        throw new NotFoundException(t('accounts.useCase.getFilterErrorMessage'));
       }
       return filter;
     } catch (/** @type {ResponseException|NotFoundException} */ error) {

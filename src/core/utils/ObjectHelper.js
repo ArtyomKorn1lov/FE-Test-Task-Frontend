@@ -1,4 +1,9 @@
 /**
+ * @fileOverview
+ * @description Хелпер для работы с объектами
+ */
+
+/**
  * @param {Object} object
  * @return {Array}
  */

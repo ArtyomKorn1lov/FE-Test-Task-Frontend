@@ -1,4 +1,9 @@
 /**
+ * @fileOverview
+ * @description Хелпер для работы с массивами/списками
+ */
+
+/**
  * @param {Array} array
  * @return {Object}
  */

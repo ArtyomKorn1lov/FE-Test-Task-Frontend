@@ -29,7 +29,6 @@ export default class GetRoles extends BaseUseCase {
    */
   async execute() {
     try {
-      //TODO перенести бизнес-логику
       return await this.repository.getRoles();
     } catch (/** @type {ResponseException} */ error) {
       console.error(error);

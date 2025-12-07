@@ -6,5 +6,13 @@
     "email": {
       "error": "Invalid email"
     }
+  },
+  "files": {
+    "fileSizeErrorMessage": "Picture size can not exceed"
+  },
+  "builder": {
+    "errors": {
+      "structure": "Invalid form field data structure"
+    }
   }
 }

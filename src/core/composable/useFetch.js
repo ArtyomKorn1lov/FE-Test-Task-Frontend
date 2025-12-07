@@ -1,7 +1,10 @@
+import Translations from "@/translations";
 import {ArgumentException} from "@/core/exceptions";
 import {MessageTypes} from "@/core/enums";
 import {MessageHelper} from "@/core/utils";
 import {BaseUseCase} from "@/core/use-case";
+
+const t = Translations.global.t;
 
 /**
  * @description Примесь с общей логикой обработки запросов, вывод всплывающего окна сообщения об ошибке
@@ -47,7 +50,7 @@ export default function useFetch(
   return async (...args) => {
     try {
       if (!useCase && !ajaxFunc) {
-        throw new ArgumentException("The request execution method cannot be empty");
+        throw new ArgumentException(t('core.composable.emptyRequestMethod'));
       }
       else if (!!useCase) {
         return await useCase.execute(...args);

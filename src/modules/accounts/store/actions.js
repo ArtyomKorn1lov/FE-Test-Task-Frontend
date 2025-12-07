@@ -17,7 +17,8 @@ import {
   Pagination,
   Account,
   NextPage,
-  SelectItem, AccountDelete
+  SelectItem,
+  AccountDelete
 } from "@/modules/accounts/models";
 import {
   GetFilterValues,
@@ -183,9 +184,9 @@ export const onFilter = async ({commit, state, dispatch}, payload) => {
 export const onDeleteItem = async ({dispatch}, payload) => {
   try {
     await MessageHelper.showConfirmMessageBox({
-      title: t('accountSection.deleteItem.questionTitle'),
-      message: t('accountSection.deleteItem.questionDescription'),
-      cancelMessage: t('modal.deleteItem.cancelBtnTitle'),
+      title: t('accounts.section.deleteItem.questionTitle'),
+      message: t('accounts.section.deleteItem.questionDescription'),
+      cancelMessage: t('accounts.section.deleteItem.cancelBtnTitle'),
       callback: async () => {
         const response = await fetchDelete(payload);
         MessageHelper.showNotification({
@@ -207,9 +208,9 @@ export const onDeleteItem = async ({dispatch}, payload) => {
 export const onDeleteSelectedItems = async ({state, dispatch}) => {
   try {
     await MessageHelper.showConfirmMessageBox({
-      title: t('controls.deleteItems.questionTitle'),
-      message: t('controls.deleteItems.questionDescription'),
-      cancelMessage: t('modal.deleteItems.cancelBtnTitle'),
+      title: t('accounts.section.deleteItems.questionTitle'),
+      message: t('accounts.section.deleteItems.questionDescription'),
+      cancelMessage: t('accounts.section.deleteItems.cancelBtnTitle'),
       callback: async () => {
         const response = await fetchDeleteItems(new AccountDelete({
           ids: state.selectedItems
