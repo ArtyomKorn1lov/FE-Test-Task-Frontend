@@ -1,0 +1,33 @@
+// Цвета
+$colorWhite: #FFFFFF;
+$colorPrimary: #475DE5;
+$colorPrimaryHover: #5869d8;
+$colorBackground: #EDF2F7;
+$colorGrey: #CBD5E0;
+$colorLightGrey: #E2E8F0;
+$colorTextPrimary: #1A202C;
+$colorTextSecondary: #718096;
+$colorDarkBlue: #2D3748;
+$colorPlaceHolder: #A0AEC0;
+$colorTextBtnSecondary: #4A5568;
+$colorSectionActive: #F7FAFC;
+
+// Цвета для тегов
+$colorTags: (
+  default: #C8E7F9,
+  default-hover: #9ed8fa,
+  default-text: #2C5282,
+  default-text-hover: #1c4a81,
+  manager: #FEDDE6,
+  manager-hover: #ffcad8,
+  manager-text: #922B6C,
+  manager-text-hover: #911c66,
+  admin: #EFE2FE,
+  admin-hover: #d1abfc,
+  admin-text: #574195,
+  admin-text-hover: #4e3496,
+  reviewer: #FEEBC8,
+  reviewer-hover: #f8d38d,
+  reviewer-text: #91472C,
+  reviewer-text-hover: #943e1e,
+);

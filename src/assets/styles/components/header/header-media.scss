@@ -1,0 +1,22 @@
+@media (max-width: $sml) {
+  .b-header {
+
+    &__section {
+      @include flex(column, start);
+      width: $full;
+    }
+
+    &__controls {
+      width: $full;
+    }
+  }
+}
+
+@media (max-width: $xs) {
+  .b-header {
+
+    &__controls {
+      @include flex(column);
+    }
+  }
+}

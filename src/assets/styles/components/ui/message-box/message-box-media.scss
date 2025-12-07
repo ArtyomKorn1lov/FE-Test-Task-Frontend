@@ -1,0 +1,48 @@
+@media (max-width: $sm) {
+  .b-message-box {
+
+    &.el-message-box {
+      padding: $m10;
+
+      &--center {
+
+        .el-message-box {
+
+          &__title {
+            gap: $m10;
+          }
+        }
+      }
+    }
+
+    .el-message-box {
+
+      &__title {
+        padding-left: $m15;
+        padding-right: $m15;
+
+        span,
+        p {
+          font-size: $textRegular;
+        }
+      }
+    }
+
+    &__headerbtn {
+      width: $m15;
+      height: $m15;
+      top: $m5;
+      right: $m5;
+    }
+
+    &__close {
+      width: $m15;
+      height: $m15;
+
+      svg {
+        width: $m15;
+        height: $m15;
+      }
+    }
+  }
+}

@@ -1,31 +1,44 @@
-# fe-test-task
+Справочник пользователей FeTestTask
+===
 
-## Задание "FE Test Task"
-### Общие задачи:
-- Закрепить HTML CSS + БЭМ
-- Использование Vue 3 + Element plus
-- Обращение к REST сервера на node js
+## Справочник пользователей FeTestTask, на момент реализации ТЗ удалено с github
+### Краткая информация:
+- Исходный макет - https://www.figma.com/design/okyYwGZKg9ZUkTzZth3YXK/FE-Test-Task-(Copy)
+- Простой справочник пользователей использующий фреймворк vue 3, является web-приложением, взаимодействующим с серверной частью посредством REST
+- Функционал: базовый CRUD, фильтрация, сортировка, пагинация, загрузка файлов
+- Возможно развёртывание в Docker
+### Cсылка на реозиторий с backend - https://github.com/ArtyomKorn1lov/FE-Test-Task-Backend
 
-## Установка проекта
-
+## Мануальная установка проекта:
 ```sh
 npm install
 ```
 
-### Запуск сервера для разработки
-
+### Запуск приложения для разработки
 ```sh
 npm run dev
 ```
 
 ### Сборка и минификация js и css
-
 ```sh
 npm run build
 ```
 
-### Запуск сервера с собранными файлами
+### Запуск приложения с собранными файлами
 
 ```sh
 npm run preview
+```
+
+
+## Установка проекта в docker:
+
+### Сборка образа:
+```sh
+docker build -t fe-test-task-frontend .
+```
+
+### Запуск контейнера:
+```sh
+docker run -d -p 80:80 --name fe-test-task-frontend fe-test-task-frontend
 ```

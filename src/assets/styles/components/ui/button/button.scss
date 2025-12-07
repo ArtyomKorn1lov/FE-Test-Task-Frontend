@@ -1,0 +1,93 @@
+.b-btn.el-button+.el-button {
+  margin-left: 0;
+}
+
+.el-button.b-btn {
+
+  &_primary {
+    @extend %buttonDefaultOptions;
+    padding: $m10 12px;
+
+    &.is-disabled {
+      @extend %buttonDisabledOptions;
+    }
+  }
+
+  &_secondary {
+    @extend %buttonDefaultOptions;
+    padding: $m10 12px;
+    background-color: $colorWhite;
+    border: 1px solid $colorLightGrey;
+
+    span,
+    p {
+      color: $colorTextBtnSecondary;
+      stroke: $colorPlaceHolder;
+    }
+
+    &.is-disabled {
+      @extend %buttonDisabledOptions;
+    }
+
+    &:hover,
+    &:active {
+      background-color: $colorGrey;
+      border-color: $colorPlaceHolder;
+
+      span,
+      p {
+        color: $colorWhite;
+        stroke: $colorWhite;
+      }
+    }
+  }
+
+  &_medium {
+    padding: 8px;
+    height: 32px;
+  }
+
+  &_large {
+    padding: 16px;
+    height: $m50;
+
+    span,
+    p {
+      font-size: $textRegular;
+    }
+  }
+
+  &_full {
+    width: $full;
+  }
+
+  &_icon {
+
+    span,
+    p {
+      @include flex(false, center);
+      gap: 8px;
+
+      svg {
+        width: 16px;
+        height: 16px
+      }
+    }
+  }
+
+  &_tag {
+    @extend %tagDefaultOptions;
+
+    &-manager {
+      @include tagPalette(manager);
+    }
+
+    &-admin {
+      @include tagPalette(admin);
+    }
+
+    &-reviewer {
+      @include tagPalette(reviewer);
+    }
+  }
+}
