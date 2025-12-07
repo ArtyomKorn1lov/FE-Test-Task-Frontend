@@ -7,9 +7,12 @@
       "error": "Invalid email"
     }
   },
-  "messageBox": {
-    "successTitle": "Success",
-    "errorTitle": "Error",
-    "confirmButtonText": "Close"
+  "files": {
+    "fileSizeErrorMessage": "Picture size can not exceed"
+  },
+  "builder": {
+    "errors": {
+      "structure": "Invalid form field data structure"
+    }
   }
 }
