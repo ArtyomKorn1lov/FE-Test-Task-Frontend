@@ -4,7 +4,7 @@ import {
   BaseUseCase,
   ObjectHelper
 } from "@/core";
-import {Pagination} from "@/modules/accounts";
+import {Pagination} from "@/modules/accounts/models";
 import {AccountRepository} from "@/modules/accounts/repositories";
 import {AccountMapper} from "@/modules/accounts/mappers";
 import {

@@ -5,11 +5,14 @@ import AccountTop from "@/modules/accounts/components/AccountTop.vue";
 import AccountControls from "@/modules/accounts/components/AccountControls.vue";
 import AccountList from "@/modules/accounts/components/AccountList.vue";
 
+import ModalComponents from "@/modules/accounts/components/ModalComponents";
+
 export {
   Header,
   ModalWrapper,
   AccountCard,
   AccountTop,
   AccountControls,
-  AccountList
+  AccountList,
+  ModalComponents
 }

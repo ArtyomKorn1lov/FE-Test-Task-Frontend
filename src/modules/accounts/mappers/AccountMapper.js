@@ -1,5 +1,5 @@
 import {ArrayHelper} from "@/core";
-import {OptionResponse, Filter, Pagination} from "@/modules/accounts";
+import {OptionResponse, Filter, Pagination} from "@/modules/accounts/models";
 
 /**
  * @param {OptionResponse[]} options

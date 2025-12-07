@@ -132,8 +132,10 @@ export default function useForm(
   /**
    * @param {Object} formRef
    * @param {VoidFunction} afterSuccess
+   * @param {Boolean} resetFrom
+   * @return {Promise<void>}
    */
-  const onSubmit = async (formRef, afterSuccess = null) => {
+  const onSubmit = async (formRef, afterSuccess = null, resetFrom = true) => {
     if (!formRef) {
       return;
     }
@@ -142,15 +144,17 @@ export default function useForm(
       if (!valid) {
         return;
       }
-      await sendRequest(formRef, afterSuccess);
+      await sendRequest(formRef, afterSuccess, resetFrom);
     });
   }
 
   /**
    * @param {Object} formRef
    * @param {VoidFunction} afterSuccess
+   * @param {Boolean} resetFrom
+   * @return {Promise<void>}
    */
-  const sendRequest = async (formRef, afterSuccess = null) => {
+  const sendRequest = async (formRef, afterSuccess = null, resetFrom = true) => {
     try {
       let model;
       if (!sendModel) {
@@ -161,7 +165,7 @@ export default function useForm(
       isLoading.value = true;
       const response = await fetch(model);
       isLoading.value = false;
-      resetForm(formRef);
+      !!resetFrom && resetForm(formRef);
       await MessageHelper.showMessageBox({
         title: t('core.messages.successTitle'),
         message: response?.message,

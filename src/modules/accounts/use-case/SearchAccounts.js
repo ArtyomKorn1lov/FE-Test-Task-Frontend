@@ -1,5 +1,5 @@
 import {ResponseException, BaseUseCase} from "@/core";
-import {ContextSearch, ContextSearchResponse} from "@/modules/accounts";
+import {ContextSearch, ContextSearchResponse} from "@/modules/accounts/models";
 import {AccountRepository} from "@/modules/accounts/repositories";
 
 /**

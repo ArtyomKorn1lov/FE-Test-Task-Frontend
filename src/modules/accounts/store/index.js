@@ -15,11 +15,15 @@ const state = new AccountStore({
   modalToggle: false,
   modalCode: false,
   modalTitle: false,
+  modalKey: false,
   accountEditId: null,
   filter: DefaultFilterValues,
   pagination: DefaultPaginationValues,
+  selectedItems: [],
+  isSelectAll: false,
+  selectedRoleName: "",
   items: [],
-  isLoading: true
+  isLoading: true,
 });
 
 export default createStore({

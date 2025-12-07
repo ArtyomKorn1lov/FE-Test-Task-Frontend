@@ -3,6 +3,9 @@ import {EmailRegex} from "@/modules/forms/constants";
 import {FieldsValidateException} from "@/modules/forms/exceptions";
 import {FormFields, FormGroup, FormField} from "@/modules/forms/models";
 
+/**
+ * @description Builder полей для реактивных форм, генерация правил валидации формы и value-objet'а для хранения значений формы
+ */
 export default class FormFieldsBuilder {
   /**
    * @protected

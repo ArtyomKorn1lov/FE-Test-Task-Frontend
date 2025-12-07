@@ -1,5 +1,5 @@
 import {ResponseException, CommonResponse, BaseUseCase} from "@/core";
-import {AccountUpdate} from "@/modules/accounts";
+import {AccountUpdate} from "@/modules/accounts/models";
 import {AccountRepository} from "@/modules/accounts/repositories";
 
 /**

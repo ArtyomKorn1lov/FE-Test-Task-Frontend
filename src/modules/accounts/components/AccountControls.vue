@@ -12,14 +12,12 @@
         class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
         v-html="'<span>' + TemplateHelper.getIcon('edit') + t('controls.editBtnTitle') + '</span>'"
         @click="editItem"
-      >
-      </el-button>
+      />
       <el-button
         class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
         v-html="'<span>' + TemplateHelper.getIcon('delete') + t('controls.deleteBtnTitle') + '</span>'"
         @click="deleteItems"
-      >
-      </el-button>
+      />
     </div>
     <el-button
       v-if="!!roleCode"

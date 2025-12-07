@@ -21,6 +21,7 @@
         <div
           v-if="showItems"
           class="b-account__list custom-scroll overflow-y"
+          :class="AccountListWrapperClass"
         >
           <AccountCard
             v-for="item in items"
@@ -42,7 +43,7 @@
   </div>
 </template>
 <script setup>
-import {computed, ref} from 'vue';
+import {computed} from 'vue';
 import {useStore, Store} from 'vuex';
 import {useI18n} from "vue-i18n";
 import {
@@ -55,6 +56,7 @@ import {
   useFetch
 } from "@/core";
 import {Pagination as PaginationComponent, ModalParams} from "@/modules/ui";
+import {AccountListWrapperClass} from "@/modules/accounts/constants";
 import {AccountControls, AccountTop, AccountCard} from "@/modules/accounts/components";
 import {ModalComponentsCodes} from "@/modules/accounts/enums";
 import {
@@ -68,16 +70,6 @@ import {
   SelectRole,
   SelectItem
 } from "@/modules/accounts/models";
-import {DeleteAccount, DeleteAccounts} from "@/modules/accounts/use-case";
-
-/**
- * @type {DeleteAccount}
- */
-const deleteAccount = DependencyInjection.resolve('DeleteAccount');
-/**
- * @type {DeleteAccounts}
- */
-const deleteAccounts = DependencyInjection.resolve('DeleteAccounts');
 
 const {t} = useI18n();
 
@@ -85,19 +77,6 @@ const {t} = useI18n();
  * @type {Store<AccountStore>}
  */
 const store = useStore();
-
-/**
- * @type {import('vue').Ref<Number[]>}
- */
-const selectedItems = ref([]);
-/**
- * @type {import('vue').Ref<Boolean>}
- */
-const isSelectAll = ref(false);
-/**
- * @type {import('vue').Ref<String>}
- */
-const selectedRoleName = ref('');
 
 /**
  * @type {import('vue').ComputedRef<Filter>}
@@ -112,6 +91,18 @@ const items = computed(() => store.getters.getItems);
  */
 const isLoading = computed(() => store.getters.getIsLoading);
 /**
+ * @type {import('vue').ComputedRef<Number[]>}
+ */
+const selectedItems = computed(() => store.getters.getSelectedItems);
+/**
+ * @type {import('vue').Ref<Boolean>}
+ */
+const isSelectAll = computed(() => store.getters.getIsSelectAll);
+/**
+ * @type {import('vue').Ref<String>}
+ */
+const selectedRoleName = computed(() => store.getters.getSelectedRoleName);
+/**
  * @type {import('vue').ComputedRef<Boolean>}
  */
 const showItems = computed(() => !!items.value && items.value.length > 0);
@@ -125,21 +116,6 @@ const itemsCount = computed(() => selectedItems.value.length);
 const disableEditTop = computed(() => selectedItems.value.length > 1);
 
 /**
- * @type {(function(id: Number): Promise<CommonResponse>)}
- */
-const fetchDelete = useFetch({
-  useCase: deleteAccount,
-  messageType: MessageTypes.messageBox
-});
-/**
- * @type {(function(object: AccountDelete): Promise<CommonResponse>)}
- */
-const fetchDeleteItems = useFetch({
-  useCase: deleteAccounts,
-  messageType: MessageTypes.messageBox
-});
-
-/**
  * @param {Number} id
  */
 const isSelectedItem = (id) => {
@@ -150,32 +126,21 @@ const isSelectedItem = (id) => {
  * @param {SelectItem} obj
  */
 const onSelectItem = (obj) => {
-  isSelectAll.value = false;
-  if (!!obj.value) {
-    !selectedItems.value.includes(obj.id)
-    && (selectedItems.value.push(obj.id));
-    return;
-  }
-  selectedItems.value = selectedItems.value.filter((item) => item !== obj.id);
+  store.dispatch("onSelectItem", obj);
 }
 
 /**
  * @param {Boolean} value
  */
 const onSelectAll = (value) => {
-  isSelectAll.value = value;
-  if (!!value) {
-    selectedItems.value = items.value.map((item) => item.id);
-    return;
-  }
-  selectedItems.value = [];
+  store.dispatch("onSelectAll", value);
 }
 
 /**
  * @param {SelectRole} obj
  */
 const onSelectRole = async (obj) => {
-  selectedRoleName.value = obj.roleName;
+  store.commit("setSelectedRole", obj.roleName);
   await store.dispatch("onFilter", new FilterRole({
     roleCode: obj.roleCode
   }));
@@ -186,50 +151,14 @@ const onSelectRole = async (obj) => {
  * @returns {Promise<void>}
  */
 const deleteItem = async (id) => {
-  try {
-    await MessageHelper.showConfirmMessageBox({
-      title: t('accountSection.deleteItem.questionTitle'),
-      message: t('accountSection.deleteItem.questionDescription'),
-      cancelMessage: t('modal.deleteItem.cancelBtnTitle'),
-      callback: async () => {
-        const response = await fetchDelete(id);
-        MessageHelper.showNotification({
-          type: ResponseStatus.success,
-          message: response?.message,
-        });
-        await afterDeleteItem();
-      },
-    });
-  } catch (e) {
-  }
+  await store.dispatch("onDeleteItem", id);
 }
 
 /**
  * @returns {Promise<void>}
  */
 const deleteSelectedItems = async () => {
-  try {
-    await MessageHelper.showConfirmMessageBox({
-      title: t('controls.deleteItems.questionTitle'),
-      message: t('controls.deleteItems.questionDescription'),
-      callback: async () => {
-        const response = await fetchDeleteItems(new AccountDelete({
-          ids: selectedItems.value
-        }));
-        MessageHelper.showNotification({
-          type: ResponseStatus.success,
-          message: response?.message,
-        });
-        afterDeleteItem();
-      },
-      cancelMessage: t('modal.deleteItems.cancelBtnTitle')
-    });
-  } catch (e) {
-  }
-}
-
-const afterDeleteItem = async () => {
-  await store.dispatch('initAccountList');
+  await store.dispatch("onDeleteSelectedItems");
 }
 
 /**
@@ -243,7 +172,11 @@ const setSortValues = async (obj) => {
 }
 
 const editSelectedItem = () => {
-  editItem(selectedItems.value.shift());
+  const id = selectedItems.value[0];
+  if (!id) {
+    return;
+  }
+  editItem(id);
 }
 
 /**

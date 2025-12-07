@@ -20,6 +20,11 @@ export default class AccountStore {
   modalTitle;
   /**
    * @public
+   * @type {Boolean}
+   * */
+  modalKey;
+  /**
+   * @public
    * @type {Number|Boolean}
    * */
   accountEditId;
@@ -33,6 +38,21 @@ export default class AccountStore {
    * @type {Pagination}
    * */
   pagination;
+  /**
+   * @public
+   * @type {Number[]}
+   * */
+  selectedItems;
+  /**
+   * @public
+   * @type {Boolean}
+   * */
+  isSelectAll;
+  /**
+   * @public
+   * @type {String}
+   * */
+  selectedRoleName;
   /**
    * @public
    * @type {Account[]}
@@ -53,9 +73,13 @@ export default class AccountStore {
     this.modalToggle = data?.modalToggle;
     this.modalCode = data?.modalCode;
     this.modalTitle = data?.modalTitle;
+    this.modalKey = data?.modalKey;
     this.accountEditId = data?.accountEditId;
     this.filter = data?.filter;
     this.pagination = data?.pagination;
+    this.selectedItems = data?.selectedItems;
+    this.isSelectAll = data?.isSelectAll;
+    this.selectedRoleName = data?.selectedRoleName;
     this.items = data?.items;
     this.isLoading = data?.isLoading;
   }

@@ -1,5 +1,19 @@
-import {ModalParams} from "@/modules/ui";
-import {AccountStore, Filter, Pagination, Account} from "@/modules/accounts";
+import {ModalAnimationDelay, ModalParams} from "@/modules/ui";
+import {AccountStore, Filter, Pagination, Account} from "@/modules/accounts/models";
+
+/**
+ * @description Управление флагом инициализации компонента внутри модального окна
+ * @param {AccountStore} state
+ */
+const toggleModalKey = (state) => {
+  if (!!state.modalKey) {
+    setTimeout(() => {
+      state.modalKey = false;
+    }, ModalAnimationDelay);
+  } else {
+    state.modalKey = true;
+  }
+}
 
 /**
  * @param {AccountStore} state
@@ -10,6 +24,16 @@ export const setModalProps = (state, payload) => {
   state.modalCode = payload.code;
   state.modalTitle = payload.title;
   state.accountEditId = !!payload.accountEditId ? payload.accountEditId : false;
+  toggleModalKey(state);
+}
+
+/**
+ * @param {AccountStore} state
+ * @param {Boolean} payload
+ */
+export const setModalToggle = (state, payload) => {
+  state.modalToggle = payload;
+  toggleModalKey(state);
 }
 
 /**
@@ -57,4 +81,36 @@ export const addAccounts = (state, payload) => {
  */
 export const setIsLoading = (state, payload) => {
   state.isLoading = payload;
+}
+
+/**
+ * @param {AccountStore} state
+ * @param {Boolean} payload
+ */
+export const setSelectAll = (state, payload) => {
+  state.isSelectAll = payload;
+}
+
+/**
+ * @param {AccountStore} state
+ * @param {Number[]} payload
+ */
+export const setSelectedItems = (state, payload) => {
+  state.selectedItems = [...payload];
+}
+
+/**
+ * @param {AccountStore} state
+ * @param {String} payload
+ */
+export const setSelectedRole = (state, payload) => {
+  state.selectedRoleName = payload;
+}
+
+/**
+ * @param {AccountStore} state
+ */
+export const resetSelected = (state) => {
+  state.isSelectAll = false;
+  state.selectedItems = [];
 }

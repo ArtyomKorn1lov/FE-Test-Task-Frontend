@@ -56,3 +56,8 @@ export const AccountRoleFieldCode = "role";
  * @type {String}
  */
 export const UploadFileUrl = EnvService.get("REST_API_URL") + '/accounts/upload/';
+
+/**
+ * @type {String}
+ */
+export const AccountListWrapperClass = "account-list-wrapper";

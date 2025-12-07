@@ -5,7 +5,8 @@
     @close="closeModal"
   >
     <component
-      :key="modalProps"
+      v-if="!!modalKey"
+      :key="modalKey"
       :is="selectedComponent"
       :account-edit-id="accountEditId"
       @update="update"
@@ -13,9 +14,9 @@
   </Modal>
 </template>
 <script setup>
-import {computed} from 'vue';
+import {computed, ref} from 'vue';
 import {useStore, Store} from 'vuex';
-import {ModalParams, CloseModalParams, Modal} from "@/modules/ui";
+import {ModalParams, Modal} from "@/modules/ui";
 import {ModalComponentsCodes} from "@/modules/accounts/enums";
 import {AccountStore} from "@/modules/accounts/models";
 import ModalComponents from "@/modules/accounts/components/ModalComponents";
@@ -42,23 +43,20 @@ const selectedComponent = computed(() => {
  * @type {import('vue').ComputedRef<Number|Boolean>}
  */
 const accountEditId = computed(() => store.getters.getAccountEditId);
-
 /**
- * @param {CloseModalParams} objClose
+ * @type {import('vue').ComputedRef<Boolean>}
  */
-const closeModal = (objClose) => {
-  store.commit('setModalProps', new ModalParams({
-    toggle: objClose.toggle,
-    title: modalProps.value.title,
-    code: modalProps.value.code
-  }));
+const modalKey = computed(() => store.getters.getModalKey);
+
+const closeModal = () => {
+  store.commit('setModalToggle', false);
 }
 
-// TODO нужно ли тут ещё делать обновление ещё вопрос
+/**
+ * @return {Promise<void>}
+ */
 const update = async () => {
-  closeModal(new CloseModalParams({
-    toggle: false
-  }));
+  closeModal();
   await store.dispatch('initAccountList');
 }
 </script>

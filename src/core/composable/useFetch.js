@@ -4,6 +4,7 @@ import {MessageHelper} from "@/core/utils";
 import {BaseUseCase} from "@/core/use-case";
 
 /**
+ * @description Примесь с общей логикой обработки запросов, вывод всплывающего окна сообщения об ошибке
  * @param {Function} ajaxFunc
  * @param {BaseUseCase} useCase
  * @param {Boolean} showMessage
@@ -45,12 +46,13 @@ export default function useFetch(
    */
   return async (...args) => {
     try {
-      if (!!useCase) {
-        return await useCase.execute(...args);
-      } else if (!!ajaxFunc) {
-        return await ajaxFunc(...args);
+      if (!useCase && !ajaxFunc) {
+        throw new ArgumentException("The request execution method cannot be empty");
       }
-      throw new ArgumentException("The request execution method cannot be empty");
+      else if (!!useCase) {
+        return await useCase.execute(...args);
+      }
+      return await ajaxFunc(...args);
     } catch (/** @type {Error} */ exception) {
       if (showMessage) {
         await displayMessage(exception?.message);

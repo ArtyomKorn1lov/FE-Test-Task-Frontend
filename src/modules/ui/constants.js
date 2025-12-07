@@ -6,4 +6,9 @@ export const ReloadPaginationEmit = "refresh";
 /**
  * @type {String}
  */
-export const PaginationSelector = ".observable";
+export const PaginationSelectorCode = "observable";
+
+/**
+ * @type {Number}
+ */
+export const ModalAnimationDelay = 250;

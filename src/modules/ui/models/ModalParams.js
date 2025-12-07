@@ -1,5 +1,3 @@
-import {ModalComponentsCodes} from "@/modules/accounts/enums";
-
 export default class ModalParams {
   /**
    * @public
@@ -8,7 +6,7 @@ export default class ModalParams {
   toggle;
   /**
    * @public
-   * @type {ModalComponentsCodes|String|Boolean}
+   * @type {String|Boolean}
    * */
   code;
   /**

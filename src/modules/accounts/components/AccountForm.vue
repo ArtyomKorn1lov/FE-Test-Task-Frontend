@@ -7,7 +7,7 @@
     ref="formRef"
     :rules="rules"
     :model="formData"
-    @submit.prevent.native="onSubmit(formRef, afterSubmit)"
+    @submit.prevent.native="onSubmit(formRef, afterSubmit, false)"
   >
     <el-row class="b-form__row">
       <el-col
@@ -63,8 +63,7 @@
             class="b-input"
             v-model="formData[field.code]"
             :placeholder="field.placeholder"
-          >
-          </el-input>
+          />
         </el-form-item>
       </el-col>
       <el-col class="b-form__col b-form__col_bottom">
@@ -92,10 +91,11 @@ import {
   ElUpload,
   ElIcon,
   ElButton,
+  ElLoading
 } from 'element-plus';
 import {Plus} from '@element-plus/icons-vue';
 import {useI18n} from "vue-i18n";
-import {DependencyInjection, CommonResponse, useFetch} from "@/core";
+import {DependencyInjection, useFetch} from "@/core";
 import {FormField, useForm, EmailRegex} from "@/modules/forms";
 import {
   AccountRoleFieldCode,
@@ -109,6 +109,7 @@ import {
   UpdateAccount
 } from "@/modules/accounts/use-case";
 import {AccountFormFields} from "@/modules/accounts/fields";
+import {ModalAnimationDelay} from "@/modules/ui/index.js";
 
 /**
  * @type {GetRoles}

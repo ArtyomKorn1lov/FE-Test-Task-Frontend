@@ -4,6 +4,7 @@ import {MessageHelper} from "@/core/utils";
 import {BaseUseCase} from "@/core/use-case";
 
 /**
+ * @description Примесь с общей логикой обработки запросов, получение информации об ошибке, флаг isLoading и получение данных как реактивного значения
  * @param {Function} ajaxFunc
  * @param {BaseUseCase} useCase
  * @param {Boolean} showMessage

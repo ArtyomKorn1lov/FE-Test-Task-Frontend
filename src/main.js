@@ -1,6 +1,6 @@
 import '@/assets/styles/index.scss';
-
 import {EnvService} from "@/core";
+
 EnvService.init();
 
 import "@/di";
@@ -12,7 +12,7 @@ import router from '@/router';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import App from '@/App.vue';
-import store from '@/modules/accounts/store';
+import {store} from "@/modules/accounts";
 import Translations from "@/translations";
 
 const app = createApp(App);

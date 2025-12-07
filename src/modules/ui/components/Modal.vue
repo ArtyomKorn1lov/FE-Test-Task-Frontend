@@ -14,8 +14,7 @@
         v-html="iconClose"
         href="javascript:void(0)"
         @click="close"
-      >
-      </a>
+      />
     </template>
     <slot/>
   </el-dialog>
@@ -24,7 +23,6 @@
 import {computed} from 'vue';
 import {ElDialog} from 'element-plus';
 import {TemplateHelper} from "@/core";
-import {CloseModalParams} from "@/modules/ui/models";
 
 const {toggle, title} = defineProps({
   toggle: {
@@ -45,9 +43,7 @@ const emit = defineEmits(['close']);
 const iconClose = computed(() => TemplateHelper.getIcon('close'));
 
 const close = () => {
-  emit('close', new CloseModalParams({
-    toggle: false
-  }));
+  emit('close');
 }
 
 </script>

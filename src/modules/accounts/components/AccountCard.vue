@@ -128,7 +128,7 @@ const selectRole = () => {
   }));
 }
 
-const deleteItem = async () => {
+const deleteItem = () => {
   emit('delete', element.id);
 }
 

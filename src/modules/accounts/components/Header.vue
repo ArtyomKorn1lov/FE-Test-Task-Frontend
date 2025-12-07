@@ -7,10 +7,7 @@
           {{ t('header.title') }}
         </span>
 
-        <form
-          class="b-header__controls"
-          @submit.prevent.native="search(searchString)"
-        >
+        <div class="b-header__controls">
 
           <el-autocomplete
             v-model="searchString"
@@ -18,7 +15,9 @@
             class="b-input b-input_header"
             placeholder="Search"
             popper-class="b-select__popper"
+            clearable
             @select="(item) => search(item.value)"
+            @clear="search('')"
           >
             <template #prefix>
               <el-icon
@@ -38,7 +37,7 @@
             {{ t('header.createBtnTitle') }}
           </el-button>
 
-        </form>
+        </div>
       </div>
     </div>
   </header>
@@ -63,7 +62,7 @@ import {
   ContextSearch,
   ContextSearchResponse
 } from "@/modules/accounts/models";
-import {SearchAccounts} from "@/modules/accounts";
+import {SearchAccounts} from "@/modules/accounts/use-case";
 import {
   AccountLoginFieldCode,
   FieldContextSearchCode
@@ -112,7 +111,7 @@ const openModal = () => {
 
 /**
  * @param {String} queryString
- * @param {Function} callback
+ * @param {VoidFunction} callback
  */
 const contextSearch = async (queryString, callback) => {
   try {
@@ -130,8 +129,8 @@ const contextSearch = async (queryString, callback) => {
 /**
  * @param {String} value
  */
-const search = (value) => {
-  store.dispatch('onFilter', new Search({
+const search = async (value) => {
+  await store.dispatch('onFilter', new Search({
     search: value
   }));
 }
