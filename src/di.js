@@ -1,2 +1,2 @@
-import "@/core/di.js";
-import "@/modules/accounts/di";
+import '@/core/di.js';
+import '@/modules/accounts/di';

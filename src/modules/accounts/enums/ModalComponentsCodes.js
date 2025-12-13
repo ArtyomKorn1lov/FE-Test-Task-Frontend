@@ -1,4 +1,4 @@
 export default {
-  account: "Account",
-  undefined: "ComponentNotExist"
-}
+  account: 'Account',
+  undefined: 'ComponentNotExist',
+};

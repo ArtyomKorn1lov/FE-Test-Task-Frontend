@@ -43,27 +43,17 @@
   </div>
 </template>
 <script setup>
-import {computed} from 'vue';
-import {useStore, Store} from 'vuex';
-import {useI18n} from "vue-i18n";
-import {
-  SortTypes,
-} from "@/core";
-import {Pagination as PaginationComponent, ModalParams} from "@/modules/ui";
-import {AccountListWrapperClass} from "@/modules/accounts/constants";
-import {AccountControls, AccountTop, AccountCard} from "@/modules/accounts/components";
-import {ModalComponentsCodes} from "@/modules/accounts/enums";
-import {
-  AccountStore,
-  Account,
-  Filter,
-  FilterRole,
-  Sort,
-  SelectRole,
-  SelectItem
-} from "@/modules/accounts/models";
+import { computed } from 'vue';
+import { useStore, Store } from 'vuex';
+import { useI18n } from 'vue-i18n';
+import { SortTypes } from '@/core';
+import { Pagination as PaginationComponent, ModalParams } from '@/modules/ui';
+import { AccountListWrapperClass } from '@/modules/accounts/constants';
+import { AccountControls, AccountTop, AccountCard } from '@/modules/accounts/components';
+import { ModalComponentsCodes } from '@/modules/accounts/enums';
+import { AccountStore, Account, Filter, FilterRole, Sort, SelectRole, SelectItem } from '@/modules/accounts/models';
 
-const {t} = useI18n();
+const { t } = useI18n();
 
 /**
  * @type {Store<AccountStore>}
@@ -112,56 +102,57 @@ const disableEditTop = computed(() => selectedItems.value.length > 1);
  */
 const isSelectedItem = (id) => {
   return selectedItems.value.includes(id);
-}
+};
 
 /**
  * @param {SelectItem} obj
  */
 const onSelectItem = (obj) => {
-  store.dispatch("onSelectItem", obj);
-}
+  store.dispatch('onSelectItem', obj);
+};
 
 /**
  * @param {Boolean} value
  */
 const onSelectAll = (value) => {
-  store.dispatch("onSelectAll", value);
-}
+  store.dispatch('onSelectAll', value);
+};
 
 /**
  * @param {SelectRole} obj
  */
 const onSelectRole = async (obj) => {
-  store.commit("setSelectedRole", obj.roleName);
-  await store.dispatch("onFilter", new FilterRole({
-    roleCode: obj.roleCode
-  }));
-}
+  store.commit('setSelectedRole', obj.roleName);
+  await store.dispatch(
+    'onFilter',
+    new FilterRole({
+      roleCode: obj.roleCode,
+    }),
+  );
+};
 
 /**
  * @param {Number} id
  * @returns {Promise<void>}
  */
 const deleteItem = async (id) => {
-  await store.dispatch("onDeleteItem", id);
-}
+  await store.dispatch('onDeleteItem', id);
+};
 
 /**
  * @returns {Promise<void>}
  */
 const deleteSelectedItems = async () => {
-  await store.dispatch("onDeleteSelectedItems");
-}
+  await store.dispatch('onDeleteSelectedItems');
+};
 
 /**
  * @param {Sort} obj
  */
 const setSortValues = async (obj) => {
-  (obj.sort === filter.value.sort)
-    ? (obj.order = obj.order === SortTypes.asc ? SortTypes.desc : SortTypes.asc)
-    : (obj.order = SortTypes.asc);
+  obj.sort === filter.value.sort ? (obj.order = obj.order === SortTypes.asc ? SortTypes.desc : SortTypes.asc) : (obj.order = SortTypes.asc);
   await store.dispatch('onFilter', obj);
-}
+};
 
 const editSelectedItem = () => {
   const id = selectedItems.value[0];
@@ -169,7 +160,7 @@ const editSelectedItem = () => {
     return;
   }
   editItem(id);
-}
+};
 
 /**
  * @param {Number} id
@@ -178,24 +169,26 @@ const editItem = (id) => {
   if (!id) {
     return;
   }
-  store.commit('setModalProps', new ModalParams({
-    toggle: true,
-    title: t('accounts.modal.titleEdit'),
-    code: ModalComponentsCodes.account,
-    accountEditId: id
-  }));
-}
+  store.commit(
+    'setModalProps',
+    new ModalParams({
+      toggle: true,
+      title: t('accounts.modal.titleEdit'),
+      code: ModalComponentsCodes.account,
+      accountEditId: id,
+    }),
+  );
+};
 
 const refresh = async () => {
   await store.dispatch('addAccountList');
-}
+};
 
 const onInit = async () => {
   await store.dispatch('initFilterValues');
   await store.dispatch('initPagination');
   await store.dispatch('initAccountList');
-}
+};
 
 onInit();
-
 </script>

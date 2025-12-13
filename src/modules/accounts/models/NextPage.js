@@ -10,6 +10,6 @@ export default class NextPage {
    * @param {NextPage|null} data
    */
   constructor(data = null) {
-    this.page = data?.page
+    this.page = data?.page;
   }
 }

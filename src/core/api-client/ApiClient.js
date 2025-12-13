@@ -1,6 +1,6 @@
-import {RequestConfig} from "@/core/models";
-import {RequestTypes} from "@/core/enums";
-import BaseApiClient from "@/core/api-client/BaseApiClient";
+import { RequestConfig } from '@/core/models';
+import { RequestTypes } from '@/core/enums';
+import BaseApiClient from '@/core/api-client/BaseApiClient';
 
 /**
  * @description реализация API-клиента для данной программной системы
@@ -15,7 +15,7 @@ export default class ApiClient extends BaseApiClient {
   async post(url, config = new RequestConfig()) {
     return await this.executeRequest(url, {
       ...config,
-      requestType: RequestTypes.post
+      requestType: RequestTypes.post,
     });
   }
 
@@ -28,7 +28,7 @@ export default class ApiClient extends BaseApiClient {
   async put(url, config = new RequestConfig()) {
     return await this.executeRequest(url, {
       ...config,
-      requestType: RequestTypes.put
+      requestType: RequestTypes.put,
     });
   }
 
@@ -41,7 +41,7 @@ export default class ApiClient extends BaseApiClient {
   async delete(url, config = new RequestConfig()) {
     return await this.executeRequest(url, {
       ...config,
-      requestType: RequestTypes.delete
+      requestType: RequestTypes.delete,
     });
   }
 
@@ -54,7 +54,7 @@ export default class ApiClient extends BaseApiClient {
   async get(url, config = new RequestConfig()) {
     return await this.executeRequest(url, {
       ...config,
-      requestType: RequestTypes.get
+      requestType: RequestTypes.get,
     });
   }
 }

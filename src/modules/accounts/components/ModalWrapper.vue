@@ -14,12 +14,12 @@
   </Modal>
 </template>
 <script setup>
-import {computed, ref} from 'vue';
-import {useStore, Store} from 'vuex';
-import {ModalParams, Modal} from "@/modules/ui";
-import {ModalComponentsCodes} from "@/modules/accounts/enums";
-import {AccountStore} from "@/modules/accounts/models";
-import ModalComponents from "@/modules/accounts/components/ModalComponents";
+import { computed, ref } from 'vue';
+import { useStore, Store } from 'vuex';
+import { ModalParams, Modal } from '@/modules/ui';
+import { ModalComponentsCodes } from '@/modules/accounts/enums';
+import { AccountStore } from '@/modules/accounts/models';
+import ModalComponents from '@/modules/accounts/components/ModalComponents';
 
 /**
  * @type {Store<AccountStore>}
@@ -50,7 +50,7 @@ const modalKey = computed(() => store.getters.getModalKey);
 
 const closeModal = () => {
   store.commit('setModalToggle', false);
-}
+};
 
 /**
  * @return {Promise<void>}
@@ -58,5 +58,5 @@ const closeModal = () => {
 const update = async () => {
   closeModal();
   await store.dispatch('initAccountList');
-}
+};
 </script>

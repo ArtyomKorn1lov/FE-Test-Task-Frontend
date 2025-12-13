@@ -1,9 +1,4 @@
-import {
-  ApiClient,
-  ResponseException,
-  RequestConfig,
-  CommonResponse
-} from "@/core";
+import { ApiClient, ResponseException, RequestConfig, CommonResponse } from '@/core';
 import {
   OptionResponse,
   Filter,
@@ -14,8 +9,8 @@ import {
   AccountUpdate,
   AccountDelete,
   ContextSearch,
-  ContextSearchResponse
-} from "@/modules/accounts/models";
+  ContextSearchResponse,
+} from '@/modules/accounts/models';
 
 /**
  * @final
@@ -41,7 +36,7 @@ export default class AccountRepository {
    * @throws {ResponseException}
    */
   async getFilterValues() {
-    return await this.apiClient.get("/accounts/filter-values");
+    return await this.apiClient.get('/accounts/filter-values');
   }
 
   /**
@@ -50,7 +45,7 @@ export default class AccountRepository {
    * @throws {ResponseException}
    */
   async getPageNav() {
-    return await this.apiClient.get("/accounts/page-nav");
+    return await this.apiClient.get('/accounts/page-nav');
   }
 
   /**
@@ -59,7 +54,7 @@ export default class AccountRepository {
    * @throws {ResponseException}
    */
   async getRoles() {
-    return await this.apiClient.get("/accounts/roles");
+    return await this.apiClient.get('/accounts/roles');
   }
 
   /**
@@ -70,10 +65,10 @@ export default class AccountRepository {
    */
   async search(contextSearch) {
     return await this.apiClient.get(
-      "/accounts/search",
+      '/accounts/search',
       new RequestConfig({
-        params: contextSearch
-      })
+        params: contextSearch,
+      }),
     );
   }
 
@@ -86,10 +81,13 @@ export default class AccountRepository {
    */
   async getList(filter, pageNav = null) {
     return await this.apiClient.get(
-      "/accounts/list",
+      '/accounts/list',
       new RequestConfig({
-        params: {...filter, ...pageNav}
-      })
+        params: {
+          ...filter,
+          ...pageNav,
+        },
+      }),
     );
   }
 
@@ -111,10 +109,10 @@ export default class AccountRepository {
    */
   async create(object) {
     return await this.apiClient.post(
-      "/accounts/create",
+      '/accounts/create',
       new RequestConfig({
-        data: object
-      })
+        data: object,
+      }),
     );
   }
 
@@ -126,10 +124,10 @@ export default class AccountRepository {
    */
   async update(object) {
     return await this.apiClient.put(
-      "/accounts/edit",
+      '/accounts/edit',
       new RequestConfig({
-        data: object
-      })
+        data: object,
+      }),
     );
   }
 
@@ -151,10 +149,10 @@ export default class AccountRepository {
    */
   async deleteItems(object) {
     return await this.apiClient.post(
-      "/accounts/delete",
+      '/accounts/delete',
       new RequestConfig({
-        data: object
-      })
+        data: object,
+      }),
     );
   }
 }

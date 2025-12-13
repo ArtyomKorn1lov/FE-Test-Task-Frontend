@@ -1,4 +1,4 @@
-import {RequestTypes, BodyTypes} from "@/core/enums";
+import { RequestTypes, BodyTypes } from '@/core/enums';
 
 export default class RequestConfig {
   /**

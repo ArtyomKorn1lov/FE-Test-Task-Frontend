@@ -1,8 +1,6 @@
 <template>
   <div class="b-controls">
-    <span class="b-controls__title">
-      {{ count }} {{ t('accounts.section.userCountLabel') }}
-    </span>
+    <span class="b-controls__title"> {{ count }} {{ t('accounts.section.userCountLabel') }} </span>
     <div
       v-if="showBtnGroup"
       class="b-controls__btns"
@@ -27,41 +25,39 @@
     >
       {{ roleName }}
       <el-icon>
-        <CircleClose/>
+        <CircleClose />
       </el-icon>
     </el-button>
   </div>
 </template>
 <script setup>
-import {computed} from 'vue';
-import {ElButton, ElIcon} from 'element-plus';
-import {CircleClose} from '@element-plus/icons-vue';
-import {useI18n} from "vue-i18n";
-import {
-  TemplateHelper,
-} from "@/core";
-import {TagAccountListModifier} from "@/modules/accounts/constants";
-import {SelectRole} from "@/modules/accounts/models";
+import { computed } from 'vue';
+import { ElButton, ElIcon } from 'element-plus';
+import { CircleClose } from '@element-plus/icons-vue';
+import { useI18n } from 'vue-i18n';
+import { TemplateHelper } from '@/core';
+import { TagAccountListModifier } from '@/modules/accounts/constants';
+import { SelectRole } from '@/modules/accounts/models';
 
-const {t} = useI18n();
+const { t } = useI18n();
 
-const {count, disableEditBtn, roleCode, roleName} = defineProps({
+const { count, disableEditBtn, roleCode, roleName } = defineProps({
   count: {
     type: Number,
-    default: 0
+    default: 0,
   },
   disableEditBtn: {
     type: Boolean,
-    default: false
+    default: false,
   },
   roleCode: {
     type: String,
-    default: ''
+    default: '',
   },
   roleName: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 });
 
 const emit = defineEmits(['clear-role', 'delete-items', 'edit-item']);
@@ -76,22 +72,24 @@ const showBtnGroup = computed(() => {
  * @type {import('vue').ComputedRef<String>}
  */
 const tagClassModifier = computed(() => {
-  return `${TagAccountListModifier}${roleCode}`
+  return `${TagAccountListModifier}${roleCode}`;
 });
 
 const clearRoleFilter = () => {
-  emit('clear-role', new SelectRole({
-    roleCode: '',
-    roleName: ''
-  }));
-}
+  emit(
+    'clear-role',
+    new SelectRole({
+      roleCode: '',
+      roleName: '',
+    }),
+  );
+};
 
 const deleteItems = () => {
   emit('delete-items');
-}
+};
 
 const editItem = () => {
   emit('edit-item');
-}
-
+};
 </script>

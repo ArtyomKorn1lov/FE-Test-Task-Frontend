@@ -1,5 +1,3 @@
-import * as AccountMapper from "@/modules/accounts/mappers/AccountMapper";
+import * as AccountMapper from '@/modules/accounts/mappers/AccountMapper';
 
-export {
-  AccountMapper
-}
+export { AccountMapper };

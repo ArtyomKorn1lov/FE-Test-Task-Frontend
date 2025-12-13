@@ -1,5 +1,5 @@
-import Translations from "@/translations";
-import {NotFoundException, ArgumentException} from "@/core/exceptions";
+import Translations from '@/translations';
+import { NotFoundException, ArgumentException } from '@/core/exceptions';
 
 const t = Translations.global.t;
 
@@ -15,7 +15,7 @@ export const init = () => {
   if (!process?.env) {
     throw new NotFoundException(t('core.utils.env.initErrorMessage'));
   }
-}
+};
 
 /**
  * @param {String} code
@@ -26,6 +26,5 @@ export const get = (code) => {
   if (!code) {
     throw ArgumentException(t('core.utils.env.emptyArgErrorMessage'));
   }
-  return process.env[code] ?? "";
-}
-
+  return process.env[code] ?? '';
+};

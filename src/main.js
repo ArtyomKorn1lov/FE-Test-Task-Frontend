@@ -1,17 +1,17 @@
 import '@/assets/styles/index.scss';
-import {EnvService} from "@/core";
+import { EnvService } from '@/core';
 
 EnvService.init();
 
-import "@/di";
+import '@/di';
 import 'virtual:svg-icons-register';
 
-import {createApp} from 'vue';
-import VLoading from "element-plus/es/components/loading/index";
+import { createApp } from 'vue';
+import VLoading from 'element-plus/es/components/loading/index';
 import router from '@/router';
 import App from '@/App.vue';
-import {store} from "@/modules/accounts";
-import Translations from "@/translations";
+import { store } from '@/modules/accounts';
+import Translations from '@/translations';
 
 const app = createApp(App);
 

@@ -1,6 +1,6 @@
-import {onMounted, onUnmounted, computed} from 'vue';
-import {TemplateHelper} from "@/core";
-import {ReloadPaginationEmit, PaginationSelectorCode} from "@/modules/ui";
+import { onMounted, onUnmounted, computed } from 'vue';
+import { TemplateHelper } from '@/core';
+import { ReloadPaginationEmit, PaginationSelectorCode } from '@/modules/ui';
 
 /**
  * @description Примесь с общей логикой пагинации через IntersectionObserver
@@ -12,7 +12,7 @@ export default function useObserverPagination(paginationSelector, emit, refreshE
   /**
    * @type {import('vue').ComputedRef<String>}
    */
-  const observerSelector = computed(() => !!paginationSelector ? paginationSelector : PaginationSelectorCode);
+  const observerSelector = computed(() => (paginationSelector ? paginationSelector : PaginationSelectorCode));
 
   /**
    * @type {IntersectionObserver}

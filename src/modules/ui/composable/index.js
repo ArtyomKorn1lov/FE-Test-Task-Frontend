@@ -1,6 +1,3 @@
-import useObserverPagination
-  from "@/modules/ui/composable/useObserverPagination";
+import useObserverPagination from '@/modules/ui/composable/useObserverPagination';
 
-export {
-  useObserverPagination
-}
+export { useObserverPagination };

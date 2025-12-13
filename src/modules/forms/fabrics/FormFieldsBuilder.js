@@ -1,8 +1,8 @@
-import Translations from "@/translations";
-import {ObjectHelper} from "@/core";
-import {EmailRegex} from "@/modules/forms/constants";
-import {FieldsValidateException} from "@/modules/forms/exceptions";
-import {FormFields, FormGroup, FormField} from "@/modules/forms/models";
+import Translations from '@/translations';
+import { ObjectHelper } from '@/core';
+import { EmailRegex } from '@/modules/forms/constants';
+import { FieldsValidateException } from '@/modules/forms/exceptions';
+import { FormFields, FormGroup, FormField } from '@/modules/forms/models';
 
 const t = Translations.global.t;
 
@@ -31,15 +31,15 @@ export default class FormFieldsBuilder {
    */
   validators = {};
 
-  get rules() {
+  get getRules() {
     return this.rules;
   }
 
-  get formData() {
+  get getFormData() {
     return this.formData;
   }
 
-  get fields() {
+  get getFields() {
     return this.fields;
   }
 
@@ -68,7 +68,7 @@ export default class FormFieldsBuilder {
    * @throws {FieldsValidateException}
    */
   validate() {
-    if (!ObjectHelper.hasProperty(this.fields, "groups")) {
+    if (!ObjectHelper.hasProperty(this.fields, 'groups')) {
       throw new FieldsValidateException(t('form.builder.errors.structure'));
     }
     if (!!this.fields.groups && this.fields.groups.length > 0) {
@@ -82,7 +82,7 @@ export default class FormFieldsBuilder {
    * @throws {FieldsValidateException}
    */
   validateGroup(group) {
-    if (!ObjectHelper.hasProperty(group, "items")) {
+    if (!ObjectHelper.hasProperty(group, 'items')) {
       throw new FieldsValidateException(t('form.builder.errors.structure'));
     }
     if (!!group.items && group.items.length > 0) {
@@ -96,11 +96,7 @@ export default class FormFieldsBuilder {
    * @throws {FieldsValidateException}
    */
   validateField(field) {
-    if (
-      !ObjectHelper.hasProperty(field, "code")
-      || !ObjectHelper.hasProperty(field, "type")
-      || !ObjectHelper.hasProperty(field, "required")
-    ) {
+    if (!ObjectHelper.hasProperty(field, 'code') || !ObjectHelper.hasProperty(field, 'type') || !ObjectHelper.hasProperty(field, 'required')) {
       throw new FieldsValidateException(t('form.builder.errors.structure'));
     }
   }
@@ -121,8 +117,8 @@ export default class FormFieldsBuilder {
    * @public
    */
   createRules() {
-    this.fields.groups?.forEach(group => {
-      group.items?.forEach(field => {
+    this.fields.groups?.forEach((group) => {
+      group.items?.forEach((field) => {
         this.setRuleValidation(field);
         this.addCustomRule(field);
       });
@@ -133,7 +129,7 @@ export default class FormFieldsBuilder {
    * @public
    */
   createFormData() {
-    this.fields.groups?.forEach(group => {
+    this.fields.groups?.forEach((group) => {
       group.items?.forEach((field) => {
         this.setFormDataValue(field);
       });
@@ -148,7 +144,7 @@ export default class FormFieldsBuilder {
   setFormFieldItems(fieldCode, items) {
     this.fields.groups?.forEach((group, indexGroup) => {
       group.items?.forEach((field, indexField) => {
-        if (!(field.code === fieldCode && ObjectHelper.hasProperty(field, "items"))) {
+        if (!(field.code === fieldCode && ObjectHelper.hasProperty(field, 'items'))) {
           return;
         }
         this.fields.groups[indexGroup].items[indexField].items = [...items];
@@ -168,25 +164,26 @@ export default class FormFieldsBuilder {
     this.rules[field.code] = [];
 
     switch (field.type) {
-      case 'email':
+      case 'email': {
         const emailValidator = (rule, value, callback) => {
-          const regularExpression = !!this.validators[field.type] ? this.validators[field.type] : EmailRegex;
+          const regularExpression = this.validators[field.type] ? this.validators[field.type] : EmailRegex;
           if (regularExpression.test(value)) {
             return callback();
           }
-          return callback(new Error(t('form.fields.email.error')));
-        }
+          return callback(new Error(t('form.getFields.email.error')));
+        };
         this.rules[field.code] = [
           {
             validator: emailValidator,
-            trigger: "change"
+            trigger: 'change',
           },
           {
             validator: emailValidator,
-            trigger: "blur"
-          }
+            trigger: 'blur',
+          },
         ];
         break;
+      }
       default:
         break;
     }
@@ -194,13 +191,13 @@ export default class FormFieldsBuilder {
     const requiredRule = [
       {
         required: true,
-        message: t('form.fields.default.error'),
-        trigger: 'change'
+        message: t('form.getFields.default.error'),
+        trigger: 'change',
       },
       {
         required: true,
-        message: t('form.fields.default.error'),
-        trigger: 'blur'
+        message: t('form.getFields.default.error'),
+        trigger: 'blur',
       },
     ];
 

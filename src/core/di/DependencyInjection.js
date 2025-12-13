@@ -1,5 +1,5 @@
-import Translations from "@/translations";
-import {NotFoundException} from "@/core/exceptions";
+import Translations from '@/translations';
+import { NotFoundException } from '@/core/exceptions';
 
 const t = Translations.global.t;
 
@@ -17,7 +17,7 @@ export default {
    * @param {any[]} constructorArgs
    */
   register(name, className, dependencyNames = [], constructorArgs = []) {
-    this.dependencies.set(name, {className, dependencyNames, constructorArgs});
+    this.dependencies.set(name, { className, dependencyNames, constructorArgs });
   },
 
   /**
@@ -31,9 +31,9 @@ export default {
       throw new NotFoundException(t('core.injection.notFound', { name: name }));
     }
 
-    const {className, dependencyNames, constructorArgs} = registration;
-    const resolvedDependencies = dependencyNames.map(dependenceName => this.resolve(dependenceName));
+    const { className, dependencyNames, constructorArgs } = registration;
+    const resolvedDependencies = dependencyNames.map((dependenceName) => this.resolve(dependenceName));
 
     return new className(...resolvedDependencies, ...constructorArgs);
-  }
-}
+  },
+};

@@ -9,8 +9,8 @@ import path from 'path';
 import vueDevTools from 'vite-plugin-vue-devtools';
 
 // Clear specific environment variables
-delete process.env['CommonProgramFiles(x86)']
-delete process.env['ProgramFiles(x86)']
+delete process.env['CommonProgramFiles(x86)'];
+delete process.env['ProgramFiles(x86)'];
 
 export default defineConfig({
   plugins: [
@@ -21,13 +21,13 @@ export default defineConfig({
       iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
       symbolId: 'icon-[dir]-[name]',
       inject: 'body-first',
-      customDomId: '__svg__icons__dom__'
+      customDomId: '__svg__icons__dom__',
     }),
     vueDevTools(),
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
 });

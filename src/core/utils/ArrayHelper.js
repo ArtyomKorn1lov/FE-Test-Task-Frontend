@@ -18,7 +18,7 @@ export const convertArrayToObject = (array) => {
   });
 
   return object;
-}
+};
 
 /**
  * @param {Array} array
@@ -36,4 +36,4 @@ export const changeArrayObjectsCode = (array, key, newKey) => {
     obj[newKey] = item[key];
     return obj;
   });
-}
+};

@@ -1,4 +1,4 @@
-import {File} from "@/core";
+import { File } from '@/core';
 
 export default class AccountUpdate {
   /**

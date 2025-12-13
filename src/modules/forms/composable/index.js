@@ -1,5 +1,3 @@
-import useForm from "@/modules/forms/composable/useForm";
+import useForm from '@/modules/forms/composable/useForm';
 
-export {
-  useForm
-}
+export { useForm };
