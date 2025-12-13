@@ -1,14 +1,14 @@
 // Подключение базовых стилей
-@import "vars/index";
-@import "fonts";
-@import "general";
-@import "typography";
-@import "animation";
+@import 'vars/index';
+@import 'fonts';
+@import 'general';
+@import 'typography';
+@import 'animation';
 // Подключение стилей-компонентов
-@import "components/ui/index";
-@import "components/header/index";
-@import "components/main/index";
-@import "components/wrap/index";
-@import "components/section/index";
-@import "components/controls/index";
-@import "components/account/index";
+@import 'components/ui/index';
+@import 'components/header/index';
+@import 'components/main/index';
+@import 'components/wrap/index';
+@import 'components/section/index';
+@import 'components/controls/index';
+@import 'components/account/index';

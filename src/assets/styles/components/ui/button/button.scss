@@ -1,9 +1,8 @@
-.b-btn.el-button+.el-button {
+.b-btn.el-button + .el-button {
   margin-left: 0;
 }
 
 .el-button.b-btn {
-
   &_primary {
     @extend %buttonDefaultOptions;
     padding: $m10 12px;
@@ -62,7 +61,6 @@
   }
 
   &_icon {
-
     span,
     p {
       @include flex(false, center);
@@ -70,7 +68,7 @@
 
       svg {
         width: 16px;
-        height: 16px
+        height: 16px;
       }
     }
   }

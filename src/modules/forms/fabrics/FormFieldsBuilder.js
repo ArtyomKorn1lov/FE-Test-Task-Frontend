@@ -170,7 +170,7 @@ export default class FormFieldsBuilder {
           if (regularExpression.test(value)) {
             return callback();
           }
-          return callback(new Error(t('form.getFields.email.error')));
+          return callback(new Error(t('form.fields.email.error')));
         };
         this.rules[field.code] = [
           {
@@ -191,12 +191,12 @@ export default class FormFieldsBuilder {
     const requiredRule = [
       {
         required: true,
-        message: t('form.getFields.default.error'),
+        message: t('form.fields.default.error'),
         trigger: 'change',
       },
       {
         required: true,
-        message: t('form.getFields.default.error'),
+        message: t('form.fields.default.error'),
         trigger: 'blur',
       },
     ];

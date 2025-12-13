@@ -1,5 +1,4 @@
 .b-upload {
-
   .el-upload {
     border: 1px dashed var(--el-border-color);
     border-radius: 6px;
@@ -15,16 +14,13 @@
       border-color: $colorPrimary;
 
       .b-upload {
-
         &__icon {
           color: $colorPrimary;
         }
       }
     }
 
-
     .b-upload {
-
       &__icon {
         font-size: 28px;
         color: $colorTextSecondary;

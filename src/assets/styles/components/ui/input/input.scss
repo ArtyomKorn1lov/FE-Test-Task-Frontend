@@ -1,8 +1,5 @@
 .b-input {
-
   .el-input {
-
-
     &__wrapper {
       @extend %inputDefaultOptions;
 
@@ -36,10 +33,7 @@
   }
 
   &_header {
-
     .el-input {
-
-
       &__wrapper {
         width: 204px;
       }

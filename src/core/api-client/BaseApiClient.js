@@ -49,11 +49,11 @@ export default class BaseApiClient {
    */
   buildFormData(formData, data, parentKey = '') {
     if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File) && !(data instanceof Blob)) {
-      Object.keys(data).forEach(key => {
+      Object.keys(data).forEach((key) => {
         this.buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
       });
     } else {
-      const value = data == null ? '' : data;
+      const value = data === null ? '' : data;
 
       formData.append(parentKey, value);
     }

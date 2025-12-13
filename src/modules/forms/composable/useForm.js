@@ -163,7 +163,9 @@ export default function useForm({ formFields, ajaxFunc = null, useCase = null, s
    * @param {Object} formRef
    */
   const resetForm = (formRef) => {
-    if (!formRef) return;
+    if (!formRef) {
+      return;
+    }
     formRef.resetFields();
   };
 

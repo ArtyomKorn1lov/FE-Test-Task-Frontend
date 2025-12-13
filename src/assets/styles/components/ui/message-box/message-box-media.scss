@@ -1,13 +1,10 @@
 @media (max-width: $sm) {
   .b-message-box {
-
     &.el-message-box {
       padding: $m10;
 
       &--center {
-
         .el-message-box {
-
           &__title {
             gap: $m10;
           }
@@ -16,7 +13,6 @@
     }
 
     .el-message-box {
-
       &__title {
         padding-left: $m15;
         padding-right: $m15;

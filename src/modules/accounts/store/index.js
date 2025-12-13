@@ -1,12 +1,9 @@
-import {createStore} from 'vuex';
+import { createStore } from 'vuex';
 import * as getters from '@/modules/accounts/store/getters';
 import * as mutations from '@/modules/accounts/store/mutations';
 import * as actions from '@/modules/accounts/store/actions';
-import {AccountStore} from "@/modules/accounts/models";
-import {
-  DefaultFilterValues,
-  DefaultPaginationValues
-} from "@/modules/accounts/constants";
+import { AccountStore } from '@/modules/accounts/models';
+import { DefaultFilterValues, DefaultPaginationValues } from '@/modules/accounts/constants';
 
 /**
  * @type {AccountStore}
@@ -21,7 +18,7 @@ const state = new AccountStore({
   pagination: DefaultPaginationValues,
   selectedItems: [],
   isSelectAll: false,
-  selectedRoleName: "",
+  selectedRoleName: '',
   items: [],
   isLoading: true,
 });
@@ -30,5 +27,5 @@ export default createStore({
   state,
   getters,
   mutations,
-  actions
+  actions,
 });

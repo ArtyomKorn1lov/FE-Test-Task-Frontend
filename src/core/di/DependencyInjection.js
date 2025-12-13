@@ -17,7 +17,11 @@ export default {
    * @param {any[]} constructorArgs
    */
   register(name, className, dependencyNames = [], constructorArgs = []) {
-    this.dependencies.set(name, { className, dependencyNames, constructorArgs });
+    this.dependencies.set(name, {
+      className,
+      dependencyNames,
+      constructorArgs,
+    });
   },
 
   /**

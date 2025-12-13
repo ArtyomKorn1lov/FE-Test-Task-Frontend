@@ -8,15 +8,18 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
 
 export default defineConfig([
-  pluginVue.configs['flat/essential'],
+  {
+    ignores: ['**/node_modules/**', '**/dist/**', '**/public/**', '**/*.min.js', '**/index.html', '**/package-lock.json'],
+  },
   {
     files: ['**/*.{js,mjs,cjs,vue}'],
     plugins: {
       js,
+      vue: pluginVue,
       'unused-imports': unusedImports,
       prettier: prettierPlugin,
     },
-    extends: ['js/recommended', prettierConfig],
+    extends: ['js/recommended', 'vue/flat/essential', prettierConfig],
     rules: {
       ...prettierPlugin.configs.recommended.rules,
       'vue/multi-word-component-names': 'off',
