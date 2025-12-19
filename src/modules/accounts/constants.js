@@ -1,10 +1,10 @@
-import { SortTypes, EnvService } from '@/core';
+import { SortTypes } from '@/core';
 import { Filter, Pagination } from '@/modules/accounts/models';
 
 /**
  * @type {String}
  */
-export const NoImageUrl = '/src/assets/img/no-image.webp';
+export const NoImageUrl = '/img/no-image.webp';
 
 /**
  * @type {String}
@@ -55,7 +55,7 @@ export const AccountRoleFieldCode = 'role';
 /**
  * @type {String}
  */
-export const UploadFileUrl = EnvService.get('REST_API_URL') + '/accounts/upload/';
+export const UploadFileUrl = process.env.REST_API_URL + '/accounts/upload/';
 
 /**
  * @type {String}

@@ -1,7 +1,4 @@
 import '@/assets/styles/index.scss';
-import { EnvService } from '@/core';
-
-EnvService.init();
 
 import '@/di';
 import 'virtual:svg-icons-register';

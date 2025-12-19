@@ -8,9 +8,12 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import path from 'path';
 import vueDevTools from 'vite-plugin-vue-devtools';
 
-// Clear specific environment variables
-delete process.env['CommonProgramFiles(x86)'];
-delete process.env['ProgramFiles(x86)'];
+// List of problematic environment variables
+const problematicEnvVars = ['CommonProgramFiles(x86)', 'ProgramFiles(x86)', 'IntelliJ IDEA Community Edition', 'IntelliJ IDEA'];
+// Remove the problematic environment variables
+problematicEnvVars.forEach((varName) => {
+  delete process.env[varName];
+});
 
 export default defineConfig({
   plugins: [
