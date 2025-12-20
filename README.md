@@ -23,6 +23,12 @@ npm install
 npm run dev
 ```
 
+### Запуск unit-тестов
+
+```sh
+npm run tests
+```
+
 ### Запуск проверки eslint и prettier
 
 ```sh
@@ -44,7 +50,7 @@ npm run build
 ### Запуск приложения с собранными файлами
 
 ```sh
-npm run preview
+npm run start
 ```
 
 ## Установка проекта в docker:

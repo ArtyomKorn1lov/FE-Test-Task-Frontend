@@ -6,6 +6,7 @@ import { defineConfig } from 'eslint/config';
 import unusedImports from 'eslint-plugin-unused-imports';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import pluginJest from 'eslint-plugin-jest';
 
 export default defineConfig([
   {
@@ -48,6 +49,20 @@ export default defineConfig([
     extends: ['json/recommended'],
     rules: {
       'json/no-duplicate-keys': 'error',
+    },
+  },
+  {
+    files: ['**/*.spec.js', '**/*.test.js'],
+    plugins: { jest: pluginJest },
+    rules: {
+      'jest/no-disabled-tests': 'warn',
+      'jest/no-focused-tests': 'error',
+      'jest/no-identical-title': 'error',
+      'jest/prefer-to-have-length': 'warn',
+      'jest/valid-expect': 'error',
+    },
+    languageOptions: {
+      globals: pluginJest.environments.globals.globals,
     },
   },
 ]);
