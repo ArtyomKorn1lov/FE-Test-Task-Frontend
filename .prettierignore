@@ -1,0 +1,7 @@
+/.idea/
+/node_modules/
+/dist/
+/public/
+*.min.js
+index.html
+*-lock.*

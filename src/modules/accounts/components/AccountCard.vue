@@ -2,7 +2,7 @@
   <a
     href="javascript:void(0)"
     class="b-account__item"
-    :class="{'b-account__item_selected': isSelected}"
+    :class="{ 'b-account__item_selected': isSelected }"
     @click.prevent.stop="clickItemCard"
   >
     <div class="b-account__item-inside b-account__row">
@@ -19,13 +19,17 @@
               class="b-account__img"
               :src="picture"
               :alt="element.login"
-            >
+            />
           </div>
           <div class="b-account__info">
             <span class="b-account__name">
               {{ element.login }}
             </span>
-            <a v-if="element.email" :href="emailLink" class="b-account__email">
+            <a
+              v-if="element.email"
+              :href="emailLink"
+              class="b-account__email"
+            >
               {{ element.email }}
             </a>
           </div>
@@ -46,15 +50,13 @@
               v-html="'<span>' + TemplateHelper.getIcon('edit') + t('accounts.section.editBtnTitle') + '</span>'"
               @click.prevent.stop="editItem"
               :disabled="disableActions"
-            >
-            </el-button>
+            />
             <el-button
               class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
               v-html="'<span>' + TemplateHelper.getIcon('delete') + '</span>'"
               @click.prevent.stop="deleteItem"
               :disabled="disableActions"
-            >
-            </el-button>
+            />
           </div>
         </div>
       </div>
@@ -62,28 +64,28 @@
   </a>
 </template>
 <script setup>
-import {computed} from 'vue';
-import {ElButton, ElCheckbox} from 'element-plus';
-import {useI18n} from 'vue-i18n';
-import {TemplateHelper} from "@/core";
-import {NoImageUrl, TagAccountListModifier} from "@/modules/accounts/constants";
-import {Account, SelectItem, SelectRole} from "@/modules/accounts/models";
+import { computed } from 'vue';
+import { ElButton, ElCheckbox } from 'element-plus';
+import { useI18n } from 'vue-i18n';
+import { TemplateHelper } from '@/core';
+import { NoImageUrl, TagAccountListModifier } from '@/modules/accounts/constants';
+import { Account, SelectItem, SelectRole } from '@/modules/accounts/models';
 
-const {t} = useI18n();
+const { t } = useI18n();
 
-const {element, isSelected, disableActions} = defineProps({
+const { element, isSelected, disableActions } = defineProps({
   element: {
     type: Account,
-    default: {}
+    default: {},
   },
   isSelected: {
     type: Boolean,
-    default: false
+    default: false,
   },
   disableActions: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const emit = defineEmits(['select-item', 'select-role', 'delete', 'edit']);
@@ -98,41 +100,47 @@ const emailLink = computed(() => {
  * @type {import('vue').ComputedRef<String>}
  */
 const picture = computed(() => {
-  return (!!element?.picture) ? element?.picture : NoImageUrl;
+  return element?.picture ? element?.picture : NoImageUrl;
 });
 /**
  * @type {import('vue').ComputedRef<String>}
  */
 const tagClassModifier = computed(() => {
-  return `${TagAccountListModifier}${element?.roleCode}`
+  return `${TagAccountListModifier}${element?.roleCode}`;
 });
 
 const clickItemCard = () => {
   selectItem(!isSelected);
-}
+};
 
 /**
  * @param {Boolean} value
  */
 const selectItem = (value) => {
-  emit('select-item', new SelectItem({
-    value: value,
-    id: element.id
-  }));
-}
+  emit(
+    'select-item',
+    new SelectItem({
+      value: value,
+      id: element.id,
+    }),
+  );
+};
 
 const selectRole = () => {
-  emit('select-role', new SelectRole({
-    roleCode: element.roleCode,
-    roleName: element.role
-  }));
-}
+  emit(
+    'select-role',
+    new SelectRole({
+      roleCode: element.roleCode,
+      roleName: element.role,
+    }),
+  );
+};
 
 const deleteItem = () => {
   emit('delete', element.id);
-}
+};
 
 const editItem = () => {
   emit('edit', element.id);
-}
+};
 </script>

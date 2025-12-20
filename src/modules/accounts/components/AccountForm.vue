@@ -7,7 +7,7 @@
     ref="formRef"
     :rules="rules"
     :model="formData"
-    @submit.prevent.native="onSubmit(formRef, afterSubmit, false)"
+    @submit.prevent="onSubmit(formRef, afterSubmit, false)"
   >
     <el-row class="b-form__row">
       <el-col
@@ -36,8 +36,11 @@
                 class="b-upload__img"
                 :alt="t('accounts.form.uploadImgAlt')"
               />
-              <el-icon v-else class="b-upload__icon">
-                <Plus/>
+              <el-icon
+                v-else
+                class="b-upload__icon"
+              >
+                <Plus />
               </el-icon>
             </el-upload>
           </template>
@@ -79,62 +82,42 @@
   </el-form>
 </template>
 <script setup>
-import {ref, computed} from 'vue';
-import {
-  ElForm,
-  ElFormItem,
-  ElCol,
-  ElRow,
-  ElInput,
-  ElSelect,
-  ElOption,
-  ElUpload,
-  ElIcon,
-  ElButton,
-  ElLoading
-} from 'element-plus';
-import {Plus} from '@element-plus/icons-vue';
-import {useI18n} from "vue-i18n";
-import {DependencyInjection, useFetch} from "@/core";
-import {FormField, useForm, EmailRegex} from "@/modules/forms";
-import {
-  AccountRoleFieldCode,
-  UploadFileUrl
-} from "@/modules/accounts/constants";
-import {Role, AccountUpdate, AccountCreate} from "@/modules/accounts/models";
-import {
-  GetRoles,
-  CreateAccount,
-  GetAccountById,
-  UpdateAccount
-} from "@/modules/accounts/use-case";
-import {AccountFormFields} from "@/modules/accounts/fields";
-import {ModalAnimationDelay} from "@/modules/ui/index.js";
+import { ref, computed } from 'vue';
+import { ElForm, ElFormItem, ElCol, ElRow, ElInput, ElSelect, ElOption, ElUpload, ElIcon, ElButton, ElLoading } from 'element-plus';
+import { Plus } from '@element-plus/icons-vue';
+import { useI18n } from 'vue-i18n';
+import { DependencyInjection, useFetch } from '@/core';
+import { FormField, useForm, EmailRegex } from '@/modules/forms';
+import { AccountRoleFieldCode, UploadFileUrl } from '@/modules/accounts/constants';
+import { Role, AccountUpdate, AccountCreate } from '@/modules/accounts/models';
+import { GetRoles, CreateAccount, GetAccountById, UpdateAccount } from '@/modules/accounts/use-case';
+import { AccountFormFields } from '@/modules/accounts/fields';
+import { ModalAnimationDelay } from '@/modules/ui/index.js';
 
 /**
  * @type {GetRoles}
  */
-const getRoles = DependencyInjection.resolve("GetRoles");
+const getRoles = DependencyInjection.resolve('GetRoles');
 /**
  * @type {GetAccountById}
  */
-const getAccountById = DependencyInjection.resolve("GetAccountById");
+const getAccountById = DependencyInjection.resolve('GetAccountById');
 /**
  * @type {CreateAccount}
  */
-const createAccount = DependencyInjection.resolve("CreateAccount");
+const createAccount = DependencyInjection.resolve('CreateAccount');
 /**
  * @type {UpdateAccount}
  */
-const updateAccount = DependencyInjection.resolve("UpdateAccount");
+const updateAccount = DependencyInjection.resolve('UpdateAccount');
 
-const {t} = useI18n();
+const { t } = useI18n();
 
-const {accountEditId} = defineProps({
+const { accountEditId } = defineProps({
   accountEditId: {
     type: [Number, Boolean],
-    default: false
-  }
+    default: false,
+  },
 });
 
 const emit = defineEmits(['update']);
@@ -143,34 +126,22 @@ const emit = defineEmits(['update']);
  * @type {(function(): Promise<Role[]>)}
  */
 const fetchRoles = useFetch({
-  useCase: getRoles
+  useCase: getRoles,
 });
 /**
  * @type {(function(id: Number): Promise<AccountUpdate>)}
  */
 const fetchAccountById = useFetch({
-  useCase: getAccountById
+  useCase: getAccountById,
 });
 
-const {
-  fields,
-  formData,
-  isLoading,
-  rules,
-  setFieldItems,
-  setFormDataValues,
-  removeFormDataValue,
-  onFileUpload,
-  onFileUploadSuccess,
-  onSubmit
-} = useForm(
-  {
+const { fields, formData, isLoading, rules, setFieldItems, setFormDataValues, removeFormDataValue, onFileUpload, onFileUploadSuccess, onSubmit } =
+  useForm({
     formFields: AccountFormFields,
     useCase: !accountEditId ? createAccount : updateAccount,
     sendModel: !accountEditId ? AccountCreate : AccountUpdate,
-    validators: {email: EmailRegex}
-  }
-);
+    validators: { email: EmailRegex },
+  });
 
 /**
  * @type {ShallowRef}
@@ -185,7 +156,7 @@ const isLoadingData = ref(false);
  * @type {import('vue').ComputedRef<String>}
  */
 const submitMessage = computed(() => {
-  return !!accountEditId ? t('accounts.form.editBtnTitle') : t('accounts.form.createBtnTitle');
+  return accountEditId ? t('accounts.form.editBtnTitle') : t('accounts.form.createBtnTitle');
 });
 
 /**
@@ -197,7 +168,7 @@ const getAccountRoles = async () => {
   } catch (e) {
     isLoadingData.value = false;
   }
-}
+};
 
 /**
  * @param {Array<Role[]>} roleOptions
@@ -207,7 +178,7 @@ const setAccountRoleOptions = (roleOptions) => {
     return;
   }
   setFieldItems(AccountRoleFieldCode, roleOptions);
-}
+};
 
 /**
  * @param {Number} id
@@ -217,8 +188,8 @@ const getRoleCodeById = (id, field) => {
   if (!id) {
     return '';
   }
-  return field.items?.find((item) => item.id === id)?.code ?? "";
-}
+  return field.items?.find((item) => item.id === id)?.code ?? '';
+};
 
 /**
  * @param {Number} id
@@ -230,11 +201,11 @@ const getEditAccount = async (id) => {
   } catch (e) {
     isLoadingData.value = false;
   }
-}
+};
 
 const afterSubmit = () => {
   emit('update');
-}
+};
 
 /**
  * @return {Promise<void>}
@@ -242,10 +213,9 @@ const afterSubmit = () => {
 const onInit = async () => {
   isLoadingData.value = true;
   await getAccountRoles();
-  !!accountEditId && await getEditAccount(accountEditId);
+  !!accountEditId && (await getEditAccount(accountEditId));
   isLoadingData.value = false;
-}
+};
 
 onInit();
-
 </script>

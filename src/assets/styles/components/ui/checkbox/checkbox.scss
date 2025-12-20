@@ -1,7 +1,5 @@
 .b-checkbox {
-
   .el-checkbox {
-
     &__input,
     &__inner {
       width: 16px;
@@ -19,17 +17,14 @@
     }
 
     &__input {
-
       &.is-checked {
-
-        +.el-checkbox {
+        + .el-checkbox {
           &__label {
             color: $colorTextSecondary;
           }
         }
 
         .el-checkbox {
-
           &__inner {
             background-color: $colorPrimary;
             border-color: $colorPrimary;

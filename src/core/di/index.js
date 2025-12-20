@@ -1,5 +1,3 @@
-import DependencyInjection from "@/core/di/DependencyInjection";
+import DependencyInjection from '@/core/di/DependencyInjection';
 
-export {
-  DependencyInjection
-}
+export { DependencyInjection };

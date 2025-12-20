@@ -2,13 +2,11 @@
   <header class="b-header">
     <div class="wrap b-section">
       <div class="b-section__header b-header__section">
-
         <span class="b-header__title">
           {{ t('accounts.header.title') }}
         </span>
 
         <div class="b-header__controls">
-
           <el-autocomplete
             v-model="searchString"
             :fetch-suggestions="contextSearch"
@@ -36,44 +34,29 @@
           >
             {{ t('accounts.header.createBtnTitle') }}
           </el-button>
-
         </div>
       </div>
     </div>
   </header>
 </template>
 <script setup>
-import {ref, computed} from 'vue';
-import {useStore, Store} from "vuex";
-import {ElIcon, ElButton, ElAutocomplete} from 'element-plus';
-import {useI18n} from "vue-i18n";
-import {
-  TemplateHelper,
-  ArrayHelper,
-  DependencyInjection,
-  useFetch,
-} from "@/core";
-import {ModalParams} from "@/modules/ui";
-import {ModalComponentsCodes} from "@/modules/accounts/enums";
-import {
-  AccountStore,
-  Search,
-  Filter,
-  ContextSearch,
-  ContextSearchResponse
-} from "@/modules/accounts/models";
-import {SearchAccounts} from "@/modules/accounts/use-case";
-import {
-  AccountLoginFieldCode,
-  FieldContextSearchCode
-} from "@/modules/accounts/constants";
+import { ref, computed } from 'vue';
+import { useStore, Store } from 'vuex';
+import { ElIcon, ElButton, ElAutocomplete } from 'element-plus';
+import { useI18n } from 'vue-i18n';
+import { TemplateHelper, ArrayHelper, DependencyInjection, useFetch } from '@/core';
+import { ModalParams } from '@/modules/ui';
+import { ModalComponentsCodes } from '@/modules/accounts/enums';
+import { AccountStore, Search, Filter, ContextSearch, ContextSearchResponse } from '@/modules/accounts/models';
+import { SearchAccounts } from '@/modules/accounts/use-case';
+import { AccountLoginFieldCode, FieldContextSearchCode } from '@/modules/accounts/constants';
 
-const {t} = useI18n();
+const { t } = useI18n();
 
 /**
  * @type {SearchAccounts}
  */
-const searchAccounts = DependencyInjection.resolve("SearchAccounts");
+const searchAccounts = DependencyInjection.resolve('SearchAccounts');
 
 /**
  * @type {Store<AccountStore>}
@@ -98,16 +81,19 @@ const filter = computed(() => store.getters.getFilter);
  * @type {(function(object: ContextSearch): Promise<ContextSearchResponse>)}
  */
 const fetchContextSearch = useFetch({
-  useCase: searchAccounts
+  useCase: searchAccounts,
 });
 
 const openModal = () => {
-  store.commit('setModalProps', new ModalParams({
-    toggle: true,
-    title: t('accounts.modal.titleCreate'),
-    code: ModalComponentsCodes.account
-  }));
-}
+  store.commit(
+    'setModalProps',
+    new ModalParams({
+      toggle: true,
+      title: t('accounts.modal.titleCreate'),
+      code: ModalComponentsCodes.account,
+    }),
+  );
+};
 
 /**
  * @param {String} queryString
@@ -117,22 +103,24 @@ const contextSearch = async (queryString, callback) => {
   try {
     const searchModel = new ContextSearch({
       search: queryString,
-      roleCode: filter.value.roleCode ?? ""
+      roleCode: filter.value.roleCode ?? '',
     });
     const response = await fetchContextSearch(searchModel);
     callback(ArrayHelper.changeArrayObjectsCode(response, AccountLoginFieldCode, FieldContextSearchCode));
   } catch (e) {
     callback([]);
   }
-}
+};
 
 /**
  * @param {String} value
  */
 const search = async (value) => {
-  await store.dispatch('onFilter', new Search({
-    search: value
-  }));
-}
-
+  await store.dispatch(
+    'onFilter',
+    new Search({
+      search: value,
+    }),
+  );
+};
 </script>

@@ -1,8 +1,8 @@
 <template>
   <main class="b-main">
-    <AccountList/>
+    <AccountList />
   </main>
 </template>
 <script setup>
-import {AccountList} from '@/modules/accounts/components';
+import { AccountList } from '@/modules/accounts/components';
 </script>

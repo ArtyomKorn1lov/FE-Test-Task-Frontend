@@ -1,2 +1,1 @@
-export default class ArgumentException extends Error {
-}
+export default class ArgumentException extends Error {}

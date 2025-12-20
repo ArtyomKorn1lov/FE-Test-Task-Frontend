@@ -8,9 +8,12 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import path from 'path';
 import vueDevTools from 'vite-plugin-vue-devtools';
 
-// Clear specific environment variables
-delete process.env['CommonProgramFiles(x86)']
-delete process.env['ProgramFiles(x86)']
+// List of problematic environment variables
+const problematicEnvVars = ['CommonProgramFiles(x86)', 'ProgramFiles(x86)', 'IntelliJ IDEA Community Edition', 'IntelliJ IDEA'];
+// Remove the problematic environment variables
+problematicEnvVars.forEach((varName) => {
+  delete process.env[varName];
+});
 
 export default defineConfig({
   plugins: [
@@ -21,13 +24,13 @@ export default defineConfig({
       iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
       symbolId: 'icon-[dir]-[name]',
       inject: 'body-first',
-      customDomId: '__svg__icons__dom__'
+      customDomId: '__svg__icons__dom__',
     }),
     vueDevTools(),
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
 });

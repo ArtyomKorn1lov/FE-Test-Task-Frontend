@@ -1,5 +1,3 @@
-import AccountLayout from "@/modules/accounts/layouts/AccountLayout.vue";
+import AccountLayout from '@/modules/accounts/layouts/AccountLayout.vue';
 
-export {
-  AccountLayout
-}
+export { AccountLayout };

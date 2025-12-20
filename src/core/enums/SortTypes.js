@@ -1,4 +1,4 @@
 export default {
-  asc: "ASC",
-  desc: "DESC"
-}
+  asc: 'ASC',
+  desc: 'DESC',
+};

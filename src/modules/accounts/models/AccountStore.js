@@ -1,6 +1,6 @@
-import Filter from "@/modules/accounts/models/Filter";
-import Pagination from "@/modules/accounts/models/Pagination";
-import Account from "@/modules/accounts/models/Account";
+import Filter from '@/modules/accounts/models/Filter';
+import Pagination from '@/modules/accounts/models/Pagination';
+import Account from '@/modules/accounts/models/Account';
 
 export default class AccountStore {
   /**
@@ -63,7 +63,6 @@ export default class AccountStore {
    * @type {Boolean}
    * */
   isLoading;
-
 
   /**
    * @constructor

@@ -1,37 +1,19 @@
-import {ref, reactive} from "vue";
-import {useI18n} from "vue-i18n";
-import {
-  ResponseStatus,
-  MessageTypes,
-  MessageHelper,
-  FileHelper,
-  File as CustomFile,
-  CommonResponse,
-  BaseUseCase,
-  useFetch,
-} from "@/core";
-import {FileDividerTypeCasting} from "@/core";
-import {MaxFileSize} from "@/modules/forms/constants";
-import {FileUploadException} from "@/modules/forms/exceptions";
-import {FormFields, FormField} from "@/modules/forms/models";
-import {FormFieldsBuilder} from "@/modules/forms/fabrics";
+import { ref, reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { ResponseStatus, MessageTypes, MessageHelper, FileHelper, File as CustomFile, CommonResponse, BaseUseCase, useFetch } from '@/core';
+import { FileDividerTypeCasting } from '@/core';
+import { MaxFileSize } from '@/modules/forms/constants';
+import { FileUploadException } from '@/modules/forms/exceptions';
+import { FormFields, FormField } from '@/modules/forms/models';
+import { FormFieldsBuilder } from '@/modules/forms/fabrics';
 
 /**
  * @description Примесь с общей логикой форм обратной связи
  * @param {{ formFields: FormFields, ajaxFunc: Function, useCase: BaseUseCase, sendModel: Class, validators: Object }} args
  * @returns {Object}
  */
-export default function useForm(
-  {
-    formFields,
-    ajaxFunc = null,
-    useCase = null,
-    sendModel = null,
-    validators = {}
-  }
-) {
-
-  const {t} = useI18n();
+export default function useForm({ formFields, ajaxFunc = null, useCase = null, sendModel = null, validators = {} }) {
+  const { t } = useI18n();
 
   const fieldBuilder = new FormFieldsBuilder(formFields, validators);
 
@@ -42,7 +24,7 @@ export default function useForm(
   /**
    * @type {import('vue').Reactive<Object>}
    */
-  const formData = reactive(fieldBuilder.formData);
+  const formData = reactive(fieldBuilder.getFormData);
   /**
    * @type {import('vue').Ref<Boolean>}
    */
@@ -50,7 +32,7 @@ export default function useForm(
   /**
    * @type {import('vue').Reactive<Object>}
    */
-  const rules = reactive(fieldBuilder.rules);
+  const rules = reactive(fieldBuilder.getRules);
 
   /**
    * @type {(function(...args): Promise<CommonResponse>)}
@@ -58,7 +40,7 @@ export default function useForm(
   const fetch = useFetch({
     useCase: useCase,
     ajaxFunc: ajaxFunc,
-    messageType: MessageTypes.messageBox
+    messageType: MessageTypes.messageBox,
   });
 
   /**
@@ -68,22 +50,22 @@ export default function useForm(
   const setFieldItems = (fieldCode, items) => {
     fieldBuilder.setFields(fields);
     fieldBuilder.setFormFieldItems(fieldCode, items);
-    Object.assign(fields, fieldBuilder.fields);
-  }
+    Object.assign(fields, fieldBuilder.getFields);
+  };
 
   /**
    * @param {Object} values
    */
   const setFormDataValues = (values) => {
     Object.assign(formData, values);
-  }
+  };
 
   /**
    * @param {String} code
    */
   const removeFormDataValue = (code) => {
     formData[code] = null;
-  }
+  };
 
   /**
    * @param {File} rawFile
@@ -98,11 +80,11 @@ export default function useForm(
       return true;
     } catch (/** @type {Error} */ exception) {
       MessageHelper.showNotification({
-        message: exception.message
+        message: exception.message,
       });
       return false;
     }
-  }
+  };
 
   /**
    * @param {String} code
@@ -114,12 +96,12 @@ export default function useForm(
       MessageHelper.showNotification({
         title: t('core.messages.successTitle'),
         message: response?.message,
-        type: ResponseStatus.success
+        type: ResponseStatus.success,
       });
       formData[code] = new CustomFile({
         file: await FileHelper.convertToBase64(uploadFile.raw),
         name: uploadFile.name,
-        url: FileHelper.createFileUrl(uploadFile.raw)
+        url: FileHelper.createFileUrl(uploadFile.raw),
       });
     } catch (/** @type {Error} */ exception) {
       console.error(exception);
@@ -127,7 +109,7 @@ export default function useForm(
         message: exception.message,
       });
     }
-  }
+  };
 
   /**
    * @param {Object} formRef
@@ -146,7 +128,7 @@ export default function useForm(
       }
       await sendRequest(formRef, afterSuccess, resetFrom);
     });
-  }
+  };
 
   /**
    * @param {Object} formRef
@@ -160,7 +142,7 @@ export default function useForm(
       if (!sendModel) {
         model = formData;
       } else {
-        model = new sendModel({...formData});
+        model = new sendModel({ ...formData });
       }
       isLoading.value = true;
       const response = await fetch(model);
@@ -170,20 +152,22 @@ export default function useForm(
         title: t('core.messages.successTitle'),
         message: response?.message,
         type: ResponseStatus.success,
-        callback: afterSuccess
+        callback: afterSuccess,
       });
     } catch (e) {
       isLoading.value = false;
     }
-  }
+  };
 
   /**
    * @param {Object} formRef
    */
   const resetForm = (formRef) => {
-    if (!formRef) return;
-    formRef.resetFields()
-  }
+    if (!formRef) {
+      return;
+    }
+    formRef.resetFields();
+  };
 
   return {
     fields,
@@ -196,6 +180,6 @@ export default function useForm(
     onFileUpload,
     onFileUploadSuccess,
     onSubmit,
-    resetForm
-  }
+    resetForm,
+  };
 }

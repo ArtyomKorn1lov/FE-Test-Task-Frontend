@@ -16,23 +16,23 @@
         @click="close"
       />
     </template>
-    <slot/>
+    <slot />
   </el-dialog>
 </template>
 <script setup>
-import {computed} from 'vue';
-import {ElDialog} from 'element-plus';
-import {TemplateHelper} from "@/core";
+import { computed } from 'vue';
+import { ElDialog } from 'element-plus';
+import { TemplateHelper } from '@/core';
 
-const {toggle, title} = defineProps({
+const { toggle, title } = defineProps({
   toggle: {
     type: Boolean,
-    default: false
+    default: false,
   },
   title: {
     type: String,
-    default: ""
-  }
+    default: '',
+  },
 });
 
 const emit = defineEmits(['close']);
@@ -44,6 +44,5 @@ const iconClose = computed(() => TemplateHelper.getIcon('close'));
 
 const close = () => {
   emit('close');
-}
-
+};
 </script>

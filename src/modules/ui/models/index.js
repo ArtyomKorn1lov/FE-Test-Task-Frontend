@@ -1,5 +1,3 @@
-import ModalParams from "@/modules/ui/models/ModalParams";
+import ModalParams from '@/modules/ui/models/ModalParams';
 
-export {
-  ModalParams
-}
+export { ModalParams };

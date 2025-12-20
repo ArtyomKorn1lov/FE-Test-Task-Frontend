@@ -1,5 +1,3 @@
-import FormFieldsBuilder from "@/modules/forms/fabrics/FormFieldsBuilder";
+import FormFieldsBuilder from '@/modules/forms/fabrics/FormFieldsBuilder';
 
-export {
-  FormFieldsBuilder
-}
+export { FormFieldsBuilder };

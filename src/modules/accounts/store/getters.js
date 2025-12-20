@@ -1,15 +1,15 @@
-import {ModalParams} from "@/modules/ui";
-import {AccountStore, Filter, Pagination, Account} from "@/modules/accounts/models";
+import { ModalParams } from '@/modules/ui';
+import { AccountStore, Filter, Pagination, Account } from '@/modules/accounts/models';
 
 /**
  * @param {AccountStore} state
  * @returns {ModalParams}
  */
-export const getModalProps = state => {
+export const getModalProps = (state) => {
   return new ModalParams({
     toggle: state.modalToggle,
     code: state.modalCode,
-    title: state.modalTitle
+    title: state.modalTitle,
   });
 };
 
@@ -17,15 +17,15 @@ export const getModalProps = state => {
  * @param {AccountStore} state
  * @return {Boolean}
  */
-export const getModalKey = state => {
+export const getModalKey = (state) => {
   return state.modalKey;
-}
+};
 
 /**
  * @param {AccountStore} state
  * @returns {Filter}
  */
-export const getFilter = state => {
+export const getFilter = (state) => {
   return state.filter;
 };
 
@@ -33,7 +33,7 @@ export const getFilter = state => {
  * @param {AccountStore} state
  * @returns {Pagination}
  */
-export const getPagination = state => {
+export const getPagination = (state) => {
   return state.pagination;
 };
 
@@ -41,46 +41,46 @@ export const getPagination = state => {
  * @param {AccountStore} state
  * @returns {Number|Boolean}
  */
-export const getAccountEditId = state => {
+export const getAccountEditId = (state) => {
   return state.accountEditId;
-}
+};
 
 /**
  * @param {AccountStore} state
  * @returns {Account[]}
  */
-export const getItems = state => {
+export const getItems = (state) => {
   return state.items;
-}
+};
 
 /**
  * @param {AccountStore} state
  * @returns {Boolean}
  */
-export const getIsLoading = state => {
-  return state.isLoading
-}
+export const getIsLoading = (state) => {
+  return state.isLoading;
+};
 
 /**
  * @param {AccountStore} state
  * @return {Number[]}
  */
-export const getSelectedItems = state => {
+export const getSelectedItems = (state) => {
   return state.selectedItems;
-}
+};
 
 /**
  * @param {AccountStore} state
  * @return {Boolean}
  */
-export const getIsSelectAll = state => {
+export const getIsSelectAll = (state) => {
   return state.isSelectAll;
-}
+};
 
 /**
  * @param {AccountStore} state
  * @return {String}
  */
-export const getSelectedRoleName = state => {
-    return state.selectedRoleName;
-}
+export const getSelectedRoleName = (state) => {
+  return state.selectedRoleName;
+};

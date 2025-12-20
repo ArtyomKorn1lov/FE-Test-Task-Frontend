@@ -1,6 +1,6 @@
-import {ResponseException, BaseUseCase} from "@/core";
-import {Role} from "@/modules/accounts/models";
-import {AccountRepository} from "@/modules/accounts/repositories";
+import { ResponseException, BaseUseCase } from '@/core';
+import { Role } from '@/modules/accounts/models';
+import { AccountRepository } from '@/modules/accounts/repositories';
 
 /**
  * @final

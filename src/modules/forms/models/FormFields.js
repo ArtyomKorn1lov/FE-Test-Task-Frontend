@@ -1,4 +1,4 @@
-import FormGroup from "@/modules/forms/models/FormGroup.js";
+import FormGroup from '@/modules/forms/models/FormGroup.js';
 
 export default class FormFields {
   /**

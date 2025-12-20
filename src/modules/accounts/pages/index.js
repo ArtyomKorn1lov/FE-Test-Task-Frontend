@@ -1,5 +1,3 @@
-import Home from "@/modules/accounts/pages/Home.vue";
+import Home from '@/modules/accounts/pages/Home.vue';
 
-export {
-  Home
-}
+export { Home };

@@ -1,5 +1,5 @@
-import Translations from "@/translations";
-import {ArgumentException} from "@/core/exceptions";
+import Translations from '@/translations';
+import { ArgumentException } from '@/core/exceptions';
 
 const t = Translations.global.t;
 
@@ -16,8 +16,8 @@ export const getIcon = (code, prefix = 'icon') => {
   if (!code) {
     throw new ArgumentException(t('core.utils.template.emptyIconErrorMessage'));
   }
-  return `<svg aria-hidden='true'><use href='#${prefix}-${code}'/></svg>`
-}
+  return `<svg aria-hidden='true'><use href='#${prefix}-${code}'/></svg>`;
+};
 
 /**
  * @param {String} className
@@ -28,4 +28,4 @@ export const getElementByClassName = (className) => {
     throw new ArgumentException(t('core.utils.template.emptyCodeErrorMessage'));
   }
   return document.querySelector(`.${className}`);
-}
+};

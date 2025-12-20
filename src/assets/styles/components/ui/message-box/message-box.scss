@@ -1,14 +1,11 @@
 .b-message-box {
-
   &.el-message-box {
     width: $full;
     padding: $m15;
     border-radius: $rounded8;
 
     &--center {
-
       .el-message-box {
-
         &__title {
           @include flex(column);
           gap: $m20;
@@ -18,7 +15,6 @@
   }
 
   .el-message-box {
-
     &__header {
       padding-bottom: 0;
 
@@ -44,7 +40,6 @@
       right: $m10;
 
       .el-message-box {
-
         &__close {
           color: $colorPrimary;
         }
@@ -53,9 +48,7 @@
       &:hover,
       &:active,
       &:focus {
-
         .el-message-box {
-
           &__close {
             color: $colorPrimaryHover;
           }
@@ -88,7 +81,6 @@
     }
 
     &__message {
-
       span,
       p {
         font-size: $textRegular;
@@ -102,15 +94,12 @@
   }
 
   &_confirm {
-
     .el-message-box {
-
       &__title {
         padding-left: 0;
       }
 
       &__message {
-
         p {
           line-height: $leadingSmall;
         }
