@@ -11,7 +11,7 @@
     "prettier": "prettier --check . --ignore-path .prettierignore --cache",
     "lint": "npm run eslint && npm run prettier",
     "format": "eslint . --ext .js,.mjs,.cjs,.vue,.json --cache --fix && prettier . --write --ignore-path .prettierignore",
-    "tests": "jest"
+    "tests": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "engines": {
     "node": ">=22.18.0",
@@ -22,7 +22,9 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@eslint/json": "^0.14.0",
+    "@types/jest": "^30.0.0",
     "@vitejs/plugin-vue": "^6.0.3",
+    "babel-jest": "^30.2.0",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jest": "^29.5.0",

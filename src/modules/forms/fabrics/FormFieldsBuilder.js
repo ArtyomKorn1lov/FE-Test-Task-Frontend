@@ -1,6 +1,6 @@
 import Translations from '@/translations';
 import { ObjectHelper } from '@/core';
-import { EmailRegex } from '@/modules/forms/constants';
+import { EmailRegex, PhoneRegex } from '@/modules/forms/constants';
 import { FieldsValidateException } from '@/modules/forms/exceptions';
 import { FormFields, FormGroup, FormField } from '@/modules/forms/models';
 
@@ -164,6 +164,26 @@ export default class FormFieldsBuilder {
     this.rules[field.code] = [];
 
     switch (field.type) {
+      case 'tel': {
+        const phoneValidator = (rule, value, callback) => {
+          const regularExpression = this.validators[field.type] ? this.validators[field.type] : PhoneRegex;
+          if (regularExpression.test(value)) {
+            return callback();
+          }
+          return callback(t('form.fields.phone.error'));
+        };
+        this.rules[field.code] = [
+          {
+            validator: phoneValidator,
+            trigger: 'change',
+          },
+          {
+            validator: phoneValidator,
+            trigger: 'blur',
+          },
+        ];
+        break;
+      }
       case 'email': {
         const emailValidator = (rule, value, callback) => {
           const regularExpression = this.validators[field.type] ? this.validators[field.type] : EmailRegex;

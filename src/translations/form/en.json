@@ -5,6 +5,9 @@
     },
     "email": {
       "error": "Invalid email"
+    },
+    "phone": {
+      "error": "Invalid phone"
     }
   },
   "files": {
