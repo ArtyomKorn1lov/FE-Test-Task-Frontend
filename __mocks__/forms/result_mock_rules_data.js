@@ -1,13 +1,17 @@
+import Translations from '@/translations';
+
+const t = Translations.global.t;
+
 export default {
   name: [
     {
       required: true,
-      message: '',
+      message: t('form.fields.default.error'),
       trigger: 'change',
     },
     {
       required: true,
-      message: '',
+      message: t('form.fields.default.error'),
       trigger: 'blur',
     },
   ],
@@ -22,12 +26,12 @@ export default {
     },
     {
       required: true,
-      message: '',
+      message: t('form.fields.default.error'),
       trigger: 'change',
     },
     {
       required: true,
-      message: '',
+      message: t('form.fields.default.error'),
       trigger: 'blur',
     },
   ],
@@ -42,36 +46,36 @@ export default {
     },
     {
       required: true,
-      message: '',
+      message: t('form.fields.default.error'),
       trigger: 'change',
     },
     {
       required: true,
-      message: '',
+      message: t('form.fields.default.error'),
       trigger: 'blur',
     },
   ],
   items: [
     {
       required: true,
-      message: '',
+      message: t('form.fields.default.error'),
       trigger: 'change',
     },
     {
       required: true,
-      message: '',
+      message: t('form.fields.default.error'),
       trigger: 'blur',
     },
   ],
   file: [
     {
       required: true,
-      message: '',
+      message: t('form.fields.default.error'),
       trigger: 'change',
     },
     {
       required: true,
-      message: '',
+      message: t('form.fields.default.error'),
       trigger: 'blur',
     },
   ],

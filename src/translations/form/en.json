@@ -15,6 +15,7 @@
   },
   "builder": {
     "errors": {
+      "empty": "Form fields cannot be empty",
       "structure": "Invalid form field data structure"
     }
   }
