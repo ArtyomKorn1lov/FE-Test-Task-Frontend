@@ -1,5 +1,6 @@
 export default {
   verbose: true,
+  silent: true,
   collectCoverageFrom: ['**/*.{js,jsx,mjs,cjs}', '!**/node_modules/**'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',

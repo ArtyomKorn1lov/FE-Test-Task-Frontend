@@ -12,7 +12,7 @@
     "lint": "npm run eslint && npm run prettier",
     "format": "eslint . --ext .js,.mjs,.cjs,.vue,.json --cache --fix && prettier . --write --ignore-path .prettierignore",
     "tests": "node --experimental-vm-modules node_modules/jest/bin/jest",
-    "watch:test": "node --experimental-vm-modules node_modules/jest/bin/jest --watch"
+    "watch:tests": "node --experimental-vm-modules node_modules/jest/bin/jest --watch"
   },
   "engines": {
     "node": ">=22.18.0",

@@ -4,11 +4,19 @@
  */
 
 /**
+ * @param {any} object
+ * @return {Boolean}
+ */
+export const isObject = (object) => {
+  return typeof object === 'object';
+};
+
+/**
  * @param {Object} object
  * @return {Array}
  */
 export const convertObjectToArray = (object) => {
-  if (object) {
+  if (!object) {
     return [];
   }
 
