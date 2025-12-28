@@ -102,4 +102,18 @@ export default class ValidationProvider {
       throw new ValidationException(t('core.services.invalidEmailErrorMessage', { code: code }));
     }
   }
+
+  checkInstanceOf(value, className, code) {
+    if (!value || !className) {
+      return;
+    }
+    if (!ObjectHelper.isCompatibleWithClass(value, className)) {
+      throw new ValidationException(
+        t('core.services.invalidClassInstance', {
+          code: code,
+          className: className,
+        }),
+      );
+    }
+  }
 }

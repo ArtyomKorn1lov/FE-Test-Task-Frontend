@@ -1,0 +1,10 @@
+export default [
+  {
+    code: 'page',
+    value: 1,
+  },
+  {
+    code: 'pageCount',
+    value: 10,
+  },
+];

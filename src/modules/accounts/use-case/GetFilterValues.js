@@ -39,7 +39,7 @@ export default class GetFilterValues extends BaseUseCase {
   async execute() {
     try {
       const filter = AccountMapper.mapFilterValuesResponseToModel(await this.repository.getFilterValues());
-      this.validationProvider.checkRequired(filter);
+      this.validationProvider.checkInstanceOf(filter, Filter, 'filter');
       return filter;
     } catch (/** @type {ResponseException|ValidationException} */ error) {
       console.error(error);

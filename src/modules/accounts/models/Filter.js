@@ -3,12 +3,12 @@ import { SortTypes } from '@/core';
 export default class Filter {
   /**
    * @public
-   * @type {String|SortTypes}
+   * @type {String}
    * */
   sort;
   /**
    * @public
-   * @type {String}
+   * @type {String|SortTypes}
    * */
   order;
   /**

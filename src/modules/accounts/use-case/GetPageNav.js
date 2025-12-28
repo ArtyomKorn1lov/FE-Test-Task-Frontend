@@ -43,7 +43,8 @@ export default class GetPageNav extends BaseUseCase {
   async execute() {
     try {
       const pageNav = AccountMapper.mapPaginationValuesResponseToModel(await this.repository.getPageNav());
-      this.validationProvider.checkRequired(pageNav);
+      this.validationProvider.checkRequired(pageNav.page, 'page');
+      this.validationProvider.checkRequired(pageNav.pageCount, 'pageCount');
       return pageNav;
     } catch (/** @type {ResponseException|ValidationException} */ error) {
       console.error(error);

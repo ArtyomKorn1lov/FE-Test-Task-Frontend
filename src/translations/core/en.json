@@ -20,7 +20,8 @@
     "undefinedValueErrorMessage": "Property {code} is undefined",
     "emptyValueErrorMessage": "Property {code} is empty",
     "invalidEmailErrorMessage": "Email invalid of property {code}",
-    "invalidPhoneErrorMessage": "Phone invalid of property {code}"
+    "invalidPhoneErrorMessage": "Phone invalid of property {code}",
+    "invalidClassInstance": "Property {code} is not instance of {className}"
   },
   "utils": {
     "env": {

@@ -1,6 +1,9 @@
-import { ResponseException, BaseUseCase } from '@/core';
+import { ResponseException, ArgumentException, BaseUseCase } from '@/core';
 import { AccountUpdate } from '@/modules/accounts/models';
 import { AccountRepository } from '@/modules/accounts/repositories';
+import Translations from '@/translations/index.js';
+
+const t = Translations.global.t;
 
 /**
  * @final
@@ -30,8 +33,11 @@ export default class GetAccountById extends BaseUseCase {
    */
   async execute(id) {
     try {
+      if (!id) {
+        throw new ArgumentException(t('accounts.useCase.getAccountByIdErrorMessage'));
+      }
       return await this.repository.getById(id);
-    } catch (/** @type {ResponseException} */ error) {
+    } catch (/** @type {ResponseException|ArgumentException} */ error) {
       console.error(error);
       throw error;
     }

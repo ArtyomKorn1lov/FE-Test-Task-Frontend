@@ -1,7 +1,8 @@
 {
   "useCase": {
     "getFilterErrorMessage": "Filter values cannot be empty",
-    "getPageNavErrorMessage": "PageNav values cannot be empty"
+    "getPageNavErrorMessage": "PageNav values cannot be empty",
+    "getAccountByIdErrorMessage": "id is required argument"
   },
   "header": {
     "title": "Account users",
@@ -33,5 +34,11 @@
     "createBtnTitle": "Create",
     "editBtnTitle": "Edit",
     "pictureUploadSizeError": "Picture size can not exceed"
+  },
+  "mocks": {
+    "errors": {
+      "objectInstance": "Object is not instance of {className}",
+      "argument": "Argument {name} is required"
+    }
   }
 }

@@ -39,6 +39,7 @@ export default class UpdateAccount extends BaseUseCase {
    */
   async execute(object) {
     try {
+      this.validationProvider.checkRequired(object.id, 'id');
       this.validationProvider.checkRequired(object.login, 'login');
       this.validationProvider.checkRequired(object.email, 'email');
       this.validationProvider.checkEmail(object.email, 'email');
