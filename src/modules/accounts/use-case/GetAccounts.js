@@ -1,6 +1,6 @@
-import {ResponseException, BaseUseCase} from "@/core";
-import {Account, Filter, Pagination} from "@/modules/accounts/models";
-import {AccountRepository} from "@/modules/accounts/repositories";
+import { ResponseException, BaseUseCase } from '@/core';
+import { Account, Filter, Pagination } from '@/modules/accounts/models';
+import { AccountRepository } from '@/modules/accounts/repositories';
 
 /**
  * @final

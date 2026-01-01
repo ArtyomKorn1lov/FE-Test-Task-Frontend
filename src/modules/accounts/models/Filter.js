@@ -1,14 +1,14 @@
-import {SortTypes} from "@/core";
+import { SortTypes } from '@/core';
 
 export default class Filter {
   /**
    * @public
-   * @type {String|SortTypes}
+   * @type {String}
    * */
   sort;
   /**
    * @public
-   * @type {String}
+   * @type {String|SortTypes}
    * */
   order;
   /**
@@ -26,10 +26,12 @@ export default class Filter {
    * @constructor
    * @param {Filter|null} data
    * */
-  constructor(data = {
-    sort: '',
-    order: ''
-  }) {
+  constructor(
+    data = {
+      sort: '',
+      order: '',
+    },
+  ) {
     this.sort = data?.sort;
     this.order = data?.order;
     this.search = data?.search;

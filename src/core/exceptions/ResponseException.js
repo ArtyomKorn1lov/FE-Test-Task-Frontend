@@ -9,8 +9,8 @@ export default class ResponseException extends Error {
    * @constructor
    * @param {ResponseException} data
    */
-  constructor(data) {
+  constructor(data = null) {
     super(data?.message);
-    this.status = data?.status
+    this.status = data?.status;
   }
 }

@@ -4,10 +4,22 @@
  */
 
 /**
+ * @param {any} array
+ * @return {Boolean}
+ */
+export const isArray = (array) => {
+  return array instanceof Array;
+};
+
+/**
  * @param {Array} array
  * @return {Object}
  */
 export const convertArrayToObject = (array) => {
+  if (!isArray(array)) {
+    return {};
+  }
+
   if (!array || array.length <= 0) {
     return {};
   }
@@ -18,7 +30,7 @@ export const convertArrayToObject = (array) => {
   });
 
   return object;
-}
+};
 
 /**
  * @param {Array} array
@@ -27,6 +39,10 @@ export const convertArrayToObject = (array) => {
  * @return {Array}
  */
 export const changeArrayObjectsCode = (array, key, newKey) => {
+  if (!isArray(array)) {
+    return [];
+  }
+
   if (!array || array.length <= 0 || !key || !newKey) {
     return [];
   }
@@ -36,4 +52,4 @@ export const changeArrayObjectsCode = (array, key, newKey) => {
     obj[newKey] = item[key];
     return obj;
   });
-}
+};

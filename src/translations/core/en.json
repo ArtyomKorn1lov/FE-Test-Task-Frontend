@@ -16,6 +16,13 @@
   "composable": {
     "emptyRequestMethod": "The request execution method cannot be empty"
   },
+  "services": {
+    "undefinedValueErrorMessage": "Property {code} is undefined",
+    "emptyValueErrorMessage": "Property {code} is empty",
+    "invalidEmailErrorMessage": "Email invalid of property {code}",
+    "invalidPhoneErrorMessage": "Phone invalid of property {code}",
+    "invalidClassInstance": "Property {code} is not instance of {className}"
+  },
   "utils": {
     "env": {
       "initErrorMessage": "Error! Environment variables not found",

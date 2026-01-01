@@ -7,9 +7,9 @@
   />
 </template>
 <script setup>
-import {ElSkeleton} from 'element-plus';
-import {useObserverPagination} from "@/modules/ui/composable";
-import {ReloadPaginationEmit, PaginationSelectorCode} from "@/modules/ui";
+import { ElSkeleton } from 'element-plus';
+import { useObserverPagination } from '@/modules/ui/composable';
+import { ReloadPaginationEmit, PaginationSelectorCode } from '@/modules/ui';
 
 const emit = defineEmits([ReloadPaginationEmit]);
 

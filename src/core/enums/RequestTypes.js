@@ -3,4 +3,4 @@ export default {
   put: 'put',
   delete: 'delete',
   get: 'get',
-}
+};

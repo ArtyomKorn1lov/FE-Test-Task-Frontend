@@ -1,8 +1,8 @@
-import {ref} from 'vue';
-import Translations from "@/translations";
-import {ArgumentException} from "@/core/exceptions";
-import {MessageHelper} from "@/core/utils";
-import {BaseUseCase} from "@/core/use-case";
+import { ref } from 'vue';
+import Translations from '@/translations';
+import { ArgumentException } from '@/core/exceptions';
+import { MessageHelper } from '@/core/utils';
+import { BaseUseCase } from '@/core/use-case';
 
 const t = Translations.global.t;
 
@@ -15,14 +15,7 @@ const t = Translations.global.t;
  * @return {Object}
  * @throws {ArgumentException|Error}
  */
-export default function useFetching(
-  {
-    ajaxFunc = null,
-    useCase = null,
-    showMessage = true,
-    ...args
-  }
-) {
+export default function useFetching({ ajaxFunc = null, useCase = null, showMessage = true, ...args }) {
   /**
    * @type {import('vue').Ref<any>}
    */
@@ -42,7 +35,7 @@ export default function useFetching(
   const fetch = async () => {
     try {
       isLoading.value = true;
-      if (!!useCase) {
+      if (useCase) {
         data.value = await useCase.execute(...args);
       } else {
         data.value = await ajaxFunc(...args);
@@ -50,14 +43,14 @@ export default function useFetching(
       isLoading.value = false;
     } catch (exception) {
       isLoading.value = false;
-      error.value = {...exception};
+      error.value = { ...exception };
       if (showMessage) {
         MessageHelper.showNotification({
-          message: exception?.message
+          message: exception?.message,
         });
       }
     }
-  }
+  };
 
   if (!useCase && !ajaxFunc) {
     throw new ArgumentException(t('core.composable.emptyRequestMethod'));
@@ -66,6 +59,6 @@ export default function useFetching(
   return {
     data,
     error,
-    isLoading
-  }
+    isLoading,
+  };
 }

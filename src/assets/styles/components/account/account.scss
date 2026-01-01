@@ -37,9 +37,7 @@
 
     &:hover,
     &:active {
-
       .b-account {
-
         &__table-title {
           color: $colorTextBtnSecondary;
         }
@@ -70,8 +68,8 @@
     margin-bottom: 2px;
     transform: translate(0);
     animation-name: rotate180Back;
-		animation-duration: 0.25s;
-		animation-timing-function: ease-in-out;
+    animation-duration: 0.25s;
+    animation-timing-function: ease-in-out;
 
     svg {
       width: 12px;
@@ -81,8 +79,8 @@
     &_rotate {
       transform: rotate(180deg);
       animation-name: rotate180;
-		  animation-duration: 0.25s;
-		  animation-timing-function: ease-in-out;
+      animation-duration: 0.25s;
+      animation-timing-function: ease-in-out;
       margin-bottom: 0;
       margin-top: 2px;
     }
@@ -111,14 +109,11 @@
 
     &:hover,
     &:active {
-
       &:not(.b-account__item_selected) {
         background-color: $colorSectionActive;
 
         .b-account {
-
           &__item {
-
             &-inside {
               background-color: $colorSectionActive;
             }
@@ -131,9 +126,7 @@
       background-color: $colorPrimary;
 
       .b-account {
-
         &__item {
-
           &-inside {
             background-color: $colorSectionActive;
           }
@@ -142,9 +135,7 @@
 
       &:hover,
       &:active {
-
         .b-account {
-
           &__controls {
             display: flex;
           }

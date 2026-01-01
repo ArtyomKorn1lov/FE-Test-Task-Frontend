@@ -1,5 +1,5 @@
 // Миксины, c логикой
-@use "sass:map";
+@use 'sass:map';
 
 @mixin flex($direction: false, $items: false, $justify: false) {
   display: flex;
@@ -51,13 +51,9 @@
 }
 
 @mixin selectTagsPalette($code: default) {
-
   &.el-select {
-
     &-dropdown {
-
       &__item {
-
         span {
           color: map.get($colorTags, $code + -text);
         }
@@ -79,11 +75,8 @@
 }
 
 @mixin selectInputTagsPalette($code: default) {
-
   .el-select {
-
     &__selected-item {
-
       span {
         color: map.get($colorTags, $code + -text);
         font-weight: $textSemibold;
@@ -95,21 +88,13 @@
 @mixin containerListHeight($breakpoint: default) {
   @if $breakpoint ==$sml {
     max-height: calc(100vh - 317px);
-  }
-
-  @else if $breakpoint ==$xs {
+  } @else if $breakpoint ==$xs {
     max-height: calc(100vh - 350px);
-  }
-
-  @else if $breakpoint ==$md {
+  } @else if $breakpoint ==$md {
     max-height: calc(100vh - 267px);
-  }
-
-  @else if $breakpoint ==$sm {
+  } @else if $breakpoint ==$sm {
     max-height: calc(100vh - 307px);
-  }
-
-  @else {
+  } @else {
     max-height: calc(100vh - 257px);
   }
 }

@@ -1,7 +1,5 @@
 .b-select {
-
   .el-select {
-
     &__wrapper {
       height: $m40;
       border: 1px solid $colorLightGrey;
@@ -12,7 +10,6 @@
     }
 
     &__selected-item {
-
       span,
       p {
         font-weight: $textNormal;
@@ -20,7 +17,6 @@
       }
 
       &.is-transparent {
-
         span,
         p {
           color: $colorPlaceHolder;
@@ -46,23 +42,18 @@
   }
 
   &__popper {
-
     &.el-popper {
-
       border-radius: $rounded10;
     }
 
     .el-popper {
-
       &__arrow {
         display: none;
       }
     }
 
     .el-select {
-
       &-dropdown {
-
         .el-scrollbar {
           border-radius: $rounded10;
         }

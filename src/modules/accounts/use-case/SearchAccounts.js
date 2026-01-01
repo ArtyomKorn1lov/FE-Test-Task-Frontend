@@ -1,6 +1,6 @@
-import {ResponseException, BaseUseCase} from "@/core";
-import {ContextSearch, ContextSearchResponse} from "@/modules/accounts/models";
-import {AccountRepository} from "@/modules/accounts/repositories";
+import { ResponseException, BaseUseCase } from '@/core';
+import { ContextSearch, ContextSearchResponse } from '@/modules/accounts/models';
+import { AccountRepository } from '@/modules/accounts/repositories';
 
 /**
  * @final

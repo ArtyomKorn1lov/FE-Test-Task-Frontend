@@ -1,9 +1,9 @@
-import axios from "axios";
-import Translations from "@/translations";
-import {BodyTypes, RequestTypes} from "@/core/enums";
-import {ResponseException} from "@/core/exceptions";
-import {RequestConfig} from "@/core/models";
-import {ObjectHelper} from "@/core/utils";
+import axios from 'axios';
+import Translations from '@/translations';
+import { BodyTypes, RequestTypes } from '@/core/enums';
+import { ResponseException } from '@/core/exceptions';
+import { RequestConfig } from '@/core/models';
+import { ObjectHelper } from '@/core/utils';
 
 const t = Translations.global.t;
 
@@ -23,7 +23,7 @@ export default class BaseApiClient {
    * @param {String} apiUrl
    */
   constructor(apiUrl) {
-    this.apiUrl = apiUrl
+    this.apiUrl = apiUrl;
   }
 
   /**
@@ -33,7 +33,7 @@ export default class BaseApiClient {
    * @return {String}
    */
   #prepareUrl(url, params = null) {
-    let queryString = "";
+    let queryString = '';
     if (!!params && !ObjectHelper.isEmpty(params)) {
       queryString = '?' + new URLSearchParams(ObjectHelper.removeEmptyProperties(params));
     }
@@ -49,11 +49,11 @@ export default class BaseApiClient {
    */
   buildFormData(formData, data, parentKey = '') {
     if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File) && !(data instanceof Blob)) {
-      Object.keys(data).forEach(key => {
+      Object.keys(data).forEach((key) => {
         this.buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
       });
     } else {
-      const value = data == null ? '' : data;
+      const value = data === null ? '' : data;
 
       formData.append(parentKey, value);
     }
@@ -93,18 +93,12 @@ export default class BaseApiClient {
    * @param {RequestConfig} config
    * @return {Promise<any>}
    */
-  async buildRequest(url, {
-    data,
-    dataType = BodyTypes.json,
-    params = null,
-    headers = {},
-    requestType = RequestTypes.post
-  }) {
+  async buildRequest(url, { data, dataType = BodyTypes.json, params = null, headers = {}, requestType = RequestTypes.post }) {
     const requestUrl = this.#prepareUrl(url, params);
 
-    const payload = !!data ? this.setPayload(data, dataType) : {};
-    const config = {}
-    headers && (config.headers = {...headers});
+    const payload = data ? this.setPayload(data, dataType) : {};
+    const config = {};
+    headers && (config.headers = { ...headers });
 
     switch (requestType) {
       case RequestTypes.get:
@@ -128,7 +122,7 @@ export default class BaseApiClient {
     if (!response) {
       throw new ResponseException({
         message: t('core.api.serverError'),
-        status: 500
+        status: 500,
       });
     }
     return response?.data;
@@ -142,7 +136,7 @@ export default class BaseApiClient {
   async createError(error) {
     throw new ResponseException({
       message: error?.message,
-      status: error?.status
+      status: error?.status,
     });
   }
 

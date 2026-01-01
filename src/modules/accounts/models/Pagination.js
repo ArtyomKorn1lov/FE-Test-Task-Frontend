@@ -14,10 +14,12 @@ export default class Pagination {
    * @constructor
    * @param {Pagination} data
    */
-  constructor(data = {
-    page: 0,
-    pageCount: 0,
-  }) {
+  constructor(
+    data = {
+      page: 0,
+      pageCount: 0,
+    },
+  ) {
     this.page = data?.page;
     this.pageCount = data?.pageCount;
   }

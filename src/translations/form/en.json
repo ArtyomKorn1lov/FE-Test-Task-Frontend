@@ -5,6 +5,9 @@
     },
     "email": {
       "error": "Invalid email"
+    },
+    "phone": {
+      "error": "Invalid phone"
     }
   },
   "files": {
@@ -12,6 +15,7 @@
   },
   "builder": {
     "errors": {
+      "empty": "Form fields cannot be empty",
       "structure": "Invalid form field data structure"
     }
   }

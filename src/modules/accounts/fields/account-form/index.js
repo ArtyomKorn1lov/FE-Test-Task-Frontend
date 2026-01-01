@@ -1,5 +1,3 @@
-import en from "@/modules/accounts/fields/account-form/en";
+import en from '@/modules/accounts/fields/account-form/en';
 
-export {
-  en
-}
+export { en };

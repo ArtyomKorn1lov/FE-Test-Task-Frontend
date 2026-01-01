@@ -1,8 +1,8 @@
-import Translations from "@/translations";
-import {ArgumentException} from "@/core/exceptions";
-import {MessageTypes} from "@/core/enums";
-import {MessageHelper} from "@/core/utils";
-import {BaseUseCase} from "@/core/use-case";
+import Translations from '@/translations';
+import { ArgumentException } from '@/core/exceptions';
+import { MessageTypes } from '@/core/enums';
+import { MessageHelper } from '@/core/utils';
+import { BaseUseCase } from '@/core/use-case';
 
 const t = Translations.global.t;
 
@@ -14,15 +14,7 @@ const t = Translations.global.t;
  * @param {MessageTypes|String} messageType
  * @return {(function(...args): Promise<any>)}
  */
-export default function useFetch(
-  {
-    ajaxFunc = null,
-    useCase = null,
-    showMessage = true,
-    messageType = MessageTypes.notification
-  }
-) {
-
+export default function useFetch({ ajaxFunc = null, useCase = null, showMessage = true, messageType = MessageTypes.notification }) {
   /**
    * @param {String} message
    * @return {Promise<void>}
@@ -31,16 +23,16 @@ export default function useFetch(
     switch (messageType) {
       case MessageTypes.messageBox:
         await MessageHelper.showMessageBox({
-          message: message
+          message: message,
         });
         break;
       default:
         MessageHelper.showNotification({
-          message: message
+          message: message,
         });
         break;
     }
-  }
+  };
 
   /**
    * @param {any} args
@@ -51,8 +43,7 @@ export default function useFetch(
     try {
       if (!useCase && !ajaxFunc) {
         throw new ArgumentException(t('core.composable.emptyRequestMethod'));
-      }
-      else if (!!useCase) {
+      } else if (useCase) {
         return await useCase.execute(...args);
       }
       return await ajaxFunc(...args);

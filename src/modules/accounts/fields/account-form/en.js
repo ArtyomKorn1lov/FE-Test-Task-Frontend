@@ -2,21 +2,21 @@ export default {
   groups: [
     {
       title: 'Fields',
-      code: 'accounts-fields',
+      code: 'accounts-getFields',
       items: [
         {
           code: 'login',
           title: 'Account name',
           type: 'text',
           placeholder: 'Enter accounts name',
-          required: true
+          required: true,
         },
         {
           code: 'email',
           title: 'Account email',
           type: 'email',
           placeholder: 'Enter accounts email',
-          required: true
+          required: true,
         },
         {
           code: 'role',
@@ -24,16 +24,16 @@ export default {
           type: 'select',
           items: [],
           placeholder: 'Select permission',
-          required: true
+          required: true,
         },
         {
           code: 'picture',
           title: 'Account image',
           type: 'file',
           placeholder: 'Download image',
-          required: false
-        }
-      ]
-    }
-  ]
-}
+          required: false,
+        },
+      ],
+    },
+  ],
+};
