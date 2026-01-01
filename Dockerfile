@@ -4,11 +4,11 @@ COPY . /app
 
 WORKDIR /app
 
-EXPOSE 80
+EXPOSE 3000
 
 RUN rm -rf node_modules
 RUN npm cache clean --force
 RUN npm install
 RUN npm run prod
 
-CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "start"]
