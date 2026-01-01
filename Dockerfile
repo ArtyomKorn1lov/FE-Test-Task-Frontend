@@ -9,6 +9,6 @@ EXPOSE 3000
 RUN rm -rf node_modules
 RUN npm cache clean --force
 RUN npm install
-RUN npm run build
+RUN npm run prod
 
 CMD ["npm", "run", "preview"]
