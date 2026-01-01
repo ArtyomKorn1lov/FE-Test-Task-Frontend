@@ -1,4 +1,4 @@
-# Справочник пользователей FeTestTask
+# Справочник пользователей FeTestTask (frontend)
 
 ## Справочник пользователей FeTestTask, на момент реализации ТЗ удалено с github
 
@@ -11,7 +11,8 @@
 - Используются eslint и prettier
 - Доступно развёртывание в Docker
 
-### Cсылка на реозиторий с backend - https://github.com/ArtyomKorn1lov/FE-Test-Task-Backend
+### Cсылка на репозиторий с backend - https://github.com/ArtyomKorn1lov/FE-Test-Task-Backend
+### Cсылка на репозиторий с docker compose - https://github.com/ArtyomKorn1lov/FE-Test-Task-Docker-Compose
 
 ## Мануальная установка проекта:
 

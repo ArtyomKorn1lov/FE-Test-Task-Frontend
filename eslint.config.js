@@ -34,6 +34,12 @@ export default defineConfig([
       'no-else-return': 'warn',
       'no-unused-vars': 'off',
       'object-property-newline': 'warn',
+      'prettier/prettier': [
+        'error',
+        {
+          endOfLine: 'auto',
+        },
+      ],
     },
     languageOptions: {
       globals: {

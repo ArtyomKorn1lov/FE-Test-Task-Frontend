@@ -11,4 +11,4 @@ RUN npm cache clean --force
 RUN npm install
 RUN npm run prod
 
-CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "start"]
