@@ -1,9 +1,8 @@
 import Translations from '@/translations';
-import { ResponseException, NotFoundException, BaseUseCase, ObjectHelper } from '@/core';
+import { ResponseException, ValidationException, BaseUseCase, ObjectHelper } from '@/core';
 import { Pagination } from '@/modules/accounts/models';
 import { AccountRepository } from '@/modules/accounts/repositories';
 import { AccountMapper } from '@/modules/accounts/mappers';
-import { mapPaginationValuesResponseToModel } from '@/modules/accounts/mappers/AccountMapper';
 
 const t = Translations.global.t;
 
@@ -17,14 +16,21 @@ export default class GetPageNav extends BaseUseCase {
    * @type {AccountRepository}
    */
   repository;
+  /**
+   * @private
+   * @type {ValidationProvider}
+   */
+  validationProvider;
 
   /**
    * @constructor
    * @param {AccountRepository} repository
+   * @param {ValidationProvider} validationProvider
    */
-  constructor(repository) {
+  constructor(repository, validationProvider) {
     super();
     this.repository = repository;
+    this.validationProvider = validationProvider;
   }
 
   /**
@@ -32,16 +38,15 @@ export default class GetPageNav extends BaseUseCase {
    * @public
    * @return {Promise<Pagination>}
    * @throws {ResponseException}
-   * @throws {NotFoundException}
+   * @throws {ValidationException}
    */
   async execute() {
     try {
       const pageNav = AccountMapper.mapPaginationValuesResponseToModel(await this.repository.getPageNav());
-      if (ObjectHelper.isEmpty(pageNav)) {
-        throw new NotFoundException(t('accounts.useCase.getPageNavErrorMessage'));
-      }
+      this.validationProvider.checkRequired(pageNav.page, 'page');
+      this.validationProvider.checkRequired(pageNav.pageCount, 'pageCount');
       return pageNav;
-    } catch (/** @type {ResponseException|NotFoundException} */ error) {
+    } catch (/** @type {ResponseException|ValidationException} */ error) {
       console.error(error);
       throw error;
     }

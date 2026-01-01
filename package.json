@@ -5,12 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 3000",
-    "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0 --port 3000",
     "eslint": "eslint . --ext .js,.mjs,.cjs,.vue,.json --cache",
     "prettier": "prettier --check . --ignore-path .prettierignore --cache",
     "lint": "npm run eslint && npm run prettier",
-    "format": "eslint . --ext .js,.mjs,.cjs,.vue,.json --cache --fix && prettier . --write --ignore-path .prettierignore"
+    "format": "eslint . --ext .js,.mjs,.cjs,.vue,.json --cache --fix && prettier . --write --ignore-path .prettierignore",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest",
+    "watch:test": "node --experimental-vm-modules node_modules/jest/bin/jest --watch",
+    "prod": "npm run lint && npm run test && npm run build",
+    "build": "vite build",
+    "start": "vite preview --host 0.0.0.0 --port 3000"
   },
   "engines": {
     "node": ">=22.18.0",
@@ -21,13 +24,17 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@eslint/json": "^0.14.0",
+    "@types/jest": "^30.0.0",
     "@vitejs/plugin-vue": "^6.0.3",
+    "babel-jest": "^30.2.0",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jest": "^29.5.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-unused-imports": "^4.3.0",
     "eslint-plugin-vue": "^10.6.2",
     "globals": "^16.5.0",
+    "jest": "^30.2.0",
     "prettier": "^3.7.4",
     "sass-embedded": "^1.97.0",
     "unplugin-element-plus": "^0.11.2",

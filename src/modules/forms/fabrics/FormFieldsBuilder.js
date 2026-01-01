@@ -1,6 +1,6 @@
 import Translations from '@/translations';
-import { ObjectHelper } from '@/core';
-import { EmailRegex } from '@/modules/forms/constants';
+import { ArgumentException, ObjectHelper } from '@/core';
+import { EmailRegex, PhoneRegex } from '@/modules/forms/constants';
 import { FieldsValidateException } from '@/modules/forms/exceptions';
 import { FormFields, FormGroup, FormField } from '@/modules/forms/models';
 
@@ -48,7 +48,7 @@ export default class FormFieldsBuilder {
    * @param {FormFields} fields
    * @param {Object} validators
    */
-  constructor(fields, validators) {
+  constructor(fields, validators = {}) {
     this.fields = fields;
     this.validators = validators;
     this.build();
@@ -68,6 +68,9 @@ export default class FormFieldsBuilder {
    * @throws {FieldsValidateException}
    */
   validate() {
+    if (ObjectHelper.isEmpty(this.fields)) {
+      throw new ArgumentException(t('form.builder.errors.empty'));
+    }
     if (!ObjectHelper.hasProperty(this.fields, 'groups')) {
       throw new FieldsValidateException(t('form.builder.errors.structure'));
     }
@@ -164,6 +167,26 @@ export default class FormFieldsBuilder {
     this.rules[field.code] = [];
 
     switch (field.type) {
+      case 'tel': {
+        const phoneValidator = (rule, value, callback) => {
+          const regularExpression = this.validators[field.type] ? this.validators[field.type] : PhoneRegex;
+          if (regularExpression.test(value)) {
+            return callback();
+          }
+          return callback(t('form.fields.phone.error'));
+        };
+        this.rules[field.code] = [
+          {
+            validator: phoneValidator,
+            trigger: 'change',
+          },
+          {
+            validator: phoneValidator,
+            trigger: 'blur',
+          },
+        ];
+        break;
+      }
       case 'email': {
         const emailValidator = (rule, value, callback) => {
           const regularExpression = this.validators[field.type] ? this.validators[field.type] : EmailRegex;

@@ -7,11 +7,15 @@
 - Исходный макет - https://www.figma.com/design/okyYwGZKg9ZUkTzZth3YXK/FE-Test-Task-(Copy)
 - Простой справочник пользователей использующий фреймворк vue 3, является web-приложением, взаимодействующим с серверной частью посредством REST
 - Функционал: базовый CRUD, фильтрация, сортировка, пагинация, загрузка файлов
+- Unit-тестирование программного кода
+- Используются eslint и prettier
 - Доступно развёртывание в Docker
 
 ### Cсылка на реозиторий с backend - https://github.com/ArtyomKorn1lov/FE-Test-Task-Backend
 
 ## Мануальная установка проекта:
+
+### Установка зависимостей
 
 ```sh
 npm install
@@ -23,13 +27,19 @@ npm install
 npm run dev
 ```
 
+### Запуск unit-тестов
+
+```sh
+npm run test
+```
+
 ### Запуск проверки eslint и prettier
 
 ```sh
 npm run lint
 ```
 
-### Запуск автоматического форматера программного кода
+### Запуск автоматического форматирования программного кода
 
 ```sh
 npm run format
@@ -44,7 +54,13 @@ npm run build
 ### Запуск приложения с собранными файлами
 
 ```sh
-npm run preview
+npm run start
+```
+
+### Prod-сборка и запуск сервера с frontend-приложением
+
+```sh
+npm run prod
 ```
 
 ## Установка проекта в docker:
